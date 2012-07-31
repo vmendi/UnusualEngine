@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties version="1">
+  <includeClasses>
+    <classEntry path="gs.OverwriteManager"/>
+    <classEntry path="gs.TweenLite"/>
+    <classEntry path="gs.easing.Back"/>
+    <classEntry path="gs.easing.Bounce"/>
+    <classEntry path="gs.easing.Circ"/>
+    <classEntry path="gs.easing.Cubic"/>
+    <classEntry path="gs.easing.Elastic"/>
+    <classEntry path="gs.easing.Expo"/>
+    <classEntry path="gs.easing.Linear"/>
+    <classEntry path="gs.easing.Quad"/>
+    <classEntry path="gs.easing.Quart"/>
+    <classEntry path="gs.easing.Quint"/>
+    <classEntry path="gs.easing.Sine"/>
+    <classEntry path="gs.easing.Strong"/>
+    <classEntry path="gs.events.TweenEvent"/>
+    <classEntry path="gs.utils.tween.ArrayTweenInfo"/>
+    <classEntry path="gs.utils.tween.BevelFilterVars"/>
+    <classEntry path="gs.utils.tween.BlurFilterVars"/>
+    <classEntry path="gs.utils.tween.ColorMatrixFilterVars"/>
+    <classEntry path="gs.utils.tween.ColorTransformVars"/>
+    <classEntry path="gs.utils.tween.DropShadowFilterVars"/>
+    <classEntry path="gs.utils.tween.FilterVars"/>
+    <classEntry path="gs.utils.tween.GlowFilterVars"/>
+    <classEntry path="gs.utils.tween.SubVars"/>
+    <classEntry path="gs.utils.tween.TransformAroundCenterVars"/>
+    <classEntry path="gs.utils.tween.TransformAroundPointVars"/>
+    <classEntry path="gs.utils.tween.TweenInfo"/>
+    <classEntry path="gs.utils.tween.TweenLiteVars"/>
+    <classEntry path="gs.utils.tween.TweenMaxVars"/>
+    <classEntry path="utils.ArrayUtils"/>
+    <classEntry path="utils.CentralLoader"/>
+    <classEntry path="utils.Delegate"/>
+    <classEntry path="utils.FPSCounter"/>
+    <classEntry path="utils.GenericEvent"/>
+    <classEntry path="utils.KeyValueWrapper"/>
+    <classEntry path="utils.KeyboardHandler"/>
+    <classEntry path="utils.MathUtils"/>
+    <classEntry path="utils.MovieClipBackwardsPlayer"/>
+    <classEntry path="utils.MovieClipFinder"/>
+    <classEntry path="utils.MovieClipLabels"/>
+    <classEntry path="utils.MovieClipListener"/>
+    <classEntry path="utils.MovieClipMouseDisabler"/>
+    <classEntry path="utils.Point3"/>
+    <classEntry path="utils.RandUtils"/>
+    <classEntry path="utils.TimeUtils"/>
+    <classEntry path="utils.Type"/>
+    <classEntry path="utils.UIComponentWrapper"/>
+    <classEntry path="utils.getDefinitionNames"/>
+    <classEntry path="utils.reflection.ArrayPeer"/>
+    <classEntry path="utils.reflection.ClassInfo"/>
+    <classEntry path="utils.reflection.MethodInfo"/>
+    <classEntry path="utils.reflection.describeType"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

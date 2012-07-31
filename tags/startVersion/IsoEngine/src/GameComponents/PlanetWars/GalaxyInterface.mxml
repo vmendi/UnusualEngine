@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%" height="100%"
+	creationComplete="OnCompleted(event);"
+	mouseEnabled="false" backgroundColor="#0"
+	>
+
+	<mx:Script>
+		<![CDATA[
+		import utils.UIComponentWrapper;
+		import GameComponents.PlanetWars.GalaxyView.BlobStar;
+		import mx.containers.VBox;
+		import mx.events.FlexEvent;
+		import mx.controls.Label;
+		import mx.containers.HBox;
+		import mx.controls.Spacer;
+		import mx.controls.TextInput;
+		import mx.core.UIComponent;
+		import utils.ColorTools;
+		import utils.CentralLoader;
+		import utils.RandUtils;
+		import utils.KeyboardHandler;
+		import utils.Point3;
+		import utils.Delegate;
+		import GameComponents.PlanetWars.GalaxyView.Matrix3D;
+		import GameComponents.PlanetWars.GalaxyView.Number3D;
+		import GameComponents.PlanetWars.GalaxyView.Star;
+
+
+		public function Init(gameController : PlanetWarsController) : void
+		{
+			mController = gameController;
+		}
+
+		private function OnCompleted(event:Event):void
+		{
+			mCentralLoader = mController.TheGameModel.TheIsoEngine.TheCentralLoader;
+
+			mCentralLoader.CreateQueue("GalaxyPNG", new ApplicationDomain());
+			mCentralLoader.AddToQueue(MILKYWAY_PNG, true, "GalaxyPNG");
+			mCentralLoader.AddToQueue(BLOB_PNG, true, "GalaxyPNG");
+			mCentralLoader.LoadQueue("GalaxyPNG", OnPNGsLoaded);
+		}
+
+		private function OnPNGsLoaded(event:Event):void
+		{
+			mGalaxyDefinitionBitmap = mCentralLoader.GetContentOfQueue(MILKYWAY_PNG, "GalaxyPNG").content as Bitmap;
+			mBlobBitmap = mCentralLoader.GetContentOfQueue(BLOB_PNG, "GalaxyPNG").content as Bitmap;
+
+			mCentralLoader.DiscardQueue("GalaxyPNG");
+
+			mWrapper = new UIComponent();
+			mWrapper.width = myGalaxy.width;
+			mWrapper.height = myGalaxy.height;
+
+			mRenderBitmapData = new BitmapData(myGalaxy.width, myGalaxy.height, false, 0);
+			mRenderBitmap = new Bitmap(mRenderBitmapData, PixelSnapping.AUTO);
+
+			mWrapper.addChild(mRenderBitmap);
+			myGalaxy.addChild(mWrapper);
+
+			CreateAll();
+			//InitStagesPanel();
+
+			//stage.quality = StageQuality.LOW;
+
+			addEventListener(Event.ENTER_FRAME, OnEnterFrame);
+		}
+
+		private function CreateAll() : void
+		{
+			CreateBlobBitmapCaches();
+			CreateStars();
+			CreateBlobStars();
+
+			mStars.splice(0, 500);
+		}
+
+		private function CreateStars():void
+		{
+			const MAX_SPIRAL_THICKNESS : Number = 0.06;
+
+			mStars = new Array;
+
+			var bmpData : BitmapData = mGalaxyDefinitionBitmap.bitmapData;
+			var width : Number = bmpData.width;
+			var height : Number = bmpData.height;
+
+			var h : Number = 0.75;
+
+			var pixels : ByteArray = bmpData.getPixels(new Rectangle(0, 0, width, height));
+			pixels.position = 0;
+			bmpData.lock();
+			for (var i:int = 0; i < width * height; i++)
+			{
+				var value : uint = pixels.readUnsignedInt() & 0x000000FF;	// Nos quedamos sólo con la intensidad
+				var valueNumber : Number = value;
+
+				if (value > 40)
+				{
+					var x:Number, y:Number, z:Number, r2:Number, yy:Number, prob:Number;
+					var iNum : Number = i;
+
+					z  = Math.floor(iNum/width);
+					x  = (iNum - width * z - 0.5 * (width - 1)) / width;
+					z  = (0.5 * (height - 1) - z) / height;
+					x  += RandUtils.RandMinusPlus() * 0.008;
+					z  += RandUtils.RandMinusPlus() * 0.008;
+					r2 = x * x + z * z;
+
+					var y0:Number = 0.5 * MAX_SPIRAL_THICKNESS * Math.sqrt(valueNumber/256.0) * Math.exp(-5.0 * r2);
+					var B:Number = (r2 > 0.35)? 1.0: 0.75;		// the darkness of the "dust lane", 0 < B < 1
+					var p0:Number = 1.0 - B * Math.exp(-h * h);	// the uniform reference probability, envelopping prob*p0.
+					do
+					{
+						// generate "thickness" y of spirals with emulation of a dust lane in galactic plane (y=0)
+						var yr:Number =  RandUtils.RandMinusPlus() * h;
+						prob = (1.0 - B * Math.exp(-yr * yr))/p0;
+
+					} while (RandUtils.RandMinusPlus() > prob);
+
+					y = y0 * yr / h;
+
+					var newStar : Star = new Star;
+					newStar.Pos = new Number3D(x, y, z)
+					newStar.Brightness = value * prob + 20;
+
+					if (newStar.Brightness > 255)
+						newStar.Brightness = 255;
+
+					var intBrightnessLevel : int = newStar.Brightness;
+					newStar.IntBrightness = (0xFF000000 | intBrightnessLevel << 16 | intBrightnessLevel << 8 | intBrightnessLevel);
+
+					mStars.push(newStar);
+				}
+			}
+			bmpData.unlock();
+
+			SortStars();
+		}
+
+		private function SortStars():void
+		{
+			mStars.sort(sortFunc);
+
+			function sortFunc(a : Star, b : Star) : int
+			{
+				if (a.Pos.moduloSquared < b.Pos.moduloSquared)
+					return -1;
+				else
+				if (a.Pos.moduloSquared > b.Pos.moduloSquared)
+					return 1;
+				return 0;
+			}
+		}
+
+
+		private function CreateBlobStars():void
+		{
+			mBlobStars = new Array();
+
+			// Las nuevas estrellas, sin las que se transforman en blobs
+			var tempStars : Array = new Array();
+
+			var prevMin : int = 0;
+			for each(var s : Object in mStageParams)
+			{
+				var maxIdx : int = s.maxIdx == -1? mStars.length : s.maxIdx;
+
+				for (var c:int=prevMin; c < maxIdx; ++c)
+				{
+					if ((c % s.step == 0) && mStars[c].Brightness >= s.clampBrightness)
+						CreateBlob(c, s.alpha);
+					else
+						tempStars.push(mStars[c]);
+				}
+				prevMin = s.maxIdx;
+			}
+
+			mStars = tempStars;
+
+			function CreateBlob(i:int, a:Number):void
+			{
+				var newBlob : BlobStar = new BlobStar();
+				newBlob.Pos = mStars[i].Pos;
+				newBlob.Brightness = mStars[i].Brightness;
+				newBlob.IntBrightness = mStars[i].IntBrightness;
+				newBlob.alpha = a;
+				newBlob.scale = 0.9 / (1+(Number(i)/1000));
+				mBlobStars.push(newBlob);
+			}
+		}
+
+		private function InitStagesPanel():void
+		{
+			mStagesPanel = new VBox();
+			mStagesPanel.setStyle("right", 5);
+			mStagesPanel.setStyle("top", 150);
+			mStagesPanel.setStyle("bottom", 150);
+			mStagesPanel.setStyle("paddingTop", 10);
+			mStagesPanel.setStyle("paddingLeft", 5);
+			mStagesPanel.width = 150;
+			mStagesPanel.setStyle("backgroundColor", 0xAAAAAA);
+
+			this.addChild(mStagesPanel);
+
+			for (var c:int=0; c < mStageParams.length; c++)
+			{
+				var hBox01 : HBox = new HBox();
+				var maxIdxInput : TextInput = new TextInput();
+				maxIdxInput.text = mStageParams[c].maxIdx;
+				maxIdxInput.width = 40;
+				var label01 : Label = new Label();
+				label01.text = "Max IDX";
+				hBox01.addChild(label01);
+				hBox01.addChild(maxIdxInput);
+				maxIdxInput.addEventListener(Event.CHANGE, Delegate.create(OnInputEnter, "maxIdx", c));
+
+				var hBox02 : HBox = new HBox();
+				var stepInput : TextInput = new TextInput();
+				stepInput.text = mStageParams[c].step;
+				stepInput.width = 40;
+				var label02 : Label = new Label();
+				label02.text = "Step";
+				hBox02.addChild(label02);
+				hBox02.addChild(stepInput);
+				stepInput.addEventListener(Event.CHANGE, Delegate.create(OnInputEnter, "step", c));
+
+				var hBox03 : HBox = new HBox();
+				var clampInput : TextInput = new TextInput();
+				clampInput.text = mStageParams[c].clampBrightness;
+				clampInput.width = 40;
+				var label03 : Label = new Label();
+				label03.text = "Max Brightness";
+				hBox03.addChild(label03);
+				hBox03.addChild(clampInput);
+				clampInput.addEventListener(Event.CHANGE, Delegate.create(OnInputEnter, "clampBrightness", c));
+
+				var hBox04 : HBox = new HBox();
+				var alphaInput : TextInput = new TextInput();
+				alphaInput.text = mStageParams[c].alpha;
+				alphaInput.width = 40;
+				var label04 : Label = new Label();
+				label04.text = "Alpha";
+				hBox04.addChild(label04);
+				hBox04.addChild(alphaInput);
+				alphaInput.addEventListener(Event.CHANGE, Delegate.create(OnInputEnter, "alpha", c));
+
+				mStagesPanel.addChild(hBox01);
+				mStagesPanel.addChild(hBox02);
+				mStagesPanel.addChild(hBox03);
+				mStagesPanel.addChild(hBox04);
+
+				var daSpacer : Spacer = new Spacer()
+				daSpacer.height = 20;
+				mStagesPanel.addChild(daSpacer);
+			}
+
+			mNumStarsLabel = new Label();
+			mNumBlobStarsLabel = new Label();
+
+			mStagesPanel.addChild(mNumStarsLabel);
+			mStagesPanel.addChild(mNumBlobStarsLabel);
+
+			mNumStarsLabel.text = mStars.length.toString();
+			mNumBlobStarsLabel.text = mBlobStars.length.toString();
+		}
+
+		private function OnInputEnter(event:Event, v : String, i : int):void
+		{
+			var textInput : TextInput = event.target as TextInput;
+			var val : Number = parseFloat(textInput.text);
+
+			if (!isNaN(val))
+				mStageParams[i][v] = val;
+
+			CreateAll();
+
+			mNumStarsLabel.text = mStars.length.toString();
+			mNumBlobStarsLabel.text = mBlobStars.length.toString();
+		}
+
+		private function ProcessKeyboard():void
+		{
+			if (KeyboardHandler.Keyb.IsKeyPressed(87))
+				mCamTranslation.y += 0.1;
+			if (KeyboardHandler.Keyb.IsKeyPressed(83))
+				mCamTranslation.y -= 0.1;
+
+			if (KeyboardHandler.Keyb.IsKeyPressed(65))
+				mCamTranslation.z += 0.1;
+			if (KeyboardHandler.Keyb.IsKeyPressed(68))
+				mCamTranslation.z -= 0.1;
+
+			if (KeyboardHandler.Keyb.IsKeyPressed(90))
+				mCamTranslation.x += 0.1;
+			if (KeyboardHandler.Keyb.IsKeyPressed(88))
+				mCamTranslation.x -= 0.1;
+
+			if (KeyboardHandler.Keyb.IsKeyPressed(77))
+				mAngleYCam += 0.02;
+			if (KeyboardHandler.Keyb.IsKeyPressed(78))
+				mAngleYCam -= 0.02;
+		}
+
+		private function OnEnterFrame(e:Event):void
+		{
+			ProcessKeyboard();
+
+			var rotation : Matrix3D = Matrix3D.rotationY(mAngleY);
+			var translation : Matrix3D = Matrix3D.translationMatrix(-mGalaxyCenter.x, -mGalaxyCenter.y, -mGalaxyCenter.z);
+
+			var camTranslation : Matrix3D = Matrix3D.translationMatrix(mCamTranslation.x, mCamTranslation.y, mCamTranslation.z);
+			var camRotation : Matrix3D = Matrix3D.rotationX(mAngleYCam);
+
+			var toWorld : Matrix3D = Matrix3D.multiply(rotation, translation);
+			var toCamSpace : Matrix3D = Matrix3D.multiply(camRotation, camTranslation);
+			var camFinal : Matrix3D = Matrix3D.multiply(toCamSpace, toWorld);
+
+			Render(camFinal);
+
+			mAngleY += Math.PI / 600;
+		}
+		
+		private function RenderStarsArray(theStars : Array, idxStar:int, idxEnd:int, camFinal:Matrix3D, coreFunc : Function):void
+		{
+			var halfWidth : Number = myGalaxy.width*0.5;
+			var halfHeight : Number = myGalaxy.height*0.5;
+			var camSpace : Number3D = new Number3D(0,0,0);
+						
+			for (var c:int=idxStar; c < idxEnd; ++c)
+			{
+				var star : Star = theStars[c];
+
+				camSpace.x = star.Pos.x;
+				camSpace.y = star.Pos.y;
+				camSpace.z = star.Pos.z;
+
+				Matrix3D.multiplyVector4x4(camFinal, camSpace);
+
+				if (camSpace.z > 0)
+				{
+					var invZ : Number = mAperture / camSpace.z;
+					var x : Number = (camSpace.x * invZ) + halfWidth;
+					var y : Number = halfHeight - (camSpace.y * invZ);
+					
+					coreFunc(star, x, y);
+				}
+			}
+		}
+
+		private function Render(camFinal : Matrix3D) : void
+		{
+			var viewWidth : Number = myGalaxy.width;
+			var viewHeight : Number = myGalaxy.height;
+			
+			var mat : Matrix = new Matrix();
+			var colTr : ColorTransform = new ColorTransform;
+			var zeroPoint : Point = new Point();
+			
+			var rectCache : Array = new Array;			
+			for each(var b : BitmapData in mBlobBitmapScaleCache)
+				rectCache.push(new Rectangle(0, 0, b.width, b.height));
+			
+			mRenderBitmapData.fillRect(new Rectangle(0,0, viewWidth, viewHeight), 0);
+			
+			mRenderBitmapData.lock();
+			RenderStarsArray(mStars, 0, mStars.length, camFinal, RenderStar);
+			RenderStarsArray(mBlobStars, 1, mBlobStars.length, camFinal, RenderBlob);
+			RenderStarsArray(mBlobStars, 0, 1, camFinal, RenderBlobAdd);
+			mRenderBitmapData.unlock();
+			
+			function RenderStar(star:Star, x:Number, y:Number):void
+			{
+				mRenderBitmapData.setPixel(x, y, star.IntBrightness);
+			}
+			
+			function RenderBlob(star:Star, x:Number, y:Number):void
+			{
+				var blobStar : BlobStar = star as BlobStar;
+				
+				x -= mBlobBitmap.bitmapData.width*0.5*blobStar.scale;
+				y -= mBlobBitmap.bitmapData.height*0.5*blobStar.scale;
+				
+				var scaleLevel : int = (mBlobBitmapScaleCache.length-1)*blobStar.scale;	// si blobStar.scale > 1, adios
+				var alphaLevel : int = blobStar.alpha * 255;
+				mRenderBitmapData.copyPixels(mBlobBitmapScaleCache[scaleLevel], rectCache[scaleLevel],
+											 new Point(x, y), mBlobBitmapAlphaCache[alphaLevel], zeroPoint, false);
+			}
+						
+			function RenderBlobAdd(star:Star, x:Number, y:Number):void
+			{
+				var blobStar : BlobStar = star as BlobStar;
+				
+				x -= mBlobBitmap.bitmapData.width*0.5*blobStar.scale;
+				y -= mBlobBitmap.bitmapData.height*0.5*blobStar.scale;
+													
+				mat.identity();
+			    mat.scale(blobStar.scale, blobStar.scale);
+ 				mat.translate(x, y);
+				colTr.alphaMultiplier = blobStar.alpha;
+				mRenderBitmapData.draw(mBlobBitmap.bitmapData, mat, colTr, BlendMode.ADD, null, false);
+			}
+		}
+		
+		private function CreateBlobBitmapCaches() : void
+		{
+			mBlobBitmapScaleCache = new Array();
+						
+			var srcBmpData : BitmapData = mBlobBitmap.bitmapData;
+			
+			if (srcBmpData.width != srcBmpData.height)
+				throw "The Blob must be a square texture";
+				
+			const NUM_SCALE_LEVELS : int = 10;
+			
+			for (var c:int=1; c <= NUM_SCALE_LEVELS; ++c)
+			{
+				var scaledWidth : Number = srcBmpData.width * c * NUM_SCALE_LEVELS/100;
+				var intScaledWidth : int = Math.round(scaledWidth);
+				
+				var targetBmpData : BitmapData = new BitmapData(intScaledWidth, intScaledWidth, true, 0x00000000);
+				var scaleMat : Matrix = new Matrix();
+				scaleMat.identity();
+				scaleMat.scale(scaledWidth/srcBmpData.width, scaledWidth/srcBmpData.width);
+				targetBmpData.draw(srcBmpData, scaleMat, null, null, null, true);
+				mBlobBitmapScaleCache.push(targetBmpData);
+			}
+				
+			mBlobBitmapAlphaCache = new Array();
+			
+			for (c=0; c < 256; c++)
+			{
+				targetBmpData = new BitmapData(srcBmpData.width, srcBmpData.height, true, c << 24);
+				mBlobBitmapAlphaCache.push(targetBmpData);
+			}
+		}
+
+
+		private var mController : PlanetWarsController;
+		private var mCentralLoader : CentralLoader;
+
+		private var mWrapper : UIComponent;
+		private var mRenderBitmap : Bitmap;
+		private var mRenderBitmapData : BitmapData;
+
+		private var mStars : Array;
+		private var mBlobStars : Array;
+
+		private var mBlobBitmap : Bitmap;
+		private var mGalaxyDefinitionBitmap : Bitmap;
+
+		private var mStagesPanel : VBox;
+		private var mNumStarsLabel : Label;
+		private var mNumBlobStarsLabel : Label;
+
+		private var mAngleY : Number = 0;
+		private var mAngleYCam : Number = -0.5;
+		private var mAperture : Number = 1000;
+		private var mCamTranslation : Number3D = new Number3D(0, -0.7, 1.3);
+		private var mGalaxyCenter : Number3D = new Number3D(0.0, 0.0, 0.0);
+
+		private const MILKYWAY_PNG : String = "Assets/PlanetWars/Galaxy/MilkyWay.png";
+		private const BLOB_PNG : String = "Assets/PlanetWars/Galaxy/Blob.png";
+		
+		private var mBlobBitmapScaleCache : Array;
+		private var mBlobBitmapAlphaCache : Array;
+
+		private var mStageParams : Array = [ { maxIdx:300,  step:10, clampBrightness:0, alpha:0.3 },
+											 { maxIdx:3000, step:15, clampBrightness:50, alpha:0.10 },
+											 { maxIdx:-1,   step:4,  clampBrightness:50, alpha:0.15 } ]
+		]]>
+	</mx:Script>
+
+	<mx:Canvas id="myGalaxy" left="50" right="50" top="150" bottom="150" backgroundColor="#0" />
+
+</mx:Canvas>

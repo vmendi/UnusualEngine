@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 skinClass="GameView.Skins.DefaultPanelSkin" xmlns:Match="GameView.Match.*" xmlns:GameView="GameView.*" xmlns:status="com.facebook.data.status.*"
+		 currentState="Disabled" 
+		 preinitialize="PreinitializeHandler(event)">
+	
+	<s:states>
+		<s:State name="Wait" />
+		<s:State name="Disabled" />
+		<s:State name="LookingForMatch" />
+	</s:states>
+	
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import GameModel.RealtimeModel;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.FlexEvent;
+		
+		protected function PreinitializeHandler(event:FlexEvent):void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+			mRealtimeModel = mMainGameModel.TheRealtimeModel;
+			
+			BindingUtils.bindSetter(OnLookingForMatchChanged, mRealtimeModel, "LookingForMatch");
+			BindingUtils.bindSetter(OnConnectedChanged, mRealtimeModel, "IsConnected");
+		}
+		
+		private function OnConnectedChanged(connected : Boolean) : void
+		{
+			if (!connected)
+				currentState = "Disabled";
+			else
+				if (mRealtimeModel.LookingForMatch)
+					currentState = "LookingForMatch";
+				else
+					currentState = "Wait";
+		}
+		
+		private function OnLookingForMatchChanged(looking : Boolean) : void
+		{
+			if (looking)
+			{
+				GameMetrics.ReportEvent(GameMetrics.LOOK_FOR_MATCH);
+				currentState = "LookingForMatch";
+			}
+			else
+				currentState = "Wait";
+				
+		}
+
+		protected function MyFindMatchButton_clickHandler(event:MouseEvent):void
+		{
+			mRealtimeModel.SwitchLookingForMatch();
+		}
+		
+		[Bindable] 
+		private var mMainGameModel : MainGameModel;
+		
+		[Bindable] 
+		private var mRealtimeModel : RealtimeModel;
+
+	]]></fx:Script>
+	
+	<s:Label width="312" x="12" y="10" text="Haz clic en “Buscar Partido” y te buscaremos contrincante de habilidad similar a la tuya." styleName="whiteBoldBig"
+			 includeIn="Wait" />
+	<s:Label width="300" x="61" y="22" textAlign="center" text="Estás desconectado del juego..." styleName="whiteBoldBig" includeIn="Disabled" />
+	<s:Label x="121" y="36" text="Buscando partido..." styleName="whiteBoldBig" includeIn="LookingForMatch" />
+		
+	<mx:Image id="MyLoadingAnim" visible="true" x="211" y="20"
+			  source="@Embed(source='/Assets/General.swf', symbol='LoadingAnim')" scaleContent="false"
+			  includeIn="LookingForMatch" />
+	
+	<s:Button id="MyCancelButton" x="241" y="33"
+			  label="Cancelar" minWidth="70" skinClass="GameView.Skins.ButtonDarkGreySkin"
+			  includeIn="LookingForMatch"
+			  click="MyFindMatchButton_clickHandler(event)"/>
+	
+	<mx:Image id="MyFindMatchButton" visible="true" x="334" y="-29"
+			  alpha.Disabled="0.2" alpha.Wait="1"
+			  includeIn="Disabled, Wait"
+			  source="@Embed(source='/Assets/General.swf', symbol='BotonBuscarPartido')" scaleContent="false"
+			  click="MyFindMatchButton_clickHandler(event)"/>
+	
+</s:Panel>

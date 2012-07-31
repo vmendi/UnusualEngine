@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	addedToStage="OnCompleted(event)"
+	frameRate="30" width="1280" height="720" backgroundColor="#FF00FF" backgroundGradientColors=""
+	>
+	<mx:Script>
+		<![CDATA[
+			import org.wiiflash.events.ButtonEvent;
+			import utils.CentralLoader;
+			import org.wiiflash.events.WiimoteEvent;
+			import mx.controls.Alert;
+			import org.wiiflash.Wiimote;
+			import utils.FPSCounter;
+			import utils.UIComponentWrapper;
+
+			private function OnCompleted(event:Event):void
+			{
+				//stage.displayState = StageDisplayState.FULL_SCREEN;
+
+				var fpsCounter : FPSCounter = new FPSCounter();
+				addChild(new UIComponentWrapper(fpsCounter));
+
+				var centralLoader : CentralLoader = new CentralLoader(CentralLoader.BaseURL());
+				centralLoader.CreateQueue("UnusualBand");
+
+				mSoundControl = new SoundControl("Love", centralLoader);
+				addChild(new UIComponentWrapper(mSoundControl));
+
+				centralLoader.LoadQueue("UnusualBand", OnAllReady);
+
+				CreateAndConnectWiimote();
+			}
+
+			private function OnAllReady(event:Event):void
+			{
+				mScore3D = new Score3D(mSoundControl);
+				addChild(new UIComponentWrapper(mScore3D));
+
+				mSoundControl.StartPlaying(mScore3D);
+			}
+
+			private function CreateAndConnectWiimote():void
+			{
+				mWiimote = new Wiimote();
+
+				mWiimote.connect();
+				mWiimote.addEventListener(Event.CONNECT, OnWiimoteConnected);
+				mWiimote.addEventListener(IOErrorEvent.IO_ERROR, OnWiimoteConnectionError);
+
+				//mWiimote.addEventListener(WiimoteEvent.UPDATE, OnWiimoteUpdate);
+				mWiimote.addEventListener(ButtonEvent.A_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.B_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.C_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.DOWN_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.UP_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.LEFT_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.RIGHT_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.MINUS_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.HOME_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.PLUS_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.ONE_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.TWO_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.L_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.R_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.X_PRESS, OnButtonPressed);				
+				mWiimote.addEventListener(ButtonEvent.Y_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.Z_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.ZL_PRESS, OnButtonPressed);
+				mWiimote.addEventListener(ButtonEvent.ZR_PRESS, OnButtonPressed);
+				
+				mWiimote.addEventListener(WiimoteEvent.NUNCHUK_CONNECT, OnNunchukConnect);
+				mWiimote.addEventListener(WiimoteEvent.NUNCHUK_DISCONNECT, OnNunchukDisconnect);				
+				mWiimote.addEventListener(WiimoteEvent.CONTROLLER_CONNECT, OnClassicConnect);
+				mWiimote.addEventListener(WiimoteEvent.CONTROLLER_DISCONNECT, OnClassicDisconnect);
+				
+				mWiimote.classicController.addEventListener(ButtonEvent.A_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.B_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.C_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.DOWN_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.UP_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.LEFT_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.RIGHT_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.MINUS_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.HOME_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.PLUS_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.ONE_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.TWO_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.L_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.R_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.X_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.Y_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.Z_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.ZL_PRESS, OnButtonPressed);
+				mWiimote.classicController.addEventListener(ButtonEvent.ZR_PRESS, OnButtonPressed);
+			}
+			
+			private function OnClassicConnect(event:Event):void
+			{
+				trace("Classic connect");	
+			}
+			
+			private function OnClassicDisconnect(event:Event):void
+			{
+				trace("Classic disconnect");
+			}
+			
+			private function OnNunchukConnect(event:Event):void
+			{
+				trace("Nunchuk connect");
+			}
+			
+			private function OnNunchukDisconnect(event:Event):void
+			{
+				trace("Nunchuk connect");
+			}
+			
+			private function OnButtonPressed(event:ButtonEvent):void
+			{
+				trace(event.toString());
+			}
+
+			private function OnWiimoteUpdate(event:WiimoteEvent):void
+			{
+				if (mWiimote.hasClassicController)
+				{
+					if (mWiimote.classicController.a)
+						trace("A pressed");
+					if (mWiimote.classicController.b)
+						trace("B pressed");
+					if (mWiimote.classicController.x)
+						trace("X pressed");
+					if (mWiimote.classicController.y)
+						trace("Y pressed"); 
+					if (mWiimote.classicController.down)
+						trace("Down pressed");
+					if (mWiimote.classicController.up)
+						trace("Up pressed");
+					if (mWiimote.classicController.left)
+						trace("Left pressed");
+					if (mWiimote.classicController.right)
+						trace("Right pressed");
+				}
+			}
+
+			private function OnWiimoteConnectionError(event:Event):void
+			{
+				Alert.show("No se puede conectar con el Wiimote", "Error");
+			}
+
+			private function OnWiimoteConnected(event:Event):void
+			{
+				trace("Wiimote connected...");
+			}
+
+			private var mScore3D : Score3D;
+			private var mSoundControl : SoundControl;
+			private var mWiimote : Wiimote;
+
+		]]>
+	</mx:Script>
+</mx:Application>

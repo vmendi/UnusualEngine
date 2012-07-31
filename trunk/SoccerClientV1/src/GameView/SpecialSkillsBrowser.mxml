@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="150" height="150"
+		 creationComplete="CreationCompleteHandler(event)"
+		 >
+	
+	<s:layout><s:TileLayout columnWidth="46" rowHeight="46" />
+	</s:layout>
+		
+	<mx:Image visible="false" id="MySpecialSkillTemplate" includeInLayout="false"
+			  source="@Embed(source='/Assets/General.swf', symbol='SpecialSkills')" scaleContent="false" />
+	
+	<fx:Script><![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.core.IVisualElement;
+		import mx.events.FlexEvent;
+
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			// Queremos aparecer vacios
+			mSpecialSkillIDs = new ArrayCollection();
+			Refresh();
+		}
+		
+		public function set SpecialSkillIDs(value:ArrayCollection):void
+		{
+			mSpecialSkillIDs = value;			
+			Refresh();
+		}
+		
+		private function Refresh() : void
+		{
+			// No queremos usar removeAllElements porque se ve un frame en blanco
+			var elements : Array = new Array();						
+			for (var c:int=0; c < numElements; c++)
+				elements.push(getElementAt(c));
+									
+			for each (var val : int in mSpecialSkillIDs)
+			{
+				if (val < 1 || val > 9)
+					throw new Error("SpecialSkillID no esperado");
+			}
+		
+			for (var i:int=1; i <= 9; i++)
+			{
+				var cloned : Image = CreateImage();
+				
+				if (mSpecialSkillIDs.contains(i))
+					(cloned.content as MovieClip).gotoAndStop("SpecialSkill" + i);
+				else
+					(cloned.content as MovieClip).gotoAndStop("Empty");
+				
+				addElement(cloned);
+			}
+			
+			for each(var element : IVisualElement in elements)
+				removeElement(element);
+		}
+		
+		private function CreateImage() : Image
+		{
+			var cloned : Image = new Image();
+			cloned.source = MySpecialSkillTemplate.source;
+			cloned.scaleContent = false;
+			cloned.load();
+			
+			return cloned;
+		}
+
+		private var mSpecialSkillIDs : ArrayCollection;
+	
+	]]></fx:Script>
+</s:Group>

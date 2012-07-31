@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 skinClass="GameView.Skins.DefaultPanelSkin" xmlns:Match="GameView.Match.*" xmlns:GameView="GameView.*" xmlns:status="com.facebook.data.status.*"
+		 currentState="LaunchChallengePossible" 
+		 preinitialize="PreinitializeHandler(event)">
+	
+	<s:states>
+		<s:State name="Empty" />
+		<s:State name="LaunchChallengePossible" />
+		<s:State name="ChallengeSource" />
+		<s:State name="ChallengeTarget" />		
+	</s:states>
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+				
+		.alignToRight .subComponent {
+			text-align:right;
+			right:0;
+		}				
+	</fx:Style>
+	
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import GameModel.RealtimeModel;
+		import GameModel.RealtimePlayer;
+		import GameModel.RoomModel;
+		
+		import GameView.HierarchyUtils;
+		import GameView.MainView;
+		import GameView.Skins.ButtonGreySkin;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.FlexEvent;
+
+		// Solo se llama 1 vez
+		protected function PreinitializeHandler(event:FlexEvent):void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+			mRealtimeModel = mMainGameModel.TheRealtimeModel;
+			
+			BindingUtils.bindSetter(OnRoomModelChanged, mMainGameModel, [ "TheRealtimeModel", "TheRoomModel" ]);
+			
+			BindingUtils.bindSetter(OnSelectedChanged, mMainGameModel, [ "TheRealtimeModel", "TheRoomModel", "Selected" ] );
+			BindingUtils.bindSetter(OnIsSelectedChallengeTargetChanged, mMainGameModel, [ "TheRealtimeModel", "TheRoomModel", "Selected", "IsChallengeTarget"]);
+			BindingUtils.bindSetter(OnIsSelectedChallengeSourceChanged, mMainGameModel, [ "TheRealtimeModel", "TheRoomModel", "Selected", "IsChallengeSource"]);
+		}
+		
+		protected function OnRoomModelChanged(theRoomModel : RoomModel) : void
+		{
+			mRoomModel = theRoomModel;
+		}
+
+		private function OnIsSelectedChallengeTargetChanged(isSelectedChallengeTarget: Boolean) : void
+		{
+			if (isSelectedChallengeTarget)
+				currentState = "ChallengeTarget";
+		}
+		
+		private function OnIsSelectedChallengeSourceChanged(isSelectedChallengeSource: Boolean) : void
+		{
+			if (isSelectedChallengeSource)
+				currentState = "ChallengeSource";
+		}
+		
+		private function OnSelectedChanged(selected : RealtimePlayer) : void
+		{
+			if (selected == null)
+				currentState = "Empty";
+			else
+			if (selected.IsChallengeSource)
+				currentState = "ChallengeSource";
+			else
+			if (selected.IsChallengeTarget)
+				currentState = "ChallengeTarget";
+			else
+				currentState = "LaunchChallengePossible";			
+		}
+				
+		protected function LaunchChallenge_clickHandler(event:MouseEvent):void
+		{
+			mRoomModel.Challenge(mRoomModel.Selected, MyChallengeMsgInput.text, 
+								 MyMatchLengthSelector.SelectedItem as int, MyTurnLengthSelector.SelectedItem as int);
+		}
+		
+		protected function MyAcceptChallenge_clickHandler(event:MouseEvent):void
+		{
+			mRoomModel.AcceptSelectedChallengeMatch(null);	
+		}
+		
+		[Bindable] private var mMainGameModel : MainGameModel;
+		[Bindable] private var mRoomModel : RoomModel;
+		[Bindable] private var mRealtimeModel : RealtimeModel;
+	]]></fx:Script>
+
+	<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='MatchDetailLeyenda')" fillMode="clip" x="118" y="47" />
+	
+	<Match:TeamDetailsPanel top="5" left="12"  TheRealtimePlayer="{mRealtimeModel.LocalRealtimePlayer}"/>
+	<Match:TeamDetailsPanel top="5" right="12" TheRealtimePlayer="{mRoomModel.Selected}" currentState="alignToRight" styleName="alignToRight"/>
+	
+	<s:Label width="110" x="185" y="54" text="¡SELECCIONA UN CONTRINCANTE!" includeIn="Empty" styleName="whiteBoldMedium" textAlign="center" />
+			
+	<s:Group left="25" right="25" top="310" includeIn="LaunchChallengePossible">
+		<s:Group>
+			<s:layout><s:VerticalLayout horizontalAlign="center" /></s:layout>
+			<s:Label text="DURACIÓN PARTIDO (Min)" styleName="whiteBoldMedium" />
+			<GameView:OptionsSelector id="MyMatchLengthSelector" width="110" DataOptions="{MainGameModel.POSSIBLE_MATCH_LENGTH_MINUTES}" />	
+		</s:Group>
+		<s:Group right="0">
+			<s:layout><s:VerticalLayout horizontalAlign="center" /></s:layout>
+			<s:Label text="DURACIÓN TURNO (Seg)" styleName="whiteBoldMedium" />
+			<GameView:OptionsSelector id="MyTurnLengthSelector" width="110" DataOptions="{MainGameModel.POSSIBLE_TURN_LENGTH_SECONDS}" />	
+		</s:Group>
+		
+		<GameView:PromptingTextInput left="0" right="0" top="60" 
+			skinClass="GameView.Skins.PromptingTextInputSkin" prompt="Escribe aquí un mensaje a tu oponente..."
+			id="MyChallengeMsgInput" text="" maxChars="50"/>
+		
+		<s:Button left="65" right="65" top="95"
+				  skinClass="GameView.Skins.ButtonGreySkin" label="LANZAR RETO" click="LaunchChallenge_clickHandler(event)" />
+	</s:Group>
+
+	<s:Group left="20" right="20" top="310" includeIn="ChallengeSource">
+		<s:Group>
+			<s:layout><s:VerticalLayout horizontalAlign="center" /></s:layout>
+			<s:Label width="265" text="¡{mRoomModel.Selected.Name} te ha enviado un reto!" styleName="whiteBoldBig" textAlign="center" />
+			<s:Label width="265" maxDisplayedLines="2" text="{mRoomModel.SelectedChallenge.Message}" styleName="whiteArial" textAlign="center" />
+		</s:Group>
+		
+		<s:Label left="0" top="65" text="DURACIÓN PARTIDO: {mRoomModel.SelectedChallenge.MatchLengthSeconds/60}" styleName="whiteBoldBig" textAlign="left" />
+		<s:Label right="0" top="65" text="DURACIÓN TURNO: {mRoomModel.SelectedChallenge.TurnLengthSeconds}" styleName="whiteBoldBig" />
+		
+		<s:Button left="65" right="65" top="95"
+				  skinClass="GameView.Skins.ButtonGreySkin" label="ACEPTAR RETO" click="MyAcceptChallenge_clickHandler(event)" textAlignLast="right" />
+	</s:Group>	
+	
+	<s:Group left="25" right="25" top="340" includeIn="ChallengeTarget">
+		<s:Label left="0" right="0" text="RETO ENVIADO" styleName="whiteBoldVeryBig" textAlign="center" />
+	</s:Group>
+
+</s:Panel>

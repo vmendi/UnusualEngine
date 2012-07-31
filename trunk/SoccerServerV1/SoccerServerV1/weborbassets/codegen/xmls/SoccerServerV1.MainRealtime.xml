@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespaces>
+  <runtime path="C:/Users/vmendi/Documents/UnusualSVN/UnusualEngine/trunk/SoccerServerV1/SoccerServerV1/" weborbRootURL="http://localhost/SoccerServerV1" />
+  <namespace name="Weborb.Util" fullname="Weborb.Util">
+    <datatype name="KeyValuePair" fullname="Weborb.Util.KeyValuePair" typeNamespace="Weborb.Util">
+      <field name="key" type="String" fulltype="String" nativetype="String" />
+      <field name="value" type="Object" fulltype="Object" nativetype="Object" />
+    </datatype>
+  </namespace>
+  <namespace name="SoccerServerV1" fullname="SoccerServerV1">
+    <datatype name="Match" fullname="SoccerServerV1.Match" typeNamespace="SoccerServerV1">
+      <field name="MatchID" type="int" fulltype="int" nativetype="int" />
+      <const name="PLAYER_1" type="String" fulltype="String" nativetype="String" value="player1" />
+      <const name="PLAYER_2" type="String" fulltype="String" nativetype="String" value="player2" />
+    </datatype>
+    <datatype name="MatchResult" fullname="SoccerServerV1.MatchResult" typeNamespace="SoccerServerV1">
+      <field name="WasAbandoned" type="Boolean" fulltype="Boolean" nativetype="bool" />
+      <field name="ResultPlayer1" type="MatchResultPlayer" fulltype="SoccerServerV1.MatchResultPlayer" nativetype="SoccerServerV1.MatchResultPlayer" typeNamespace="SoccerServerV1" />
+      <field name="ResultPlayer2" type="MatchResultPlayer" fulltype="SoccerServerV1.MatchResultPlayer" nativetype="SoccerServerV1.MatchResultPlayer" typeNamespace="SoccerServerV1" />
+    </datatype>
+    <datatype name="MatchResultPlayer" fullname="SoccerServerV1.MatchResultPlayer" typeNamespace="SoccerServerV1">
+      <field name="Name" type="String" fulltype="String" nativetype="String" />
+      <field name="PredefinedTeamName" type="String" fulltype="String" nativetype="String" />
+      <field name="Goals" type="int" fulltype="int" nativetype="int" />
+      <field name="DiffXP" type="int" fulltype="int" nativetype="int" />
+      <field name="DiffSkillPoints" type="int" fulltype="int" nativetype="int" />
+      <field name="DiffTrueSkill" type="int" fulltype="int" nativetype="int" />
+    </datatype>
+    <service name="MainRealtime" fullname="SoccerServerV1.MainRealtime" namespace="SoccerServerV1" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+      <method name="AcceptMatch" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="opponentClientID" type="int" nativetype="int" />
+      </method>
+      <method name="addChildScope" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="addListener" type="void" nativetype="Void" containsvalues="0">
+        <arg name="listener" type="Object" nativetype="Object" />
+      </method>
+      <method name="addScheduledJob" type="String" nativetype="String" containsvalues="0">
+        <arg name="interval" type="int" nativetype="int" />
+        <arg name="job" type="Object" nativetype="Object" />
+      </method>
+      <method name="addScheduledOnceJob" type="String" nativetype="String" containsvalues="0">
+        <arg name="date" type="Date" nativetype="DateTime" />
+        <arg name="job" type="Object" nativetype="Object" />
+      </method>
+      <method name="appConnect" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="conn" type="Object" nativetype="Object" />
+        <arg name="parms" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="appDisconnect" type="void" nativetype="Void" containsvalues="0">
+        <arg name="conn" type="Object" nativetype="Object" />
+      </method>
+      <method name="appJoin" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="client" type="Object" nativetype="Object" />
+        <arg name="app" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="appLeave" type="void" nativetype="Void" containsvalues="0">
+        <arg name="client" type="Object" nativetype="Object" />
+        <arg name="app" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="appStart" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="app" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="appStop" type="void" nativetype="Void" containsvalues="0">
+        <arg name="app" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="cancelGhostConnectionsCleanup" type="void" nativetype="Void" containsvalues="0" />
+      <method name="Challenge" type="int" nativetype="int" containsvalues="0">
+        <arg name="clientID" type="int" nativetype="int" />
+        <arg name="msg" type="String" nativetype="String" />
+        <arg name="matchLengthSeconds" type="int" nativetype="int" />
+        <arg name="turnLengthSeconds" type="int" nativetype="int" />
+      </method>
+      <method name="clearSharedObjects" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="ClientEndShoot" type="void" nativetype="Void" containsvalues="0" />
+      <method name="connect" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="conn" type="Object" nativetype="Object" />
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="parms" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="createChildScope" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="createSharedObject" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+        <arg name="persistent" type="Boolean" nativetype="bool" />
+      </method>
+      <method name="disconnect" type="void" nativetype="Void" containsvalues="0">
+        <arg name="conn" type="Object" nativetype="Object" />
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="getAttribute" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="getAttributeNames" type="ArrayCollection" nativetype="ICollection&lt;String&gt;" containsvalues="0" />
+      <method name="getAttributes" type="ArrayCollection" nativetype="IDictionary&lt;String,Object&gt;" containsvalues="0" />
+      <method name="getBroadcastStream" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="getBroadcastStreamNames" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="getChildScope" type="ArrayCollection" nativetype="Object[]" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="getChildScopeNames" type="Object" nativetype="Object" containsvalues="0" />
+      <method name="getClients" type="ArrayCollection" nativetype="ICollection&lt;Object&gt;" containsvalues="0" />
+      <method name="getClientTTL" type="Number" nativetype="long" containsvalues="0" />
+      <method name="getConnectionsIter" type="Object" nativetype="Object" containsvalues="0" />
+      <method name="getConnectionsSyncRoot" type="Object" nativetype="Object" containsvalues="0" />
+      <method name="getContext" type="Object" nativetype="Object" containsvalues="0" />
+      <method name="getDepth" type="int" nativetype="int" containsvalues="0" />
+      <method name="getGhostConnsCleanupPeriod" type="int" nativetype="int" containsvalues="0" />
+      <method name="getListeners" type="ArrayCollection" nativetype="IList&lt;Object&gt;" containsvalues="0" />
+      <method name="getMaxPingRetryCount" type="int" nativetype="int" containsvalues="0" />
+      <method name="getName" type="String" nativetype="String" containsvalues="0" />
+      <method name="getOnDemandStream" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="getParent" type="ArrayCollection" nativetype="Object[]" containsvalues="0" />
+      <method name="getPath" type="String" nativetype="String" containsvalues="0" />
+      <method name="getResource" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="path" type="String" nativetype="String" />
+      </method>
+      <method name="getResources" type="ArrayCollection" nativetype="Object[]" containsvalues="0">
+        <arg name="pattern" type="String" nativetype="String" />
+      </method>
+      <method name="getScheduledJobNames" type="ArrayCollection" nativetype="List&lt;String&gt;" containsvalues="0" />
+      <method name="getScope" type="ArrayCollection" nativetype="Object[]" containsvalues="0" />
+      <method name="getSharedObject" type="ArrayCollection" nativetype="Object[]" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="getSharedObjectNames" type="ArrayCollection" nativetype="IList&lt;String&gt;" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="getStreamLength" type="Number" nativetype="double" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="getStreamPlaybackSecurity" type="ArrayCollection" nativetype="List&lt;Object&gt;" containsvalues="0" />
+      <method name="getStreamPublishSecurity" type="ArrayCollection" nativetype="List&lt;Object&gt;" containsvalues="0" />
+      <method name="getSubscriberStream" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="handleEvent" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="evt" type="Object" nativetype="Object" />
+      </method>
+      <method name="hasAttribute" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="hasBroadcastStream" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="hasChildScope" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="hasOnDemandStream" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="hasParent" type="Boolean" nativetype="bool" containsvalues="0" />
+      <method name="hasSharedObject" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="join" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="client" type="Object" nativetype="Object" />
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="leave" type="void" nativetype="Void" containsvalues="0">
+        <arg name="client" type="Object" nativetype="Object" />
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="LogInToDefaultRoom" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="facebookSession" type="String" nativetype="String" />
+      </method>
+      <method name="lookupConnections" type="ArrayCollection" nativetype="ICollection&lt;Object&gt;" containsvalues="0">
+        <arg name="client" type="Object" nativetype="Object" />
+      </method>
+      <method name="measureBandwidth" type="void" nativetype="Void" containsvalues="0" />
+      <method name="NewMessageToRoom" type="void" nativetype="Void" containsvalues="0">
+        <arg name="msg" type="String" nativetype="String" />
+      </method>
+      <method name="OnAbort" type="void" nativetype="Void" containsvalues="0" />
+      <method name="OnFinishMatch" type="MatchResult" nativetype="SoccerServerV1.MatchResult" containsvalues="0">
+        <arg name="realtimeMatch" type="Match" nativetype="SoccerServerV1.Match" />
+      </method>
+      <method name="OnGoalScored" type="void" nativetype="Void" containsvalues="0">
+        <arg name="scoredPlayer" type="int" nativetype="int" />
+        <arg name="bValid" type="Boolean" nativetype="bool" />
+      </method>
+      <method name="OnPlaceBall" type="void" nativetype="Void" containsvalues="0">
+        <arg name="capID" type="int" nativetype="int" />
+        <arg name="dirX" type="Number" nativetype="float" />
+        <arg name="dirY" type="Number" nativetype="float" />
+      </method>
+      <method name="OnPlayerReady" type="void" nativetype="Void" containsvalues="0" />
+      <method name="OnPosCap" type="void" nativetype="Void" containsvalues="0">
+        <arg name="capID" type="int" nativetype="int" />
+        <arg name="posX" type="Number" nativetype="float" />
+        <arg name="posY" type="Number" nativetype="float" />
+      </method>
+      <method name="OnRequestData" type="void" nativetype="Void" containsvalues="0" />
+      <method name="OnSecondTick" type="void" nativetype="Void" containsvalues="0" />
+      <method name="OnServerShoot" type="void" nativetype="Void" containsvalues="0">
+        <arg name="capID" type="int" nativetype="int" />
+        <arg name="dirX" type="Number" nativetype="float" />
+        <arg name="dirY" type="Number" nativetype="float" />
+        <arg name="force" type="Number" nativetype="float" />
+      </method>
+      <method name="OnServerShutdown" type="void" nativetype="Void" containsvalues="0" />
+      <method name="OnServerTimeout" type="void" nativetype="Void" containsvalues="0" />
+      <method name="OnTest" type="void" nativetype="Void" containsvalues="0">
+        <arg name="a" type="int" nativetype="int" />
+        <arg name="b" type="Number" nativetype="float" />
+      </method>
+      <method name="OnTiroPuerta" type="void" nativetype="Void" containsvalues="0" />
+      <method name="OnUseSkill" type="void" nativetype="Void" containsvalues="0">
+        <arg name="idSkill" type="int" nativetype="int" />
+      </method>
+      <method name="registerStreamPlaybackSecurity" type="void" nativetype="Void" containsvalues="0">
+        <arg name="handler" type="Object" nativetype="Object" />
+      </method>
+      <method name="registerStreamPublishSecurity" type="void" nativetype="Void" containsvalues="0">
+        <arg name="handler" type="Object" nativetype="Object" />
+      </method>
+      <method name="removeAttribute" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="removeAttributes" type="void" nativetype="Void" containsvalues="0" />
+      <method name="removeChildScope" type="void" nativetype="Void" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="removeListener" type="void" nativetype="Void" containsvalues="0">
+        <arg name="listener" type="Object" nativetype="Object" />
+      </method>
+      <method name="removeScheduledJob" type="void" nativetype="Void" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+      </method>
+      <method name="roomConnect" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="conn" type="Object" nativetype="Object" />
+        <arg name="parms" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="roomDisconnect" type="void" nativetype="Void" containsvalues="0">
+        <arg name="conn" type="Object" nativetype="Object" />
+      </method>
+      <method name="roomJoin" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="client" type="Object" nativetype="Object" />
+        <arg name="room" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="roomLeave" type="void" nativetype="Void" containsvalues="0">
+        <arg name="client" type="Object" nativetype="Object" />
+        <arg name="room" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="roomStart" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="room" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="roomStop" type="void" nativetype="Void" containsvalues="0">
+        <arg name="room" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="scheduleGhostConnectionsCleanup" type="void" nativetype="Void" containsvalues="0" />
+      <method name="serviceCall" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="conn" type="Object" nativetype="Object" />
+        <arg name="call" type="Object" nativetype="Object" />
+      </method>
+      <method name="setAttribute" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="name" type="String" nativetype="String" />
+        <arg name="value" type="Object" nativetype="Object" />
+      </method>
+      <method name="setAttributes" type="void" nativetype="Void" containsvalues="0">
+        <arg name="values" type="ArrayCollection" nativetype="IDictionary&lt;String,Object&gt;" />
+      </method>
+      <method name="setCanCallService" type="void" nativetype="Void" containsvalues="0">
+        <arg name="canCallService" type="Boolean" nativetype="bool" />
+      </method>
+      <method name="setCanConnect" type="void" nativetype="Void" containsvalues="0">
+        <arg name="canConnect" type="Boolean" nativetype="bool" />
+      </method>
+      <method name="setCanStart" type="void" nativetype="Void" containsvalues="0">
+        <arg name="canStart" type="Boolean" nativetype="bool" />
+      </method>
+      <method name="setClientTTL" type="void" nativetype="Void" containsvalues="0">
+        <arg name="clientTTL" type="int" nativetype="int" />
+      </method>
+      <method name="setGhostConnsCleanupPeriod" type="void" nativetype="Void" containsvalues="0">
+        <arg name="ghostConnsCleanupPeriod" type="int" nativetype="int" />
+      </method>
+      <method name="setJoin" type="void" nativetype="Void" containsvalues="0">
+        <arg name="canJoin" type="Boolean" nativetype="bool" />
+      </method>
+      <method name="setMaxPingRetryCount" type="void" nativetype="Void" containsvalues="0">
+        <arg name="newMaxPingRetryCount" type="int" nativetype="int" />
+      </method>
+      <method name="setScope" type="void" nativetype="Void" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="start" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="stop" type="void" nativetype="Void" containsvalues="0">
+        <arg name="scope" type="ArrayCollection" nativetype="Object[]" />
+      </method>
+      <method name="unregisterStreamPlaybackSecurity" type="void" nativetype="Void" containsvalues="0">
+        <arg name="handler" type="Object" nativetype="Object" />
+      </method>
+      <method name="unregisterStreamPublishSecurity" type="void" nativetype="Void" containsvalues="0">
+        <arg name="handler" type="Object" nativetype="Object" />
+      </method>
+    </service>
+  </namespace>
+</namespaces>

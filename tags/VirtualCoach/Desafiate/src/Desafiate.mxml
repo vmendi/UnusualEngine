@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute" backgroundColor="0x000000" backgroundAlpha="0" backgroundGradientColors="[]"
+				frameRate="30"
+				width="960" height="554"
+				addedToStage="OnAddedToStage();" preloader="ProgressPreloader"
+				horizontalScrollPolicy="off" verticalScrollPolicy="off"
+				clipContent="true">
+
+	<mx:Script>
+		<![CDATA[
+		import utils.CentralLoader;
+		import mx.controls.Alert;
+		import utils.FPSCounter;
+		import utils.KeyboardHandler;
+
+		import flash.events.Event;
+
+ 
+		protected function OnAddedToStage() : void
+		{
+			KeyboardHandler.Init(stage);
+			//FPSCounter.Init(stage, new Point(0, 0));
+
+			IsoEngine.BaseUrl = CentralLoader.BaseURL();
+			mIsoEngine = new IsoEngine(this);
+
+			// Un único punto de control de error de carga. Si ocurre, adios!
+			mIsoEngine.TheCentralLoader.addEventListener("LoadError", OnLoadError);
+
+			// Setup de la barra de progreso
+			SetupProgressBar();
+
+			mIsoEngine.Load("Maps/Desafiate/Recepcion.xml");
+		}
+
+		private function SetupProgressBar() : void
+		{
+			myProgressBar.x = this.width * 0.5;
+			myProgressBar.y = this.height * 0.5;
+			(myProgressBar.content as MovieClip).gotoAndStop(0);
+
+			mIsoEngine.TheCentralLoader.addEventListener("LoadStartSWF", OnLoadStart);
+			mIsoEngine.TheCentralLoader.addEventListener("LoadProgressSWF", OnProgress);
+			mIsoEngine.TheCentralLoader.addEventListener("LoadCompleteSWF", OnLoadComplete);
+		}
+
+		private function OnLoadComplete(event:Event) : void
+		{
+			myProgressBar.visible = false;
+
+			// Setup del cache. Aquí nos llamaran multiples veces, pero se encarga el cache de evitar duplicados
+			//mIsoEngine.TheCentralLoader.AddToCache("Assets/IsoRacer/F430.swf");
+		}
+
+		private function OnLoadStart(event:Event):void
+		{
+			myProgressBar.visible = true;
+			(myProgressBar.content as MovieClip).gotoAndStop(0);
+		}
+
+		private function OnProgress(event:ProgressEvent) : void
+		{
+			var percent : int = Math.floor((event.bytesLoaded/event.bytesTotal*100));
+			(myProgressBar.content as MovieClip).gotoAndStop(percent);
+
+			//trace(event.bytesLoaded + " of " + event.bytesTotal + "; " + percent + "%");
+		}
+
+		private function OnLoadError(event:ErrorEvent):void
+		{
+			Alert.show(event.text, "Error de carga...", Alert.OK);
+		}
+
+		private var mIsoEngine : IsoEngine;
+		]]>
+	</mx:Script>
+
+	<!-- Añadimos un componente que fuerza a que el clipping este siempre activo -->
+	<mx:UIComponent x="-1" y="-1" />
+	<mx:SWFLoader id="myProgressBar" scaleContent="false" source="@Embed(source='Embedded/Loading.swf', symbol='mcLoading')"/>
+
+</mx:Application>

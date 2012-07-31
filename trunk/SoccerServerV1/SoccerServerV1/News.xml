@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+        <title>News</title>
+        <description>Esta es la descripción del canal</description>
+        <link>http://apps.facebook.com/mahouligachapas</link>
+        <lastBuildDate>Mon, 06 Sep 2010 00:01:00 +0000 </lastBuildDate>
+        <pubDate>Mon, 06 Sep 2009 16:45:00 +0000 </pubDate>
+		    <defaultShowTime>10</defaultShowTime>
+		 
+        <!--
+          <item>
+                  <title>Título</title>
+                  <description>Cambio en el portero: ahora vuelve a su posición después de un saque de puerta.</description>
+                  <link>http://www.wikipedia.org/</link>
+                  <guid>GUID01</guid>
+                  <pubDate>Mon, 06 Sep 2009 16:45:00 +0000 </pubDate>
+				          <showTime>5</showTime>
+          </item>
+        -->
+  
+</channel>
+</rss>

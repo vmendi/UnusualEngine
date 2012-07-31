@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 creationComplete="CreationCompleteHandler(event)"
+		 >
+	
+	<fx:Script>
+		<![CDATA[
+			import GameModel.LoginModel;
+			import GameModel.MainGameModel;
+			
+			import SoccerServerV1.enum.VALID_NAME;
+			
+			import flash.net.sendToURL;
+			
+			import mx.events.FlexEvent;
+			import mx.rpc.Responder;
+			import mx.rpc.events.ResultEvent;
+			
+			import spark.events.IndexChangeEvent;
+			import spark.events.TextOperationEvent;
+			
+			protected function CreationCompleteHandler(event:FlexEvent):void
+			{
+				mMainGameModel = SoccerClientV1.GetMainGameModel();
+				mLoginModel = mMainGameModel.TheLoginModel; 
+				
+				MyPredefinedTeamList.addEventListener(IndexChangeEvent.CHANGE, OnMyPredefinedTeamListSelectionChanged);
+				RefreshValidity(mLoginModel.IsValidTeamNameLastResult);
+			}
+			
+			protected function OnMyPredefinedTeamListSelectionChanged(e:IndexChangeEvent):void
+			{
+				RefreshValidity(mLoginModel.IsValidTeamNameLastResult);
+			}
+			
+			private function RefreshValidity(validity : String = null) : void
+			{
+				mWaitingForNameValidity = false;
+				
+				if (MyPredefinedTeamList.selectedIndex != -1)
+				{
+					if (validity == VALID_NAME.VALID)
+						SetNameValidity(true, "Nombre disponible");	
+					else if (validity == VALID_NAME.EMPTY)
+						SetNameValidity(false, "Por favor, escribe tu nombre de jugador");	
+					else if (validity == VALID_NAME.DUPLICATED)
+						SetNameValidity(false, "Nombre no disponible");	
+					else if (validity == VALID_NAME.INAPPROPIATE)
+						SetNameValidity(false, "Nombre inapropiado");
+					else if (validity == VALID_NAME.TOO_SHORT)
+						SetNameValidity(false, "Nombre demasiado corto");
+					else if (validity == VALID_NAME.WHITE_SPACE_TRIM)
+						SetNameValidity(false, "Nombre no puede empezar o acabar en blanco");
+					else if (validity == VALID_NAME.TOO_MANY_WHITESPACES)
+						SetNameValidity(false, "Demasiados espacios en blanco (máximo 3)");
+					else
+						SetNameValidity(false, "Nombre invalido");
+				}
+				else
+				{
+					SetNameValidity(false, "Antes de nada, selecciona un equipo");
+				}
+			}
+			
+			private function SetNameValidity(valid : Boolean, text : String) : void
+			{
+				if (valid)
+					MyValidityLabel.setStyle("color", "#0DBF00");
+				else
+					MyValidityLabel.setStyle("color", "#E26261");
+				
+				MyValidityLabel.text = text;
+				mNameValidity = valid;
+				
+				SetValidity();
+			}
+			
+			private function SetValidity() : void
+			{
+				if (mNameValidity && mAgeValidity)
+					MyButtonNext.enabled = true;
+				else
+					MyButtonNext.enabled = false;
+			}
+			
+			protected function MyRadioButtonYes_changeHandler(event:Event):void
+			{
+				mAgeValidity = true;
+				SetValidity();
+			}
+			
+			protected function MyRadioButtonNo_changeHandler(event:Event):void
+			{
+				mAgeValidity = false;
+				SetValidity();
+			} 
+			
+			protected function MyTeamNameInput_changeHandler(event:TextOperationEvent):void
+			{
+				mWaitingForNameValidity = true;
+				
+				mLoginModel.IsValidTeamName(MyTeamNameInput.text, RefreshValidity);
+			}
+			
+			protected function MyButtonNext_clickHandler(event:MouseEvent):void
+			{
+				if (!mWaitingForNameValidity)
+				{
+					GameMetrics.ReportEvent(GameMetrics.TEAM_SELECTED);
+					mMainGameModel.TheTeamModel.CreateTeam(MyTeamNameInput.text, 
+														   mMainGameModel.ThePredefinedTeamsModel.GetIDByName(MyPredefinedTeamList.selectedItem), 
+													   	   OnTeamCreatedResponse, OnTeamCreationFailed);
+				}			
+			}
+			
+			private function OnTeamCreationFailed() : void
+			{
+				RefreshValidity(VALID_NAME.DUPLICATED);
+			}
+			
+			private function OnTeamCreatedResponse():void
+			{
+				(HierarchyUtils.FindParentOfType(this, getQualifiedClassName(MainView)) as MainView).currentState = "Ranking";
+			}
+			
+			[Bindable] private var mMainGameModel : MainGameModel;
+			[Bindable] private var mLoginModel : LoginModel;
+			
+			private var mWaitingForNameValidity : Boolean = false;
+			private var mNameValidity : Boolean = false;
+			private var mAgeValidity : Boolean = false;
+		]]>
+	</fx:Script>
+	
+	<fx:Style source="styles.css" />
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		
+		.headerBox {
+			font-family:MyFontHelveticaNeueLTBold;
+			font-size:15pt;
+			font-weight:bold;
+			color:#FFFFFF;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<s:DropShadowFilter id="MyTextDropShadowFilter" angle="270" distance="1" blurX="1" blurY="1" color="0x444444" />
+	</fx:Declarations>	
+	
+	<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='LoginBg')" fillMode="clip"/>
+	
+	<s:Panel skinClass="GameView.Skins.DefaultPanelSkin" x="352" y="40" width="365" height="550" title="1. SELECCIONA TU EQUIPO">
+		<s:List width="365" height="260" id="MyPredefinedTeamList" 
+				top="0" left="0"
+				dataProvider="{mMainGameModel.ThePredefinedTeamsModel.PredefinedTeamNames}"
+				itemRenderer="GameView.PredefinedTeamItem"
+				skinClass="GameView.Skins.DefaultListSkin" tabEnabled="false" tabFocusEnabled="false">
+		</s:List>	
+		
+		<s:Rect id="tbFill" x="0" y="260" width="100%" height="27">
+			<s:fill>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry color="#fe0001" ratio="0" alpha="1"/>
+					<s:GradientEntry color="#8c1304" ratio="1.0" alpha="1"/>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		<s:Label id="myStep2Label" maxDisplayedLines="1"
+				 x="10" y="260" width="350" height="27"
+				 verticalAlign="middle" textAlign="start" styleName="headerBox" filters="{MyTextDropShadowFilter}"
+				 text="2. ELIGE TU NOMBRE DE ENTRENADOR"></s:Label>
+		
+		<s:Label id="myStep2Txt" x="10" y="295" width="350"
+				 verticalAlign="middle" textAlign="center" styleName="whiteBoldBig"
+				 text="Este será el nombre que aparecerá en el juego, el que verán los otros jugadores. De esta forma tu nombre de usuario de Facebook permanecerá oculto."></s:Label>
+		
+		<s:BitmapImage x="0" bottom="0" source="@Embed(source='/Assets/General.swf', symbol='LoginBottomBg')" fillMode="clip" />
+		<s:TextInput x="82" y="357" change="MyTeamNameInput_changeHandler(event)" id="MyTeamNameInput" width="200" styleName="blackBoldMediumHN" maxChars="30"/>
+		<s:Label x="32" y="386" width="300" color="#0DBF00" height="40" id="MyValidityLabel" styleName="whiteBoldBig" textAlign="center"/>
+		
+		<s:Rect id="tbFill2" x="0" y="410" width="100%" height="27">
+			<s:fill>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry color="#fe0001" ratio="0" alpha="1"/>
+					<s:GradientEntry color="#8c1304" ratio="1.0" alpha="1"/>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		<s:Label id="myStep3Label" maxDisplayedLines="1"
+				 x="10" y="410" width="350" height="27"
+				 verticalAlign="middle" textAlign="start" styleName="headerBox" filters="{MyTextDropShadowFilter}"
+				 text="3. ACEPTA LAS CONDICIONES LEGALES"></s:Label>
+		
+		<s:Label id="myStep3Txt" x="10" y="442" width="350"
+				 verticalAlign="middle" textAlign="center" styleName="whiteBoldBig"
+				 text="Para jugar a este juego debes ser mayor de edad."></s:Label>
+		
+		<s:Label id="myStep4Txt" x="100" y="466"
+				 verticalAlign="middle" textAlign="center" styleName="whiteBoldBig"
+				 text="¿Lo eres?"></s:Label>
+		
+		<s:RadioButton x="170" y="462" id="myRadioButtonYes" change="MyRadioButtonYes_changeHandler(event)" label="Sí" groupName="SoyMayorEdad" styleName="whiteBoldBig"/>
+		<s:RadioButton x="210" y="462" id="myRadioButtonNo" change="MyRadioButtonNo_changeHandler(event)" label="No" groupName="SoyMayorEdad" styleName="whiteBoldBig"/>
+		
+		<s:Button id="MyButtonNext" label="CONTINUAR" click="MyButtonNext_clickHandler(event)" x="98" y="492" width="160" height="24" skinClass="GameView.Skins.ButtonGreySkin"/>
+	</s:Panel>
+
+</s:Group>
+
+

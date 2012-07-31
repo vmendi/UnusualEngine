@@ -1,0 +1,179 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>WebORB-enabled Web Site</Name>
+    <Description>WebORB-enabled Web Site</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>Web</ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>WebORB-enabled Web Site</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+	<Icon Package="{349c5850-65df-11da-9384-00065b846f21}" ID="9001" />
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="ProjectName.webproj" File="ProjectName.webproj" ReplaceParameters="true">
+	  <Folder Name="App_Code" TargetFolderName="App_Code">
+        <ProjectItem ReplaceParameters="true" TargetFileName="SampleService.cs">SampleService.cs</ProjectItem>
+      </Folder>
+      <Folder Name="App_Data" TargetFolderName="App_Data" />
+      <Folder Name="Applications" TargetFolderName="Applications">
+        <Folder Name="DataService" TargetFolderName="DataService">
+          <ProjectItem ReplaceParameters="true" TargetFileName="app.config">app.config</ProjectItem>
+        </Folder>
+        <Folder Name="DataServiceCodegen" TargetFolderName="DataServiceCodegen">
+          <ProjectItem ReplaceParameters="true" TargetFileName="app.config">app.config</ProjectItem>
+        </Folder>
+        <Folder Name="default" TargetFolderName="default" />
+        <Folder Name="MessagingService" TargetFolderName="MessagingService">
+          <ProjectItem ReplaceParameters="true" TargetFileName="app.config">app.config</ProjectItem>
+        </Folder>
+      </Folder>
+      <Folder Name="bin" TargetFolderName="bin">
+        <ProjectItem ReplaceParameters="false" TargetFileName="weborb.dll">weborb.dll</ProjectItem>
+		<ProjectItem ReplaceParameters="false" TargetFileName="MySql.Data.dll">MySql.Data.dll</ProjectItem>
+		<ProjectItem ReplaceParameters="false" TargetFileName="Mono.Security.dll">Mono.Security.dll</ProjectItem>
+		<ProjectItem ReplaceParameters="false" TargetFileName="Npgsql.dll">Npgsql.dll</ProjectItem>
+      </Folder>
+      <Folder Name="console" TargetFolderName="console">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AC_OETags.js">AC_OETags.js</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="configtrouble.htm">configtrouble.htm</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="console.swf">console.swf</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="examplesinstructions.htm">examplesinstructions.htm</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="gettingstarted.htm">gettingstarted.htm</ProjectItem>
+        <Folder Name="images" TargetFolderName="images">
+          <ProjectItem ReplaceParameters="false" TargetFileName="consolebar.jpg">consolebar.jpg</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="examplesoverview.jpg">examplesoverview.jpg</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="folder_closed.png">folder_closed.png</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="orboverview.jpg">orboverview.jpg</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="runningwoee.jpg">runningwoee.jpg</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="services.png">services.png</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="testdrive.png">testdrive.png</ProjectItem>
+        </Folder>
+        <ProjectItem ReplaceParameters="true" TargetFileName="introduction.htm">introduction.htm</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="playerProductInstall.swf">playerProductInstall.swf</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="troubleshooting.htm">troubleshooting.htm</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="woeeoverview.htm">woeeoverview.htm</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="woeestandalone.htm">woeestandalone.htm</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="yesflex-yesdotnet.htm">yesflex-yesdotnet.htm</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx">Default.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx.cs">Default.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="diagnostics.aspx">diagnostics.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Global.asax">Global.asax</ProjectItem>
+      <Folder Name="WEB-INF" TargetFolderName="WEB-INF">
+        <Folder Name="flex" TargetFolderName="flex">
+          <ProjectItem ReplaceParameters="true" TargetFileName="data-management-config.xml">data-management-config.xml</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="messaging-config.xml">messaging-config.xml</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="remoting-config.xml">remoting-config.xml</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="services-config.xml">services-config.xml</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="weborb-services-config.xml">weborb-services-config.xml</ProjectItem>
+        </Folder>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Web.config">Web.config</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="weborb.config">weborb.config</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="WebORB.js">WebORB.js</ProjectItem>
+      <Folder Name="weborbassets" TargetFolderName="weborbassets">
+        <Folder Name="codegen" TargetFolderName="codegen">
+          <ProjectItem ReplaceParameters="true" TargetFileName="ajax-client.xslt">ajax-client.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="arp-framework-as3.xslt">arp-framework-as3.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="arp-framework.xslt">arp-framework.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="cairngorm-framework.xslt">cairngorm-framework.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="codegen.invoke.ajax.xslt">codegen.invoke.ajax.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="codegen.invoke.xslt">codegen.invoke.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="codegen.xslt">codegen.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="flashcomm-fms2.xslt">flashcomm-fms2.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="flex-remoting-as2-inline.xslt">flex-remoting-as2-inline.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="flex-remoting-as2.xslt">flex-remoting-as2.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="flex-remoting-as3.xslt">flex-remoting-as3.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="flex-wcf-ria-services-as3.xslt">flex-wcf-ria-services-as3.xslt</ProjectItem>
+          <Folder Name="html-template" TargetFolderName="html-template">
+            <ProjectItem ReplaceParameters="true" TargetFileName="AC_OETags.js">AC_OETags.js</ProjectItem>
+            <Folder Name="history" TargetFolderName="history">
+              <ProjectItem ReplaceParameters="true" TargetFileName="history.css">history.css</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="history.js">history.js</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="historyFrame.html">historyFrame.html</ProjectItem>
+            </Folder>
+            <ProjectItem ReplaceParameters="true" TargetFileName="index.template.html">index.template.html</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="playerProductInstall.swf">playerProductInstall.swf</ProjectItem>
+          </Folder>
+          <ProjectItem ReplaceParameters="true" TargetFileName="mate.xslt">mate.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="pureMVC.xslt">pureMVC.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="sl-c-sharp.xslt">sl-c-sharp.xslt</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="swiz.xslt">swiz.xslt</ProjectItem>
+          <Folder Name="wdm" TargetFolderName="wdm">
+            <Folder Name="client" TargetFolderName="client">
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.domain.xslt">codegen.client.domain.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.testdrive.add.xslt">codegen.client.ui.testdrive.add.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.testdrive.xslt">codegen.client.ui.testdrive.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.unittest.app.xslt">codegen.client.ui.unittest.app.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.unittest.create.xslt">codegen.client.ui.unittest.create.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.unittest.delete.xslt">codegen.client.ui.unittest.delete.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.unittest.findfirst.xslt">codegen.client.ui.unittest.findfirst.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.unittest.findlast.xslt">codegen.client.ui.unittest.findlast.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.unittest.update.xslt">codegen.client.ui.unittest.update.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.ui.unittest.xslt">codegen.client.ui.unittest.xslt</ProjectItem>
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.client.xslt">codegen.client.xslt</ProjectItem>
+            </Folder>
+            <ProjectItem ReplaceParameters="true" TargetFileName="codegen.xslt">codegen.xslt</ProjectItem>
+            <Folder Name="import" TargetFolderName="import">
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.import.keys.xslt">codegen.import.keys.xslt</ProjectItem>
+            </Folder>
+            <Folder Name="server" TargetFolderName="server">
+              <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.xslt">codegen.server.xslt</ProjectItem>
+              <Folder Name="csharp" TargetFolderName="csharp">
+                <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.config.xslt">codegen.server.csharp.config.xslt</ProjectItem>
+                <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.domain.xslt">codegen.server.csharp.domain.xslt</ProjectItem>
+                <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.project.xslt">codegen.server.csharp.project.xslt</ProjectItem>
+                <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.xslt">codegen.server.csharp.xslt</ProjectItem>
+                <Folder Name="data" TargetFolderName="data">
+                  <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.xslt">codegen.server.csharp.data.xslt</ProjectItem>
+                  <Folder Name="mssql" TargetFolderName="mssql">
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.create.xslt">codegen.server.csharp.data.mssql.create.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.findAll.xslt">codegen.server.csharp.data.mssql.findAll.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.findByPrimaryKey.xslt">codegen.server.csharp.data.mssql.findByPrimaryKey.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.load.xslt">codegen.server.csharp.data.mssql.load.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.remove.xslt">codegen.server.csharp.data.mssql.remove.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.save.xslt">codegen.server.csharp.data.mssql.save.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.update.xslt">codegen.server.csharp.data.mssql.update.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mssql.xslt">codegen.server.csharp.data.mssql.xslt</ProjectItem>
+                  </Folder>
+                  <Folder Name="mysql" TargetFolderName="mysql">
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.create.xslt">codegen.server.csharp.data.mysql.create.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.findAll.xslt">codegen.server.csharp.data.mysql.findAll.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.findByPrimaryKey.xslt">codegen.server.csharp.data.mysql.findByPrimaryKey.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.load.xslt">codegen.server.csharp.data.mysql.load.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.remove.xslt">codegen.server.csharp.data.mysql.remove.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.save.xslt">codegen.server.csharp.data.mysql.save.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.update.xslt">codegen.server.csharp.data.mysql.update.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.mysql.xslt">codegen.server.csharp.data.mysql.xslt</ProjectItem>
+                  </Folder>
+                  <Folder Name="odbc" TargetFolderName="odbc">
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.create.xslt">codegen.server.csharp.data.odbc.create.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.findAll.xslt">codegen.server.csharp.data.odbc.findAll.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.findByPrimaryKey.xslt">codegen.server.csharp.data.odbc.findByPrimaryKey.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.load.xslt">codegen.server.csharp.data.odbc.load.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.remove.xslt">codegen.server.csharp.data.odbc.remove.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.save.xslt">codegen.server.csharp.data.odbc.save.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.update.xslt">codegen.server.csharp.data.odbc.update.xslt</ProjectItem>
+                    <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.csharp.data.odbc.xslt">codegen.server.csharp.data.odbc.xslt</ProjectItem>
+                  </Folder>
+                </Folder>
+              </Folder>
+              <Folder Name="vb" TargetFolderName="vb">
+                <ProjectItem ReplaceParameters="true" TargetFileName="codegen.server.vb.project.xslt">codegen.server.vb.project.xslt</ProjectItem>
+              </Folder>
+            </Folder>
+          </Folder>
+        </Folder>
+        <Folder Name="uploads" TargetFolderName="uploads" />
+        <Folder Name="wdm" TargetFolderName="wdm">
+          <Folder Name="output" TargetFolderName="output" />
+          <ProjectItem ReplaceParameters="false" TargetFileName="weborb.swc">weborb.swc</ProjectItem>          
+        </Folder>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="weborbconsole.html">weborbconsole.html</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" backgroundAlpha="0"
+	creationComplete="OnCompleted(event);"
+	mouseEnabled="false"
+	>
+
+<!--
+	Dejamos pasar el raton para que el elementos de por debajo (ciudades...) puedan cogerlo. Si no, las ciudades tendrían que
+    hacer subscripción a la stage, puesto que MainInterface les ocluye.
+
+    Flash siempre manda el OVER, etc a un sólo elemento de todos los que puede haber en un pixel (y luego sube por la cadena
+    jerarquica). Si dos elementos solapan, sólo se entera del ratón el que está por encima.
+ -->
+
+
+<mx:Script>
+	<![CDATA[
+	import mx.events.IndexChangedEvent;
+	import utils.GenericEvent;
+	import mx.binding.utils.BindingUtils;
+
+	public function Init(gameController : PlanetWarsController) : void
+	{
+		mController = gameController;
+	}
+
+	private function ServerTurnUpdateEnd(event:Event):void
+	{
+		myGold.text = mController.ThePlanet.TheLocalPlayer.Gold.toString();
+		myScience.text = mController.ThePlanet.TheLocalPlayer.Science.toString();
+		myGoldOutput.text = mController.ThePlanet.TheLocalPlayer.GoldPerTurn.toString();
+		myScienceOutput.text = mController.ThePlanet.TheLocalPlayer.SciencePerTurn.toString();
+		myLaborOutput.text = mController.ThePlanet.TheLocalPlayer.LaborPerTurn.toString();
+
+		RefreshSelectedCity(mController.TheSelectedCity);
+	}
+
+	public function OnCompleted(event:Event):void
+	{
+		SubscribeListeners();
+
+		// Tenemos que rellenar el interface por primera vez
+		ServerTurnUpdateEnd(null);
+	}
+
+	private function SubscribeListeners() : void
+	{
+		// Como hemos dejado pasar el raton, lo cogemos de la stage
+		stage.addEventListener(MouseEvent.CLICK, OnMouseClick);
+		addEventListener(KeyboardEvent.KEY_DOWN, OnKeyDown);
+
+		// Subscricion al fin de actualización de turno
+		mController.addEventListener("ServerTurnUpdateEnd", ServerTurnUpdateEnd);
+
+		// Cambio de Ciudad Seleccionada
+		BindingUtils.bindSetter(RefreshSelectedCity, mController, "TheSelectedCity");
+	}
+
+	private function OnKeyDown(event:KeyboardEvent):void
+	{
+		if (event.keyCode == Keyboard.ESCAPE)
+		{
+			mController.Cancel();
+		}
+	}
+
+	private function RefreshSelectedCity(selectedCity : City) : void
+	{
+		if (selectedCity != null)
+		{
+			mySize.text = selectedCity.Size.toString();
+			myFoodOnStore.text = selectedCity.FoodOnStore.toString();
+
+			if (myBuildTabNavigator.selectedIndex == 0)
+			{
+				var currSelected : String = myUnitsList.selectedItem as String;
+				myUnitsList.dataProvider = selectedCity.Units;
+				if (selectedCity.Units.contains(currSelected))
+					myUnitsList.selectedItem = currSelected;
+
+				currSelected = myUnitsAvailableList.selectedItem as String;
+				myUnitsAvailableList.dataProvider = selectedCity.AvailableUnits;
+				if (selectedCity.AvailableUnits.contains(currSelected))
+					myUnitsAvailableList.selectedItem = currSelected;
+			}
+			else if (myBuildTabNavigator.selectedIndex == 1)
+			{
+				currSelected = myBuildingsList.selectedItem as String;
+				myBuildingsList.dataProvider = selectedCity.Buildings;
+				if (selectedCity.Buildings.contains(currSelected))
+					myBuildingsList.selectedItem = currSelected;
+
+				currSelected = myBuildingsAvailableList.selectedItem as String;
+				myBuildingsAvailableList.dataProvider = selectedCity.AvailableBuildings;
+				if (selectedCity.AvailableBuildings.contains(currSelected))
+					myBuildingsAvailableList.selectedItem = currSelected;
+			}
+
+			myProductionQueueList.dataProvider = selectedCity.ProductionQueue;
+			myProductionPoints.text = selectedCity.ProductionPoints.toString();
+		}
+		else
+		{
+			mySize.text = "";
+			myFoodOnStore.text = "";
+
+			if (myBuildTabNavigator.selectedIndex == 0)
+			{
+				myUnitsAvailableList.dataProvider = null;
+				myUnitsList.dataProvider = null;
+			}
+			else if (myBuildTabNavigator.selectedIndex == 1)
+			{
+				myBuildingsAvailableList.dataProvider = null;
+				myBuildingsList.dataProvider = null;
+			}
+
+			myProductionQueueList.dataProvider = null;
+			myProductionPoints.text = "";
+		}
+	}
+
+	private function OnMouseClick(event:MouseEvent):void
+	{
+		// Como el ratón está cogido de la stage, tenemos que ver si el click es en el viewport del mundo
+		if (!this.getBounds(this).containsPoint(new Point(event.stageX, event.stageY)))
+			return;
+
+		// Si ha sido en uno de nuestro hijos, tampoco va al mundo
+		if (IsMyChild(event.target as DisplayObject))
+			return;
+
+		mController.OnRenderCanvasClick(event);
+	}
+
+	private function IsMyChild(other : DisplayObject):Boolean
+	{
+		var theParent : DisplayObject = other.parent;
+
+		while (theParent != stage)
+		{
+			if (theParent == this)
+				return true;
+			theParent = theParent.parent;
+		}
+
+		return false;
+	}
+
+	private function OnAddUnitToQueueClick(event:Event):void
+	{
+		if (myUnitsAvailableList.selectedItem != null)
+			mController.AddBuildableToQueue(myUnitsAvailableList.selectedItem as String);
+	}
+
+	private function OnAddBuildingToQueueClick(event:Event):void
+	{
+		if (myBuildingsAvailableList.selectedItem != null)
+			mController.AddBuildableToQueue(myBuildingsAvailableList.selectedItem as String);
+	}
+
+	private function OnButtonCreateCityClick(event:Event):void
+	{
+		mController.BeginCityCreation();
+	}
+
+	private function OnIndexChangeTabNavigator(event:IndexChangedEvent):void
+	{
+		RefreshSelectedCity(mController.TheSelectedCity);
+	}
+
+	private var mController : PlanetWarsController;
+	]]>
+</mx:Script>
+
+
+<!-- TODO: Poner esto en sus propios modulos -->
+<mx:HBox top="0" width="100%" backgroundColor="#D6D6D6" backgroundAlpha="0.95">
+	<mx:Spacer width="10" />
+	<mx:Label text="Gold:" />
+	<mx:Label id="myGold" />
+
+	<mx:Label text="Science:"/>
+	<mx:Label id="myScience"/>
+
+	<mx:Spacer width="100%" />
+
+	<mx:Label text="Gold output:"/>
+	<mx:Label id="myGoldOutput" />
+	<mx:Label text="Science output:"/>
+	<mx:Label id="myScienceOutput" />
+	<mx:Label text="Labor output:"/>
+	<mx:Label id="myLaborOutput" />
+
+	<mx:Spacer width="10" />
+</mx:HBox>
+
+
+
+<mx:HBox horizontalCenter="0" bottom="0" width="500" height="180" backgroundColor="#D6D6D6" backgroundAlpha="0.95"
+		paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5">
+	<mx:TabNavigator id="myBuildTabNavigator" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5"
+		change="OnIndexChangeTabNavigator(event);">
+		<mx:HBox label="Units" width="100%" height="90%">
+			<mx:List id="myUnitsList" editable="false" width="115" height="100%" selectable="false" />
+			<mx:List id="myUnitsAvailableList" editable="false" width="115" height="100%"/>
+			<mx:Button id="myUnitAddToQueueButton" label="Add" click="OnAddUnitToQueueClick(event);"/>
+		</mx:HBox>
+		<mx:HBox label="Buildings" width="100%" height="90%">
+			<mx:List id="myBuildingsList" editable="false" width="115" height="100%" selectable="false"/>
+			<mx:List id="myBuildingsAvailableList" editable="false" width="115" height="100%"/>
+			<mx:Button id="myBuilidingAddToQueueButton" label="Add" click="OnAddBuildingToQueueClick(event);"/>
+		</mx:HBox>
+	</mx:TabNavigator>
+
+	<mx:VBox height="100%">
+		<mx:HBox>
+			<mx:Label text="Size:"/>
+			<mx:Label id="mySize"/>
+		</mx:HBox>
+		<mx:HBox>
+			<mx:Label text="Food On Store:"/>
+			<mx:Label id="myFoodOnStore"/>
+		</mx:HBox>
+		<mx:HBox>
+			<mx:List id="myProductionQueueList" editable="false" width="105" height="122"/>
+			<mx:Label id="myProductionPoints" />
+		</mx:HBox>
+
+	</mx:VBox>
+</mx:HBox>
+
+
+<mx:Button id="myCreateCity" width="90" bottom="10" left="10" height="39" label="Create City" click="OnButtonCreateCityClick(event);">
+</mx:Button>
+
+</mx:Canvas>

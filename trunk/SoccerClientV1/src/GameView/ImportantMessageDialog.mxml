@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:Team="GameView.Team.*" width="356" height="212">
+	
+	<fx:Style source="styles.css"/>
+	
+	<fx:Script><![CDATA[
+		import mx.core.FlexGlobals;
+		import mx.core.IFlexModule;
+		import mx.managers.PopUpManager;
+		
+		[Bindable]
+		public function get Title() : String { return mTitle; }
+		public function set Title(t:String) : void { mTitle = t; }
+		
+		[Bindable]
+		public function get Text() : String { return mText; }
+		public function set Text(t:String) : void { mText = t; }
+		
+		[Bindable]
+		public function get TextAlign() : String { return mTextAlign; }
+		public function set TextAlign(t:String) : void { mTextAlign = t; }
+		
+		public static function Show(text : String, title : String, textAlign : String = "left") : void
+		{
+			var errorDialog : ErrorDialog = new ErrorDialog();
+			var parent : Sprite = FlexGlobals.topLevelApplication as Sprite;
+			
+			errorDialog.Text = text;
+			errorDialog.Title = title;
+			errorDialog.TextAlign = textAlign;
+			
+			errorDialog.moduleFactory = IFlexModule(parent).moduleFactory;
+			
+			PopUpManager.addPopUp(errorDialog, parent, true, null);
+			PopUpManager.centerPopUp(errorDialog);
+		}
+		
+		protected function ClickHandler(event:MouseEvent):void
+		{
+			PopUpManager.removePopUp(this);	
+		}
+		
+		private var mText : String;
+		private var mTitle : String;
+		private var mTextAlign : String = "left";
+		
+	]]></fx:Script>
+	<s:BitmapImage x="0" y="0" source="@Embed(source='/Assets/General.swf', symbol='PopupDialogBg')" fillMode="clip" />
+	
+	<s:Label text="{Title}" styleName="whiteBoldVeryBig" x="28" y="26" width="300" textAlign="center" />
+	<s:Label text="{Text}" styleName="whiteBoldMedium" x="28" y="64" width="300" textAlign="{TextAlign}" />
+	
+	<s:Button label="CERRAR" click="ClickHandler(event)" minWidth="80" x="138" y="170" skinClass="GameView.Skins.ButtonDarkGreySkin" />
+	
+	
+</s:Group>

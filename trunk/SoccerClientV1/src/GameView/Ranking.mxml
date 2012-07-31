@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 addedToStage="AddedToStageHandler(event)" xmlns:GameView="GameView.*">
+	
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import GameModel.RankingModel;
+		
+		import GameView.Skins.ButtonFirstOneSkin;
+		import GameView.Skins.DefaultListSkin;
+		import GameView.Skins.DefaultPanelSkin;
+		
+		import SoccerServerV1.TransferModel.vo.RankingTeam;
+		
+		import mx.binding.utils.BindingUtils;
+		
+		import spark.events.IndexChangeEvent;
+		
+		protected function AddedToStageHandler(event:Event):void
+		{
+			GameMetrics.ReportEvent(GameMetrics.VIEW_RANKING);
+			
+			mGameModel = SoccerClientV1.GetMainGameModel();
+			
+			if (mRankingModel == null)
+				mRankingModel = mGameModel.TheRankingModel;
+			
+			BindingUtils.bindSetter(OnSelectedRankingTeamChanged, mRankingModel, "SelectedRankingTeam");
+			
+			mRankingModel.RefreshAndSelectSelf();
+		}
+		
+		private function OnSelectedRankingTeamChanged(newSelectedRankingTeam : RankingTeam) : void
+		{
+			// Cambio en el modelo sin haber cambiado en la vista
+			if (MyRankingList != null)
+			{
+				MyRankingList.selectedItem = newSelectedRankingTeam;
+				
+				// Ahora mismo la lista no está disponible, ensureIndexIsVisible revienta
+				if (newSelectedRankingTeam != null && newSelectedRankingTeam.Name == mGameModel.TheTeamModel.TheTeam.Name)
+					MyRankingList.callLater(EnsureSelectedIsVisible);
+			}
+		}
+		
+		private function EnsureSelectedIsVisible() : void
+		{
+			var idx : int = MyRankingList.dataProvider.getItemIndex(mRankingModel.SelectedRankingTeam);
+			
+			if (idx + 4 < MyRankingList.dataProvider.length)
+				idx += 4;
+			
+			MyRankingList.ensureIndexIsVisible(idx);
+		}
+		
+		protected function MyRankingList_changeHandler(event:IndexChangeEvent):void
+		{		
+			// La vista cambia el seleccionado
+			mRankingModel.SelectedRankingTeam = (MyRankingList.selectedItem as RankingTeam);
+						
+			if (mRankingModel.SelectedRankingTeam.Name == mGameModel.TheTeamModel.TheTeam.Name)
+				MyBackButton.visible = false;
+			else
+				MyBackButton.visible = true;
+		}
+		
+		protected function MyBackButton_clickHandler(event:MouseEvent):void
+		{
+			mRankingModel.RefreshAndSelectSelf();
+			MyBackButton.visible = false;
+		}
+		
+		[Bindable] 
+		private var mRankingModel : RankingModel;
+		private var mGameModel : MainGameModel;
+		
+	]]></fx:Script>
+	
+	<fx:Style source="styles.css" />
+
+	<s:Panel skinClass="GameView.Skins.DefaultPanelSkin" top="10" bottom="10" left="10" width="365" title="RANKING DE JUGADORES">
+		<s:List id="MyRankingList" left="0" right="0" top="0" height="407"
+				dataProvider="{mRankingModel.TheRankingPage.Teams}" 
+				itemRenderer="GameView.RankingTeamItem" useVirtualLayout="false"
+				skinClass="GameView.Skins.DefaultListSkin" 
+				change="MyRankingList_changeHandler(event)"/>
+
+		<s:Group x="0" bottom="0">
+			<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='RankingPagesNavBg')" fillMode="clip" />
+			<s:Button skinClass="GameView.Skins.ButtonFirstOneSkin" x="64" y="3" click="mRankingModel.FirstPage()" />
+			<s:Button skinClass="GameView.Skins.ButtonPrevSkin" x="96" y="3" click="mRankingModel.PrevRankingPage()" />
+			<s:Button skinClass="GameView.Skins.ButtonNextSkin" x="243" y="3" click="mRankingModel.NextRankingPage()" />
+			<s:Button skinClass="GameView.Skins.ButtonLastOneSkin" x="273" y="3" click="mRankingModel.LastPage()"/>
+			<s:Label x="132" y="9" width="100" textAlign="center"
+					 text="{mRankingModel.TheRankingPage.PageIndex+1} / {mRankingModel.TheRankingPage.TotalPageCount}"
+					 styleName="blackBoldMediumHN"/>
+		</s:Group>
+	</s:Panel>
+	
+	<s:Panel skinClass="GameView.Skins.DefaultPanelSkin" top="10" right="10" bottom="10" width="365" title="ESTADÍSTICAS">
+		<s:controlBarContent>
+			<s:Button id="MyBackButton" visible="false" 
+					  label="Volver a tus estadísticas" minWidth="80" skinClass="GameView.Skins.ButtonDarkGreySkin" 
+					  click="MyBackButton_clickHandler(event)"/>
+		</s:controlBarContent>		
+		<s:Group>
+			<s:layout><s:VerticalLayout /></s:layout>
+			<s:Group>
+				<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='FondoStatsHeader')" fillMode="clip" />
+				<s:Group x="7" y="32" width="100%" height="43">
+					<s:layout><s:HorizontalLayout/></s:layout>
+
+					<GameView:FacebookPicture FacebookID="{mRankingModel.SelectedRankingTeam.FacebookID}" />
+					
+					<s:Group>
+						<s:layout><s:VerticalLayout paddingTop="4" /></s:layout>
+						<GameView:BadgeTeam TeamName="{mRankingModel.SelectedRankingTeam.PredefinedTeamName}" />
+					</s:Group>
+										
+					<s:Group width="70%" height="50">
+						<s:layout><s:VerticalLayout paddingTop="7" gap="3"/></s:layout>
+						<s:Label width="100%" text="{mRankingModel.SelectedRankingTeam.Name}" styleName="whiteBoldBig" 
+								 maxDisplayedLines="1" toolTip="{mRankingModel.SelectedRankingTeam.Name}"/>
+						<s:Label text="{mRankingModel.SelectedRankingTeam.PredefinedTeamName}" styleName="greyBoldMedium"/>
+					</s:Group>
+				</s:Group>
+			</s:Group>
+			
+			<s:Group>
+				<s:layout><s:VerticalLayout gap="10" /></s:layout>
+				
+				<s:Group>
+					<s:Rect x="0" y="0" 
+							radiusX="0" radiusY="0" 
+							height="28" width="365">
+						<s:fill>
+							<s:LinearGradient>
+								<s:entries>
+									<mx:GradientEntry color="0x000000" alpha="0.6"/>
+								</s:entries>
+							</s:LinearGradient>
+						</s:fill>
+					</s:Rect>
+					<s:Group>
+						<s:layout><s:HorizontalLayout verticalAlign="middle" /></s:layout>
+						<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='StatsTitTip')" fillMode="clip" />
+						<s:Label text="ESTADÍSTICAS DE PARTIDOS" styleName="whiteBoldBig" />						
+					</s:Group>
+				</s:Group>
+				
+				<s:Group>
+					<s:Label text="PARTIDOS JUGADOS" styleName="whiteBoldMedium" textAlign="left" x="23" />
+					<s:Label text="{mRankingModel.SelectedRankingTeamMatchStats.NumMatches} " styleName="whiteBoldMedium" x="290" width="60" textAlign="right" />
+				</s:Group>
+				<s:Line xFrom="0" xTo="365">
+					<s:stroke>
+						<s:SolidColorStroke color="0x000000" weight="1"/>
+					</s:stroke>
+				</s:Line>
+				<s:Group>
+					<s:Label text="PARTIDOS GANADOS" styleName="whiteBoldMedium" x="23" />
+					<s:Label text="{mRankingModel.SelectedRankingTeamMatchStats.NumWonMatches} " styleName="whiteBoldMedium" x="290" width="60" textAlign="right" />
+				</s:Group>
+				<s:Line xFrom="0" xTo="365">
+					<s:stroke>
+						<s:SolidColorStroke color="0x000000" weight="1"/>
+					</s:stroke>
+				</s:Line>
+				<s:Group>
+					<s:Label text="PARTIDOS PERDIDOS" styleName="whiteBoldMedium" x="23" />
+					<s:Label text="{mRankingModel.SelectedRankingTeamMatchStats.NumLostMatches} " styleName="whiteBoldMedium" x="290" width="60" textAlign="right" />
+				</s:Group>
+				<s:Line xFrom="0" xTo="365">
+					<s:stroke>
+						<s:SolidColorStroke color="0x000000" weight="1"/>
+					</s:stroke>
+				</s:Line>
+				<s:Group>
+					<s:Label text="PARTIDOS EMPATADOS" styleName="whiteBoldMedium" x="23" />
+					<s:Label text="{mRankingModel.SelectedRankingTeamMatchStats.NumMatches - 
+							 		mRankingModel.SelectedRankingTeamMatchStats.NumWonMatches - 
+							 		mRankingModel.SelectedRankingTeamMatchStats.NumLostMatches} " 
+							 		styleName="whiteBoldMedium" x="290" width="60" textAlign="right" />
+				</s:Group>
+				
+				<s:Group>
+					<s:Rect x="0" y="0" 
+							radiusX="0" radiusY="0" 
+							height="28" width="365">
+						<s:fill>
+							<s:LinearGradient>
+								<s:entries>
+									<mx:GradientEntry color="0x000000" alpha="0.6"/>
+								</s:entries>
+							</s:LinearGradient>
+						</s:fill>
+					</s:Rect>
+					<s:Group>
+						<s:layout><s:HorizontalLayout verticalAlign="middle" /></s:layout>
+						<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='StatsTitTip')" fillMode="clip" />
+						<s:Label text="ESTADÍSTICAS DE GOLES" styleName="whiteBoldBig" />						
+					</s:Group>
+				</s:Group>
+				
+				<s:Group>
+					<s:Label text="GOLES A FAVOR" styleName="whiteBoldMedium" x="23" />
+					<s:Label text="{mRankingModel.SelectedRankingTeamMatchStats.NumGoalsScored} " styleName="whiteBoldMedium" x="290" width="60" textAlign="right" />
+				</s:Group>
+				<s:Line xFrom="0" xTo="365">
+					<s:stroke>
+						<s:SolidColorStroke color="0x000000" weight="1"/>
+					</s:stroke>
+				</s:Line>
+				<s:Group>
+					<s:Label text="GOLES EN CONTRA" styleName="whiteBoldMedium" x="23" />
+					<s:Label text="{mRankingModel.SelectedRankingTeamMatchStats.NumGoalsReceived} " styleName="whiteBoldMedium" x="290" width="60" textAlign="right" />
+				</s:Group>
+			</s:Group>
+		</s:Group>
+	</s:Panel>
+					
+</s:Group>

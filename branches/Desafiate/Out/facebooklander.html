@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <!-- saved from url=(0014)about:internet -->
+<html lang="en">
+
+<!-- 
+Smart developers always View Source. 
+
+This application was built using Adobe Flex, an open source framework
+for building rich Internet applications that get delivered via the
+Flash Player or to desktops via Adobe AIR. 
+
+Learn more about Flex at http://flex.org 
+// -->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<!--  BEGIN Browser History required section -->
+<link rel="stylesheet" type="text/css" href="history/history.css" />
+<!--  END Browser History required section -->
+
+<title>DESAF&Iacute;ATE</title>
+<script src="AC_OETags.js" language="javascript"></script>
+<script src="http://static.ak.connect.facebook.com/connect.php/es_ES" type="text/javascript"></script>
+<script>
+	FB.init("0311c819f5d81865ec7a0183543a5d54");
+	FB.ensureInit(function() 
+	{
+		FB.Connect.get_status().waitUntilReady( function( status ) 
+		{
+			switch ( status ) {
+				case FB.ConnectState.connected:
+					loggedIn = true;
+					break;
+				case FB.ConnectState.appNotAuthorized:
+				case FB.ConnectState.userNotLoggedIn:
+					//FB.Connect.requireSession();
+					loggedIn = false;
+			}
+		});
+	});
+</script>
+
+<style>
+	body {
+		font-family: Helvetica, Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		margin: 0;
+		padding: 0;
+		background-color: #fff;
+	}
+	#wrapper_content {
+/*		top: 10px;*/
+		width: 99%;
+		z-index: 5;
+		position: absolute;
+		left: 0;
+	}
+	#page_content {
+/*		margin-top: 50px;*/
+		margin: auto;
+		width: 760px;
+		height: 668px;
+		background-image: url('images/facebookPortada.jpg');
+		background-repeat: no-repeat;
+	}
+	#flash_zone {
+		width: 760px;
+		height: 596px;
+		overflow: hidden;
+	}
+	#footer {
+		clear: both;
+		margin: auto;
+		width: 820px;
+		margin-top: 40px;
+	}
+	a {
+		color: #999;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	img {
+		border: 0;
+	}
+	#share_comp {
+		float: right;
+		margin-top: 15px;
+		margin-right: 10px;
+	}
+	#reglink {
+		height: 20px;
+		cursor: pointer;
+	}
+	#polaroid {
+		background-image: url('images/facebookPolaroid.jpg');
+		background-repeat: no-repeat;
+		padding-left: 28px;
+		padding-right: 28px;
+		padding-top: 28px;
+		width: 189px;
+		height: 245px;
+		float: left;
+		margin-left: 5px;
+		margin-bottom: 20px;
+	}
+	#polaroid2 {
+		background-image: url('images/facebookPolaroid2.jpg');
+		background-repeat: no-repeat;
+		padding-left: 28px;
+		padding-right: 28px;
+		padding-top: 28px;
+		width: 189px;
+		height: 245px;
+		float: left;
+		margin-left: 5px;
+		margin-bottom: 20px;
+	}
+	#polaroid3 {
+		background-image: url('images/facebookPolaroid3.jpg');
+		background-repeat: no-repeat;
+		padding-left: 28px;
+		padding-right: 28px;
+		padding-top: 28px;
+		width: 189px;
+		height: 245px;
+		float: left;
+		margin-left: 5px;
+		margin-bottom: 20px;
+	}
+	#polaroid img, #polaroid2 img, #polaroid3 img {
+		margin-bottom: 10px;
+	}
+</style>
+</head>
+
+<body>
+<!-- Note: Include this div markup as a workaround for a known bug in this release on IE where you may get a "operation aborted" error -->
+<div id="FB_HiddenContainer"  style="position:absolute; top:-10000px; width:0px; height:0px;" ></div>
+<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div>
+
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+<script type="text/javascript">
+  FB_RequireFeatures(["CanvasUtil"], function(){
+    FB.XdComm.Server.init('facebooklander.html');
+      FB.CanvasClient.setCanvasHeight("900px");
+  });
+
+</script>
+	<!--
+    <div id="bg_left">
+    </div><div id="bg_right">
+    </div>
+    -->
+    <div id="wrapper_content">
+    	<div id="page_content">
+	       	<div id="flash_zone" onclick="window.open('http://www.desafiate.es/')" style="cursor:pointer">
+            </div>
+            <div id="polaroid">
+            	<img src="images/polaroid1.jpg" /><br/>
+            	Ponte en la piel de un profesional de IT y enfréntate a los problemas que se presentan en una gran empresa.
+            </div>
+            <div id="polaroid2">
+            	<img src="images/polaroid2.jpg" /><br/>
+            	Explora los escenarios y encuentra los minijuegos que te ayudarán a mejorar tu puntuación y estar entre los mejores.
+            </div>
+            <div id="polaroid3">
+            	<img src="images/polaroid3.jpg" /><br/>
+            	Supera los retos que encontrarás en tu camino y podrás ganar fantásticos premios.
+            </div>
+            <div id="nav_bar">
+<div id="share_comp">
+<!-- AddThis Button BEGIN -->
+<!--<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_live"></a>
+<a class="addthis_button_delicious"></a>
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_digg"></a>
+<a class="addthis_button_stumbleupon"></a>
+<a class="addthis_button_blogger"></a>
+<span class="addthis_separator">|</span>
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4bbb627f52fc1a5f" class="addthis_button_compact">Compartir</a>
+</div>-->
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4bbb627f52fc1a5f"></script>
+<!-- AddThis Button END -->
+
+</div>
+            </div>
+        </div>
+<!--        <div id="footer">
+        	<div id="logo_zone">
+           	<div id="copyright">
+            		&copy; 2010 Microsoft
+                </div>
+            	<img src="images/logo.jpg"/>
+            </div>
+            <div id="footer_links">
+            	<ul>
+                	<li><a href="#">MSN Privacy</a></li>
+                	<li><a href="#">Terms of Use</a></li>
+                	<li><a href="#">Advertise</a></li>
+                	<li><a href="#">Trademark</a></li>
+                	<li><a href="#">Feedback</a></li>
+                </ul>
+            </div>-->
+        </div>
+    </div>
+</body>
+</html>

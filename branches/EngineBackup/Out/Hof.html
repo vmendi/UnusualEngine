@@ -1,0 +1,272 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<!--  BEGIN Browser History required section -->
+<link rel="stylesheet" type="text/css" href="history/history.css" />
+<!--  END Browser History required section -->
+
+<title>DESAF&Iacute;ATE</title>
+
+
+<style>
+	body {
+		font-family: Helvetica, Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		margin: 0;
+		padding: 0;
+		background-color: #f0efe6;
+	}
+	#bg_left {
+		width: 49%;
+		background-image: url(images/bg_topleft.jpg);
+		background-repeat: no-repeat;
+		height: 500px;
+		float: left;
+		z-index: 0;
+	}
+	#bg_right {
+		width: 49%;
+		background-image: url(images/bg_topright.jpg);
+		background-repeat: no-repeat;
+		background-position: 100% 0%;
+		height: 500px;
+		float: right;
+		z-index: 0;
+	}
+	#wrapper_content {
+		top: 20px;
+		width: 99%;
+		z-index: 5;
+		position: absolute;
+		left: 0;
+	}
+	#page_content {
+		margin: auto;
+		width: 921px;
+/*		margin-top: 50px;*/
+	}
+	#flash_zone {
+		height: 352px;
+		background-image: url('images/header_content.jpg');
+		background-repeat: no-repeat;
+		margin-bottom: 20px;
+	}
+	#welcome_logged {
+		margin-top: 530px;
+		margin-left: 470px;
+		width: 363px;
+		height: 124px;
+		background-image: url('images/jugar_layer.jpg');
+		background-repeat: no-repeat;
+		cursor: pointer;
+	}
+	#welcome_zone {
+		margin-top: 529px;
+		margin-left: 470px;
+		width: 286px;
+		height: 106px;
+		text-align: right;
+		font-size: 16px;
+		color: #666;
+		background-image: url('images/facebook_layer.jpg');
+		background-repeat: no-repeat;
+		padding-top: 53px;
+		padding-right: 44px;
+	}
+	#footer {
+		clear: both;
+		margin: auto;
+		width: 820px;
+		margin-top: 40px;
+	}
+	#nav_bar {
+		width: 880px;
+		height: 10px;
+	}
+	#logo_zone {
+		float: left;
+	}
+	#footer_links {
+		float: right;
+	}
+	ul {
+		list-style-type: none;
+	}
+	li {
+		float: left;
+		margin-left: 20px;
+		color: #999;
+		font-size: 12px;
+	}
+	#copyright {
+		color: #999;
+		font-size: 12px;
+		float: left;
+		margin-top: 8px;
+		padding: 5px;
+		padding-right: 10px;
+		border-right: 1px solid #999;
+	}
+	a {
+		color: #999;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	img {
+		border: 0;
+	}
+	#share_comp {
+		float: right;
+		margin-top: 15px;
+		margin-right: 10px;
+	}
+	#home_text {
+		width: 100px;
+		height: 38px;
+		margin-top: 310px;
+		margin-left: 80px;
+		cursor: pointer;
+		float: left;
+	}
+	#bases_text {
+		width: 186px;
+		height: 38px;
+		margin-top: 310px;
+		margin-left: 0px;
+		cursor: pointer;
+		float: left;
+	}
+	#hof_text {
+		width: 176px;
+		height: 38px;
+		margin-top: 315px;
+		margin-left: 0px;
+		cursor: pointer;
+		float: left;
+	}
+	#reglink {
+		height: 20px;
+
+		cursor: pointer;
+	}
+	#main_content {
+		background-image: url(images/hof.jpg);
+		width: 921px;
+		height: 1051px;
+		margin: auto;
+		float: left;
+	}
+	#hoftable {
+		font-size: 17px; 
+		margin-left: 320px; 
+		margin-top: 157px;	
+	}
+	#hoftable tr {
+		height: 38px;
+		vertical-align: top;
+	}
+</style>
+<script src="http://static.ak.connect.facebook.com/connect.php/es_ES" type="text/javascript"></script>
+	   <script src="js/jquery-1.3.2.min.js" type="text/javascript"></script>
+       <script>
+	   	
+		var result = '';
+	   	var usernames;
+	   	
+		function getHofTable ()
+		{
+			$.ajax(
+		   {
+				type: 'GET',
+				url: 'services/MainService.asmx/getHOF', 
+				contentType: 'application/json',
+				success: 
+					function(data) 
+					{
+						result = '<table id="hoftable">';
+						$(data).find('UserData').each( function() 
+						{
+							usuario = $(this).find('Usuario').text();
+							puntuacion = $(this).find('Puntuacion').text();
+							result += '<tr><td width="240" id="user_data"><fb:profile-pic height="16" uid="' + usuario + '"></fb:profile-pic> <fb:name uid="' + usuario + '">An&oacute;nimo</fb:name></td><td>' + puntuacion + '</td></tr>';
+							// 100000959596966 (SAMPLE USER)
+						});
+						result += '</table>';
+						$('#main_content').html(result);
+					},
+				error:
+					function(status) 
+					{
+						$('#main_content').html('ERROR : ' + status.statusText + ' ' + status.status);
+					}
+			})
+		}
+		
+       	$(document).ready(function() {
+		   setTimeout('FB.init("0311c819f5d81865ec7a0183543a5d54")', 1000);
+		   getHofTable();
+		});
+
+        </script>
+</head>
+
+<body>
+<div id="FB_HiddenContainer"  style="position:absolute; top:-10000px; width:0px; height:0px;" ></div>
+	<!--
+    <div id="bg_left">
+    </div><div id="bg_right">
+    </div>
+    -->
+    <div id="wrapper_content">
+    	<div id="page_content">
+	       	<div id="flash_zone">
+            	<div id="home_text" onClick="window.location.href='index.html'"></div>
+            	<div id="bases_text" onClick="window.location.href='bases.html'"></div>
+                <div id="hof_text" onClick="window.location.href='halloffame.html'"></div>
+            </div>
+        <div id="main_content">
+ 			
+        </div>
+            
+        <div id="nav_bar">
+<div id="share_comp">
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_live"></a>
+<a class="addthis_button_delicious"></a>
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_digg"></a>
+<a class="addthis_button_stumbleupon"></a>
+<a class="addthis_button_blogger"></a>
+<!--<span class="addthis_separator">|</span>
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4bbb627f52fc1a5f" class="addthis_button_compact">Compartir</a>-->
+</div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4bbb627f52fc1a5f"></script>
+<!-- AddThis Button END -->
+
+</div>
+            </div>
+        </div>
+        <div id="footer">
+        	<div id="logo_zone">
+           	<div id="copyright">
+            		&copy; 2010 Microsoft
+                </div>
+            	<img src="images/logo.jpg"/>
+            </div>
+            <div id="footer_links">
+            	<ul>
+                	<li><a href="#">MSN Privacy</a></li>
+                	<li><a href="#">Terms of Use</a></li>
+                	<li><a href="#">Advertise</a></li>
+                	<li><a href="#">Trademark</a></li>
+                	<li><a href="#">Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

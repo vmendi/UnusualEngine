@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:GameView="GameView.*"
+		 creationComplete="CreationCompleteHandler(event)" xmlns:Team="GameView.Team.*">
+	
+	<fx:Script><![CDATA[
+		import GameModel.TeamModel;
+		
+		import GameView.HierarchyUtils;
+		
+		import SoccerServerV1.TransferModel.vo.SoccerPlayer;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.FlexEvent;
+		
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mTeamModel = SoccerClientV1.GetMainGameModel().TheTeamModel;
+			
+			BindingUtils.bindSetter(OnSelectedChanged, mTeamModel, "SelectedSoccerPlayer");
+		}
+				
+		private function OnSelectedChanged(newOne : SoccerPlayer):void
+		{
+			if (newOne != null)
+				mSkillPointAssignerPM = new SkillPointAssignerPresentationModel(mTeamModel.SelectedSoccerPlayer, 
+																				mTeamModel.TheTeam.SkillPoints);
+			else
+				mSkillPointAssignerPM = null;
+		}
+				
+		protected function MyAcceptButton_clickHandler(event:MouseEvent):void
+		{
+			GameMetrics.ReportEvent(GameMetrics.UPGRADE_PLAYER);
+			
+			// Esto provoca un OnSkillPointsChanged en el CapPanel
+			mTeamModel.AssignSkillPoints(mSkillPointAssignerPM.DiffWeight, 
+									     mSkillPointAssignerPM.DiffSliding, 
+										 mSkillPointAssignerPM.DiffPower); 
+		}
+		
+		protected function MyCancelButton_clickHandler(event:MouseEvent):void
+		{
+			(HierarchyUtils.FindParentOfType(this, "GameView.Team::CapPanel") as CapPanel).currentState="Unassigned";
+		}
+		
+		[Bindable] private var mSkillPointAssignerPM : SkillPointAssignerPresentationModel;
+		[Bindable] private var mTeamModel : TeamModel;
+
+	]]></fx:Script>
+	
+	<s:Group x="12" y="91">
+		<s:layout><s:VerticalLayout horizontalAlign="left" gap="0"/></s:layout>
+		
+		<GameView:AssignerSpinner id="MyPowerAssigner" width="164" AnimationEnabled="false" DisplayName="POTENCIA:"
+								  Max="{mSkillPointAssignerPM.MaxPower}" Min="{mSkillPointAssignerPM.MinPower}"
+								  Val="@{mSkillPointAssignerPM.Power}"/>
+		
+		<GameView:AssignerSpinner id="MySlidingAssigner" width="164" AnimationEnabled="false" DisplayName="CONTROL:" 
+								  Max="{mSkillPointAssignerPM.MaxSliding}" Min="{mSkillPointAssignerPM.MinSliding}"
+								  Val="@{mSkillPointAssignerPM.Sliding}"/>		
+		
+		<GameView:AssignerSpinner id="MyWeightAssigner" width="164" AnimationEnabled="false" DisplayName="DEFENSA:" 
+								  Max="{mSkillPointAssignerPM.MaxWeight}" Min="{mSkillPointAssignerPM.MinWeight}"
+								  Val="@{mSkillPointAssignerPM.Weight}"/>		
+	</s:Group>
+		
+	<s:Group y="210" x="0" width="188">
+		<s:layout><s:VerticalLayout horizontalAlign="center"/></s:layout>
+		<s:Group>
+			<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='TeamMahouPoints')" fillMode="clip" />
+			<s:Label top="6" left="22" width="26" id="MyUnassignedSkillPointsLabel" text="{mSkillPointAssignerPM.RemainingSkillPoints}"
+					 textAlign="center" styleName="whiteBoldMedium"/>
+		</s:Group>
+		<s:Group>
+			<s:layout><s:HorizontalLayout gap="10"/></s:layout>
+			<s:Button label="ACEPTAR" click="MyAcceptButton_clickHandler(event)" skinClass="GameView.Skins.ButtonGreySkin" width="80"/>
+			<s:Button label="CANCELAR" click="MyCancelButton_clickHandler(event)" skinClass="GameView.Skins.ButtonGreySkin" width="80"/>
+		</s:Group>		
+	</s:Group>
+</s:Group>

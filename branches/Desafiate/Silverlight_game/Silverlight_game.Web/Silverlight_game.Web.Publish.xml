@@ -1,0 +1,46 @@
+<publishData>
+  <publishTarget publishUrl="ftp://desafiate.unusualwonder.com/wwwroot/Silverlight/">
+    <file relUrl="Silverlight.js" publishTime="04/16/2010 10:36:15" />
+    <file relUrl="bin/Silverlight_game.Web.dll" publishTime="05/03/2010 11:53:07" />
+    <file relUrl="ClientBin/WindowsMedia.wmv" publishTime="04/23/2010 17:18:25" />
+    <file relUrl="Web.config" publishTime="04/16/2010 10:36:14" />
+    <file relUrl="ClientBin/Silverlight_game.xap" publishTime="04/30/2010 18:30:05" />
+    <file relUrl="Default.aspx" publishTime="05/03/2010 11:52:59" />
+    <file relUrl="images/bg_left.jpg" publishTime="04/16/2010 10:36:14" />
+    <file relUrl="images/bg_right.jpg" publishTime="04/16/2010 10:36:14" />
+    <file relUrl="images/main.jpg" publishTime="04/18/2010 16:36:56" />
+    <file relUrl="images/background.jpg" publishTime="04/16/2010 10:36:14" />
+    <file relUrl="Silverlight_gameTestPage.aspx" publishTime="04/18/2010 16:36:56" />
+    <file relUrl="bin/Silverlight_game.Web.pdb" publishTime="05/03/2010 11:53:07" />
+    <file relUrl="Silverlight_gameTestPage.html" publishTime="04/16/2010 10:36:14" />
+  </publishTarget>
+  <publishTarget publishUrl="ftp://desafiate.unusualwonder.com/Silverlight/">
+    <file relUrl="Default.aspx" publishTime="04/26/2010 17:19:46" />
+    <file relUrl="Silverlight.js" publishTime="04/20/2010 16:44:56" />
+    <file relUrl="bin/Silverlight_game.Web.dll" publishTime="04/26/2010 16:57:20" />
+    <file relUrl="Web.config" publishTime="04/20/2010 16:44:56" />
+    <file relUrl="ClientBin/Silverlight_game.xap" publishTime="04/26/2010 17:15:50" />
+    <file relUrl="Silverlight_gameTestPage.html" publishTime="04/20/2010 16:44:56" />
+    <file relUrl="images/main.jpg" publishTime="04/20/2010 16:44:51" />
+    <file relUrl="bin/Silverlight_game.Web.pdb" publishTime="04/26/2010 16:57:20" />
+    <file relUrl="ClientBin/WindowsMedia.wmv" publishTime="04/23/2010 12:32:11" />
+    <file relUrl="images/background.jpg" publishTime="04/20/2010 16:44:51" />
+    <file relUrl="Silverlight_gameTestPage.aspx" publishTime="04/20/2010 16:44:56" />
+    <file relUrl="images/bg_left.jpg" publishTime="04/20/2010 16:44:51" />
+    <file relUrl="images/bg_right.jpg" publishTime="04/20/2010 16:44:51" />
+  </publishTarget>
+  <publishTarget publishUrl="C:\Users\MCz\Desktop\WebSite\">
+    <file relUrl="Silverlight.js" publishTime="04/15/2010 16:36:22" />
+    <file relUrl="bin/Silverlight_game.Web.dll" publishTime="04/15/2010 16:43:12" />
+    <file relUrl="Web.config" publishTime="04/15/2010 16:43:13" />
+    <file relUrl="ClientBin/Silverlight_game.xap" publishTime="04/15/2010 16:44:08" />
+    <file relUrl="Default.aspx" publishTime="04/15/2010 16:43:10" />
+    <file relUrl="ClientBin/WindowsMedia.wmv" publishTime="04/15/2010 16:37:56" />
+    <file relUrl="images/main.jpg" publishTime="04/15/2010 16:37:39" />
+    <file relUrl="bin/Silverlight_game.Web.pdb" publishTime="04/15/2010 16:43:12" />
+    <file relUrl="images/bg_right.jpg" publishTime="04/15/2010 16:37:39" />
+    <file relUrl="Silverlight_gameTestPage.aspx" publishTime="04/15/2010 16:36:22" />
+    <file relUrl="images/bg_left.jpg" publishTime="04/15/2010 16:37:39" />
+    <file relUrl="Silverlight_gameTestPage.html" publishTime="04/15/2010 16:36:22" />
+  </publishTarget>
+</publishData>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	addedToStage="OnAddedToStage(event)"
+	removedFromStage="OnRemovedFromStage(event)"
+	width="100%" height="100%"
+	backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FFFFFF, #FFFFFF]">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+			import flash.utils.setTimeout;
+			import mx.controls.Alert;
+			import mx.collections.ArrayCollection;
+			import it.gotoandplay.smartfoxserver.data.User;
+			import it.gotoandplay.smartfoxserver.data.Room;
+
+			import it.gotoandplay.smartfoxserver.SFSEvent;
+			import it.gotoandplay.smartfoxserver.SmartFoxClient;
+
+			public var ServerIP : String = "unusualwonder.gotdns.com";
+			public var ServerPort : int = 9339;
+
+			public var Zone : String = "SmallChat";
+
+			[Embed(source="Embedded/VideoPlayer.swf")]
+			private var mVideoPlayerClass : Class;
+
+			private var mNoVideo : Boolean = false;
+			private var mNick : String = "";
+
+			public function OnAddedToStage(e:Event) : void
+			{
+				var params : URLVariables = ReadURLParamaters();
+				
+				if (params["Nick"] != null)
+				{
+					mNick = params["Nick"];
+					StartChat();
+				}
+				else
+				{
+					var nickForm : IFlexDisplayObject = PopUpManager.createPopUp(this, NickForm, true); // popup modal dialog
+					nickForm.addEventListener("NickFormClosed", OnNickFormClosed);
+				}
+			}
+					
+			private function StartChat():void
+			{
+				var params : URLVariables = ReadURLParamaters();
+
+				if (params["NoVideo"] != null && (params["NoVideo"] != "false"))
+				{
+					myMainContainer.setStyle("backgroundColor", 0xFF00FF);
+					myMainContainer.setStyle("top", 0);
+					myMainContainer.setStyle("bottom", 0);
+					myMainContainer.setStyle("left", 0);
+					myMainContainer.setStyle("right", 0);
+					
+					myChatCanvas.height=150;
+					myChatCanvas.setStyle("left", 20);
+					myChatCanvas.setStyle("right", 20);
+					myChatArea.setStyle("left", 20);
+					myChatArea.setStyle("right", 20);
+					myChatArea.setStyle("cornerRadius", 6);
+				
+					myTextInput.parent.removeChild(myTextInput);
+					myUserList.parent.removeChild(myUserList);
+
+					mNoVideo = true;
+				}
+				else
+				{
+					var videoPlayer : DisplayObject = new mVideoPlayerClass;
+					myVideoCanvas.addChild(videoPlayer);
+				}
+
+				myTextInput.addEventListener(KeyboardEvent.KEY_DOWN, OnTextInputKeyDown);
+				myMainContainer.addEventListener(MouseEvent.CLICK, OnDoubleClick);
+
+				Connect();
+			}
+			
+			private function OnDoubleClick(event:MouseEvent):void
+			{
+				if (event.target != myMainContainer)
+					return;
+					
+				if (!mNoVideo)
+					return;
+					
+				if (StageDisplayState.FULL_SCREEN != stage.displayState) 
+					stage.displayState = StageDisplayState.FULL_SCREEN;
+				else
+					stage.displayState = StageDisplayState.NORMAL;
+			}
+
+			public function OnNickFormClosed(event:Event):void
+			{
+				var nickForm : NickForm = event.target as NickForm;
+				mNick = nickForm.myNickInput.text;
+
+				nickForm.removeEventListener("NickFormClosed", OnNickFormClosed);
+
+				StartChat();	
+			}
+
+			private function ReadURLParamaters() : URLVariables
+			{
+				var params : String = ExternalInterface.call("window.location.search.substring");
+				var ret : URLVariables = null;
+
+				try {
+					ret = new URLVariables(params.substring(1))
+				}
+				catch(e:Error) {
+					ret = new URLVariables();
+				}
+
+				return ret;
+			}
+
+			public function OnRemovedFromStage(e:Event) : void
+			{
+				myTextInput.removeEventListener(KeyboardEvent.KEY_DOWN, OnTextInputKeyDown);
+
+				if (mSmartFox != null && mSmartFox.isConnected)
+				{
+					mSmartFox.disconnect();
+					RemoveServerListeners();
+					mSmartFox = null;
+				}
+			}
+
+			private function OnTextInputKeyDown(event:KeyboardEvent):void
+			{
+				if (event.charCode == Keyboard.ENTER)
+				{
+					SendPublicMessage(myTextInput.text);
+					myTextInput.text = "";
+				}
+			}
+
+			private function SubscribeServerListeners() : void
+			{
+				mSmartFox.addEventListener(SFSEvent.onConnection, OnConnection);
+				mSmartFox.addEventListener(SFSEvent.onLogin, OnLogin);
+				mSmartFox.addEventListener(SFSEvent.onRoomListUpdate, OnRoomListUpdate);
+				mSmartFox.addEventListener(SFSEvent.onJoinRoom, OnJoinRoom);
+				mSmartFox.addEventListener(SFSEvent.onUserEnterRoom, OnUserEnterRoom);
+				mSmartFox.addEventListener(SFSEvent.onUserLeaveRoom, OnUserLeaveRoom);
+				mSmartFox.addEventListener(SFSEvent.onPublicMessage, OnPublicMessage);
+
+				mSmartFox.addEventListener(SFSEvent.onJoinRoomError, ReDispatchServerEvent);
+				mSmartFox.addEventListener(SFSEvent.onUserVariablesUpdate, ReDispatchServerEvent);
+			}
+
+			private function RemoveServerListeners() : void
+			{
+				mSmartFox.removeEventListener(SFSEvent.onConnection, OnConnection);
+				mSmartFox.removeEventListener(SFSEvent.onLogin, OnLogin);
+				mSmartFox.removeEventListener(SFSEvent.onRoomListUpdate, OnRoomListUpdate);
+				mSmartFox.removeEventListener(SFSEvent.onJoinRoom, OnJoinRoom);
+				mSmartFox.removeEventListener(SFSEvent.onUserEnterRoom, OnUserEnterRoom);
+				mSmartFox.removeEventListener(SFSEvent.onUserLeaveRoom, OnUserLeaveRoom);
+				mSmartFox.removeEventListener(SFSEvent.onPublicMessage, OnPublicMessage);
+
+				mSmartFox.removeEventListener(SFSEvent.onJoinRoomError, ReDispatchServerEvent);
+				mSmartFox.removeEventListener(SFSEvent.onUserVariablesUpdate, ReDispatchServerEvent);
+			}
+
+			private function ReDispatchServerEvent(event:Event) : void
+			{
+				dispatchEvent(event);
+			}
+
+			public function Connect() : void
+			{
+				mSmartFox = new SmartFoxClient();
+				//mSmartFox.debug = true;
+
+				SubscribeServerListeners();
+				mSmartFox.connect(ServerIP, ServerPort);
+			}
+
+			private function OnRoomListUpdate(event:SFSEvent):void
+			{
+				trace("Received rooms, " + event.params.roomList.length)
+
+				if (mSmartFox.activeRoomId == -1)
+					mSmartFox.joinRoom("Main Room", "", false, false, -1);
+			}
+
+			private function OnJoinRoom(evt:SFSEvent):void
+			{
+				var room : Room = evt.params.room;
+				var userList : Array = room.getUserList();
+
+				var usersArray : ArrayCollection = new ArrayCollection();
+
+				for each(var user : User in userList)
+					usersArray.addItem(user.getName());
+
+				myUserList.dataProvider = usersArray;
+				
+				KeepAlive(new Object());
+			}
+
+			private function OnUserEnterRoom(evt:SFSEvent):void
+			{
+				var usersArray : ArrayCollection = myUserList.dataProvider as ArrayCollection;
+				var user : User = evt.params.user;
+
+				usersArray.addItem(user.getName());
+			}
+
+			private function OnUserLeaveRoom(evt:SFSEvent):void
+			{
+				var usersArray : ArrayCollection = myUserList.dataProvider as ArrayCollection;
+
+				usersArray.removeItemAt(usersArray.getItemIndex(evt.params.userName));
+			}
+
+			private function OnPublicMessage(evt:SFSEvent):void
+			{
+				var msgString : String = evt.params.sender.getName() + "> " + evt.params.message;
+
+				if (mNoVideo)
+				{
+					msgString = "<font size='20'>" + msgString + "</font>";
+					myChatArea.htmlText += msgString;
+				}
+				else
+					myChatArea.text += (myChatArea.text.length == 0? "" : "\n")  + msgString;
+
+				setTimeout(function():void{myChatArea.verticalScrollPosition = myChatArea.maxVerticalScrollPosition;},100);
+			}
+
+			private function OnLogin(event:SFSEvent):void
+			{
+				if (event.params.success as Boolean)
+					trace("Successfully logged in as " + event.params.name)
+				else
+					trace("Zone login error; the following error occurred: " + event.params.error)
+			}
+
+			private function OnConnection(event:SFSEvent) : void
+			{
+				if (event.params.success as Boolean)
+				{
+					trace("Connection successfull");
+					dispatchEvent(new Event("ConnectionReady"));
+	                mSmartFox.login(Zone, mNick, "");
+		        }
+		        else
+		        {
+		        	trace("Can't connect!");
+		        }
+			}
+
+			public function SendPublicMessage(msg:String):void
+			{
+				if (mSmartFox != null && mSmartFox.isConnected)
+					mSmartFox.sendPublicMessage(msg);
+			}
+
+			public function KeepAlive(obj:Object):void
+			{
+				mSmartFox.setUserVariables(obj);
+				
+				setTimeout(function():void{KeepAlive(obj);}, 3000);
+			}
+
+			private var mSmartFox : SmartFoxClient;
+		]]>
+	</mx:Script>
+
+	<mx:Canvas id="myMainContainer" width="854" height="624" horizontalCenter="0" verticalCenter="0" backgroundColor="#D4D4D4">
+		<mx:UIComponent width="854" height="480" id="myVideoCanvas">
+		</mx:UIComponent>
+
+		<mx:Canvas id="myChatCanvas" bottom="0" height="136" width="100%">
+			<mx:List id="myUserList" width="162" bottom="9" top="0" right="10"></mx:List>
+			<mx:TextArea id="myChatArea" editable="false" bottom="37" top="0" left="10" right="180"/>
+			<mx:TextInput id="myTextInput" bottom="9" right="180" left="10"/>
+		</mx:Canvas>
+	</mx:Canvas>
+</mx:Application>

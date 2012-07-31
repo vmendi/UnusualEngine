@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flexlib:SuperTabNavigator xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:flexlib="http://code.google.com/p/flexlib/" width="400" height="300">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.TabNavigator;
+			import mx.events.StateChangeEvent;
+			import mx.states.AddChild;
+			import flash.utils.setTimeout;
+			import mx.core.Container;
+			import mx.events.CollectionEventKind;
+			import mx.events.CollectionEvent;
+			import Model.AssetBundle;
+			import mx.managers.FocusManager;
+			import mx.effects.Resize;
+			import utils.GenericEvent;
+			import flexlib.events.SuperTabEvent;
+			import flexlib.controls.tabBarClasses.SuperTab;
+			import mx.collections.ArrayCollection;
+			import Model.AssetLibrary;
+			import mx.binding.utils.BindingUtils;
+
+			public function Init(controller : EditorController) : void
+			{
+				mController = controller;
+				mBundleCollection = mController.TheAssetBundleController.FilteredAssetBundles;
+
+				mBundleCollection.addEventListener(CollectionEvent.COLLECTION_CHANGE, OnCollectionChange);
+
+				closePolicy=SuperTab.CLOSE_SELECTED;
+				addEventListener(SuperTabEvent.TAB_CLOSE, OnSuperTabClosed, false, 0, true);
+
+				this.addEventListener(Event.CHANGE, OnTabSelectedChange);
+
+				CreateAll();
+			}
+
+			private function OnTabSelectedChange(event:Event):void
+			{
+				RefreshAssetBundleSelectedInController();
+			}
+
+			private function OnCollectionChange(event:CollectionEvent):void
+			{
+				if (event.kind == CollectionEventKind.ADD)
+				{
+					// Podríamos mirar event.items, pero así sincronizamos la posición
+					SynchronizeAdded();
+				}
+				else
+				if (event.kind == CollectionEventKind.REMOVE)
+				{
+					SynchronizeRemoved();
+				}
+				else
+				if (event.kind == CollectionEventKind.REFRESH)
+				{
+					var select : Container = this.selectedChild;
+
+					SynchronizeAdded();
+					SynchronizeRemoved();
+
+					if (this.getChildren().indexOf(select) != -1)
+						this.selectedChild = select;
+					else if (this.numChildren != 0)
+						this.selectedIndex = 0;
+				}
+				
+				// A veces al hacer cambios, sale sin seleccionar (bug de flex o de SuperTabNavigator...)
+				// También, cuando el control está vacio, salta una excepcion pq selectedIndex 0
+				try
+				{
+					if (this.selectedIndex != -1)
+						this.getTabAt(this.selectedIndex).selected = true;					
+				}
+				catch (e : Error) {	}
+				
+				RefreshAssetBundleSelectedInController();
+			}
+			
+			private function RefreshAssetBundleSelectedInController() : void
+			{
+				if (this.selectedChild != null)
+					mController.TheAssetBundleController.SelectedAssetBundle = (this.selectedChild as AssetObjectsHList).TheAssetBundle;
+				else
+					mController.TheAssetBundleController.SelectedAssetBundle = null;
+			}
+
+			private function SynchronizeAdded():void
+			{
+				for (var c:int = 0; c < mBundleCollection.length; c++)
+					if (!IsAmongMyChildren(mBundleCollection[c]))
+						CreateHList(mBundleCollection[c], c);
+			}
+
+			private function SynchronizeRemoved():void
+			{
+				for each(var child : AssetObjectsHList in getChildren())
+					if (!mBundleCollection.contains(child.TheAssetBundle))
+						removeChild(child);
+			}
+
+			private function IsAmongMyChildren(bundle:AssetBundle):Boolean
+			{
+				for each(var child : AssetObjectsHList in getChildren())
+					if (child.TheAssetBundle == bundle)
+						return true;
+				return false;
+			}
+
+			private function CreateAll() : void
+			{
+				for each(var b : AssetBundle in mBundleCollection)
+					CreateHList(b);
+					
+				RefreshAssetBundleSelectedInController();
+			}
+
+			private function RemoveAll() : void
+			{
+				removeAllChildren();
+				
+				RefreshAssetBundleSelectedInController();
+			}
+
+			private function RemoveHList(bundle : AssetBundle):void
+			{
+				for each(var hList : AssetObjectsHList in getChildren())
+				{
+					if (hList.TheAssetBundle == bundle)
+					{
+						removeChild(hList);
+						break;
+					}
+				}
+			}
+
+			private function CreateHList(bundle : AssetBundle, position:int = -1):void
+			{
+				var hList : AssetObjectsHList = new AssetObjectsHList();
+				hList.percentWidth = 100;
+				hList.percentHeight = 100;
+
+				if (position == -1)
+					addChild(hList);
+				else
+					addChildAt(hList, position);
+
+				hList.Init(mController, bundle);
+			}
+
+			private function OnSuperTabClosed(e : SuperTabEvent) : void
+			{
+				var closedHList : AssetObjectsHList = getChildAt(e.tabIndex) as AssetObjectsHList;
+
+				mController.TheAssetBundleController.RemoveAssetBundleFromLibrary(closedHList.TheAssetBundle);
+
+				// Ya hemos cerrado nosotros, puesto que el RemoveAssetBundleFromLibrary ha provocado un CHANGE en mBundleCollection
+				e.preventDefault();
+			}
+
+
+			private var mController : EditorController;
+			private var mBundleCollection : ArrayCollection;
+		]]>
+	</mx:Script>
+
+</flexlib:SuperTabNavigator>

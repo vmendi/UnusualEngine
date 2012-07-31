@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   addedToStage="OnAddedToStage();"
+					   backgroundColor="0xFFFFFF"
+					   frameRate="30"
+					   width="1200" height="900"
+					   showStatusBar="false"
+					   creationComplete="OnCreationComplete(event);"
+					   closing="OnClosing();"
+					   styleName="myFont"
+					   windowMove="OnWindowMove(event)">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		
+		.myFont {
+			fontFamily: "_typewriter";
+			fontSize: 12;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+
+	<fx:Script>
+		<![CDATA[
+			import Editor.EditorController;
+			import Editor.EditorView;
+			import Editor.LoadSaveController;
+			
+			import EditorUtils.Config;
+			
+			import GameComponents.GameComponentEnumerator;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexNativeWindowBoundsEvent;
+			
+			import utils.FPSCounter;
+			import utils.KeyboardHandler;
+			import utils.Point3;
+
+		protected function OnWindowMove(event:FlexNativeWindowBoundsEvent):void
+		{
+			Config.GetInstance().WriteValue("WindowPos", new Point(event.afterBounds.x, event.afterBounds.y).toString());
+		}
+
+		private function OnCreationComplete(event: Event): void
+        {
+			Config.GetInstance().Create();
+			
+			if (Config.GetInstance().HasKey("WindowPos"))
+			{	
+				var coords : Point = Point3.PointFromString(Config.GetInstance().ReadValue("WindowPos"));
+				
+				nativeWindow.x = coords.x;
+				nativeWindow.y = coords.y;
+			}
+			else
+			{
+		        nativeWindow.x = (Capabilities.screenResolutionX - nativeWindow.width) / 2;
+		        nativeWindow.y = (Capabilities.screenResolutionY - nativeWindow.height) / 2;
+			}
+        }
+
+		protected function OnAddedToStage() : void
+		{
+			stage.quality = StageQuality.BEST;
+
+			KeyboardHandler.Init(stage);
+			FPSCounter.Init(stage, new Point(0, 21));
+
+			mLoadSaveController = new LoadSaveController(new LoadSaveHelperAIR());
+
+			mLoadSaveController.addEventListener("GameModelNew", OnGameModelChanged);
+			mLoadSaveController.addEventListener("GameModelLoaded", OnGameModelChanged);
+			mLoadSaveController.addEventListener("LoadError", OnLoadError);
+			
+			if (Config.GetInstance().HasKey("LastOpenenedProject"))
+			{
+				mLoadSaveController.LoadProjectUrl(Config.GetInstance().ReadValue("LastOpenenedProject"));
+			}
+			else
+			{
+				InitializeViewAndController();
+			}
+		}
+
+		private function OnClosing() : void
+		{
+			// Si cierran la ventana principal, salimos de todas
+			NativeApplication.nativeApplication.exit();
+		}
+
+		private function InitializeViewAndController() : void
+		{
+			mEditorController = new EditorController(new GameComponentEnumerator, mLoadSaveController);
+			mEditorView = new EditorView();
+			addElement(mEditorView);
+
+			mEditorView.Init(mEditorController, new WindowHelperAIR());
+		}
+
+		protected function OnLoadError(event:ErrorEvent):void
+		{
+			Alert.show(event.text, "Error de carga...", Alert.OK);
+		}
+
+		protected function OnGameModelChanged(event:Event):void
+		{
+			if (mEditorView != null)
+				removeElement(mEditorView);
+			
+			Config.GetInstance().WriteValue("LastOpenenedProject", mLoadSaveController.TheGameModel.GameModelUrl);
+				
+			InitializeViewAndController();
+		}
+
+		private var mLoadSaveController : LoadSaveController;
+		private var mEditorController : EditorController;
+		private var mEditorView : EditorView;
+
+
+		]]>
+	</fx:Script>
+
+</s:WindowedApplication>

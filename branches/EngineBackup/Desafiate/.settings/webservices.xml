@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectRoot>
+<url value="http://82.223.211.112/services/MainService.asmx?WSDL">
+<service name="MainService">
+<port name="MainServiceSoap">
+<operations>
+<operation name="getUsuario(parameters: getUsuario): getUsuarioResponse"/>
+<operation name="saveUsuario(parameters: saveUsuario): saveUsuarioResponse"/>
+</operations>
+</port>
+</service>
+<asPackage absPath="C:\Users\vmendi\Documents\Unusual SVN\UnusualEngine\trunk\Desafiate\src\generated\webservices" name="generated.webservices">
+<mainAsClass name="MainService.as"/>
+<otherAsClass name="BaseMainServiceSchema.as"/>
+<otherAsClass name="IMainService.as"/>
+<otherAsClass name="BaseMainService.as"/>
+<otherAsClass name="SaveUsuario_request.as"/>
+<otherAsClass name="SaveUsuarioResultEvent.as"/>
+<otherAsClass name="GetUsuarioResultEvent.as"/>
+<otherAsClass name="GetUsuario_request.as"/>
+</asPackage>
+</url>
+<url value="http://www.desafiate.es/services/MainService.asmx?WSDL">
+<service name="MainService">
+<port name="MainServiceSoap">
+<operations>
+<operation name="sessionStart(parameters: sessionStart): sessionStartResponse"/>
+<operation name="sessionStartNew(parameters: sessionStartNew): sessionStartNewResponse"/>
+<operation name="keepAlive(parameters: keepAlive): keepAliveResponse"/>
+<operation name="getChecker(parameters: getChecker): getCheckerResponse"/>
+<operation name="getHOF(parameters: getHOF): getHOFResponse"/>
+<operation name="getUsuario(parameters: getUsuario): getUsuarioResponse"/>
+<operation name="saveUsuario(parameters: saveUsuario): saveUsuarioResponse"/>
+<operation name="savePuntuacion(parameters: savePuntuacion): savePuntuacionResponse"/>
+<operation name="addLogro(parameters: addLogro): addLogroResponse"/>
+</operations>
+</port>
+</service>
+<asPackage absPath="C:\Users\vmendi\Documents\UnusualSVN\UnusualEngine\trunk\Desafiate\src\es\desafiate" name="es.desafiate">
+<mainAsClass name="MainService.as"/>
+<otherAsClass name="KeepAliveResultEvent.as"/>
+<otherAsClass name="ArrayOfUserData.as"/>
+<otherAsClass name="AddLogroResultEvent.as"/>
+<otherAsClass name="IMainService.as"/>
+<otherAsClass name="String0.as"/>
+<otherAsClass name="SavePuntuacionResultEvent.as"/>
+<otherAsClass name="KeepAlive_request.as"/>
+<otherAsClass name="SessionStartNewResultEvent.as"/>
+<otherAsClass name="ArrayOfUserData0.as"/>
+<otherAsClass name="SaveUsuarioResultEvent.as"/>
+<otherAsClass name="GetUsuario_request.as"/>
+<otherAsClass name="GetChecker_request.as"/>
+<otherAsClass name="SessionStartNew_request.as"/>
+<otherAsClass name="BaseMainServiceSchema.as"/>
+<otherAsClass name="SavePuntuacion_request.as"/>
+<otherAsClass name="GetCheckerResultEvent.as"/>
+<otherAsClass name="SessionStartResultEvent.as"/>
+<otherAsClass name="GetHOF_request.as"/>
+<otherAsClass name="AddLogro_request.as"/>
+<otherAsClass name="UserData.as"/>
+<otherAsClass name="SaveUsuario_request.as"/>
+<otherAsClass name="BaseMainService.as"/>
+<otherAsClass name="GetHOFResultEvent.as"/>
+<otherAsClass name="SessionStart_request.as"/>
+<otherAsClass name="GetUsuarioResultEvent.as"/>
+</asPackage>
+</url>
+</projectRoot>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectRoot>
+<url value="http://www.embellecetupiel.com/services/service.asmx?WSDL">
+<service name="Service">
+<port name="ServiceSoap">
+<operations>
+<operation name="SaveTestResult(parameters: SaveTestResult): SaveTestResultResponse"/>
+<operation name="SaveRegister(parameters: SaveRegister): SaveRegisterResponse"/>
+</operations>
+</port>
+</service>
+<asPackage absPath="C:\Users\vmendi\Documents\UnusualSVN\UnusualEngine\trunk\Dove\src\com\embellecetupiel" name="com.embellecetupiel">
+<mainAsClass name="DoveWebService.as"/>
+<otherAsClass name="RegisterFields.as"/>
+<otherAsClass name="BaseDoveWebService.as"/>
+<otherAsClass name="IDoveWebService.as"/>
+<otherAsClass name="BaseDoveWebServiceSchema.as"/>
+<otherAsClass name="SaveRegisterResultEvent.as"/>
+<otherAsClass name="SaveRegister_request.as"/>
+<otherAsClass name="SaveTestResult_request.as"/>
+<otherAsClass name="SaveTestResultResultEvent.as"/>
+<otherAsClass name="ArrayOfString.as"/>
+</asPackage>
+</url>
+</projectRoot>

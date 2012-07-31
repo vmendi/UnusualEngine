@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="760" height="65"
+		 creationComplete="CreationCompleteHandler(event)" xmlns:GameView="GameView.*">
+	
+	<fx:Style source="styles.css" />
+
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import GameModel.TeamModel;
+		
+		import mx.events.FlexEvent;
+
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+			mTeamModel = mMainGameModel.TheTeamModel;
+		}
+
+		[Bindable] private var mMainGameModel : MainGameModel;
+		[Bindable] private var mTeamModel : TeamModel;
+		
+	]]></fx:Script>
+	
+	<fx:Declarations>
+		<s:GlowFilter id="txtGlowFilter" blurX="18" blurY="18" color="0xFFFFFF"/>
+	</fx:Declarations>
+	
+	<mx:Image source="@Embed(source='/Assets/General.swf', symbol='StatusPanelBackground')"/>
+	
+	<GameView:BadgeTeamBig x="10" y="10" TeamName="{mTeamModel.PredefinedTeamName}" />
+	<GameView:BadgeCategory x="354" y="25" TrueSkill="{mTeamModel.TheTeam.TrueSkill}" />
+		
+	<s:Label x="432" y="34" text="{mTeamModel.TheTeam.TrueSkill}" width="60" height="20" id="MyTrueSkillLabel" styleName="whiteBoldVeryBig" textAlign="center" filters="{txtGlowFilter}"/>	
+	<s:Label x="503" y="34" text="{mTeamModel.TheTeam.XP}" width="44" height="20" id="MyXPLabel" styleName="whiteBoldVeryBig" textAlign="center" filters="{txtGlowFilter}"/>
+	<s:Label x="573" y="34" text="{mTeamModel.TheTeam.Fitness}%" width="60" height="20" id="MyTrainingLabel" styleName="whiteBoldVeryBig" textAlign="center" filters="{txtGlowFilter}"/>
+	
+	<s:Group x="658" y="28" width="102" height="37">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center" gap="5" />
+		</s:layout>
+		<mx:Image source="@Embed(source='/Assets/General.swf', symbol='IconMahouPoints')"/>
+		<s:Label x="701" y="34" text="{mTeamModel.TheTeam.SkillPoints}" id="MySkillPointsLabel" styleName="whiteBoldVeryBig" textAlign="left" filters="{txtGlowFilter}"/>
+	</s:Group>
+	
+
+	<s:Label x="76" y="34" text="{mTeamModel.PredefinedTeamName}" width="204" styleName="whiteBoldVeryBig" id="MyPredefinedTeamLabel" filters="{txtGlowFilter}"/> 
+	<s:Label x="76" y="7" text="{mTeamModel.TheTeam.Name}" width="204" styleName="whiteBoldBig" id="MyTeamNameLabel" filters="{txtGlowFilter}"/>
+</s:Group>

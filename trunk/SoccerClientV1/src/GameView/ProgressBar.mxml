@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:Team="GameView.Team.*" xmlns:GameView="GameView.*"
+		 minWidth="20" minHeight="9"
+		 preinitialize="PreinitializeHandler(event)">
+	
+	<fx:Style source="styles.css"/>
+	
+	<fx:Declarations>
+		<s:Animate id="MyAnimateEffect"
+				   target="{MyRedBar}" repeatCount="1" 
+				   repeatBehavior="loop"
+				   duration="500">
+			<s:motionPaths>
+				<s:SimpleMotionPath property="percentWidth" valueFrom="0" valueTo="100"/>
+			</s:motionPaths>
+		</s:Animate>
+	</fx:Declarations>
+	
+	<fx:Script><![CDATA[
+		import mx.effects.Tween;
+		import mx.events.FlexEvent;
+		
+		protected function PreinitializeHandler(event:FlexEvent):void
+		{
+			Percent = 0;
+			MaxPercent = 0;
+		}		
+		
+		public function get AnimationEnabled() : Boolean { return mAnimationEnabled; }
+		public function set AnimationEnabled(v : Boolean) : void { mAnimationEnabled = v; }
+				
+		[Bindable]
+		public function get Percent() : Number { return mPercent; }
+		public function set Percent(v:Number) : void 
+		{ 
+			MyAnimateEffect.stop();
+			
+			if (!isNaN(MyRedBar.percentWidth) && mAnimationEnabled)
+			{
+				(MyAnimateEffect.motionPaths[0] as SimpleMotionPath).valueFrom = MyRedBar.percentWidth;
+				mPercent = v;			
+				(MyAnimateEffect.motionPaths[0] as SimpleMotionPath).valueTo = mPercent;
+			
+				MyAnimateEffect.play();
+			}
+			else
+			{
+				mPercent = v;
+				MyRedBar.percentWidth = mPercent;
+			}
+		}
+		
+		[Bindable]
+		public function get MaxPercent() : Number { return mMaxPercent; }
+		public function set MaxPercent(v:Number) : void 
+		{ 
+			mMaxPercent = v;
+			MyTransparentBar.percentWidth = mMaxPercent;
+		}
+
+		private var mAnimationEnabled : Boolean = true;
+		private var mPercent : Number = 100;
+		private var mMaxPercent : Number = 100;
+		
+	]]></fx:Script>
+
+	<s:Group left="0" right="0" top="0" bottom="0">
+
+		<s:Rect left="0" right="0" top="0" bottom="0" radiusX="4" radiusY="4">
+			<s:stroke>
+				<s:SolidColorStroke caps="none" color="#B2B2B2" joints="miter" miterLimit="4"  weight="1" pixelHinting="true"/>
+			</s:stroke>
+			<s:fill>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry alpha="1.0" color="#A7A7A7" ratio="0"/>
+					<s:GradientEntry alpha="1.0" color="#D0D0D0" ratio="0.48"/>
+					<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="0.50"/>
+					<s:GradientEntry alpha="1.0" color="#FFFFFF" ratio="1"/>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		
+		<s:Rect id="MyTransparentBar" left="0" right="0" top="0" bottom="0" radiusX="4" radiusY="4">
+			<s:stroke>
+				<s:SolidColorStroke caps="none" color="#BF0000" joints="miter" miterLimit="4" weight="1" pixelHinting="true"/>
+			</s:stroke>
+		</s:Rect>
+		
+		<s:Rect id="MyRedBar" left="0" right="0" top="0" bottom="0" radiusX="4" radiusY="4">
+			<s:stroke>
+				<s:SolidColorStroke caps="none" color="#BF0000" joints="miter" miterLimit="4" weight="1" pixelHinting="true"/>
+			</s:stroke>
+			<s:fill>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry alpha="1.0" color="#FF575C" ratio="0"/>
+					<s:GradientEntry alpha="1.0" color="#FF575C" ratio="0.50"/>
+					<s:GradientEntry alpha="1.0" color="#E00000" ratio="0.62"/>
+					<s:GradientEntry alpha="1.0" color="#C70000" ratio="1"/>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		
+	</s:Group>
+
+</s:Group>

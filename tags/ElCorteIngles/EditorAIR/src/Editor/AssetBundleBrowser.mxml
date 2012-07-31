@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+		import mx.events.ListEvent;
+		import utils.reflection.ArrayPeer;
+		import mx.collections.ArrayCollection;
+		import Model.AssetBundle;
+		import utils.GenericEvent;
+
+		public function Init(controller : AssetBundleController) : void
+		{
+			mController = controller;
+
+			myBundlesList.addEventListener(ListEvent.CHANGE, OnSelectionChange);
+
+			myBundlesList.labelFunction = AddTrailingSpaces;
+			myBundlesList.dataProvider = mController.BundleGroupNames;
+			myBundlesList.selectedItem = mController.SelectedBundleGroupName;
+		}
+
+		private function OnSelectionChange(event:ListEvent):void
+		{
+			mController.SelectedBundleGroupName = myBundlesList.selectedItem as String;
+		}
+
+		private function AddTrailingSpaces(item:Object):String
+		{
+			var itemString : String = item as String;
+
+			if (itemString != mController.ALL)
+				itemString = TRAILING_SPACES.concat(itemString);
+			else
+				itemString = VIEW_ALL;
+
+			return itemString;
+		}
+
+		private const VIEW_ALL : String = "View All";
+		private const TRAILING_SPACES : String = "    ";
+		private var mController : AssetBundleController;
+
+		]]>
+	</mx:Script>
+
+	<mx:List id="myBundlesList" width="100%" height="100%">
+	</mx:List>
+
+</mx:Canvas>

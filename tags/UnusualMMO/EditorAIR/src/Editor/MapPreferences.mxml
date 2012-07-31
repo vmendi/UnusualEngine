@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow title="Map Preferences" showCloseButton="true" close="CloseDialog(event)"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="175" creationComplete="CreationComplete(event)">
+
+	<mx:Script>
+		<![CDATA[
+			import Model.IsoCamera;
+			import Model.GameModel;
+			import mx.managers.SystemManager;
+			import mx.managers.IFocusManager;
+			import mx.managers.FocusManager;
+			import mx.managers.PopUpManager;
+          	import mx.events.CloseEvent;
+
+          	public function Init(controller : EditorController) : void
+			{
+				mController = controller;
+			}
+
+          	private function CreationComplete(e:Event):void
+          	{
+                PopUpManager.centerPopUp(this);
+
+                myCellSizeInMeters.text = GameModel.CellSizeMeters.toString();
+                myPixelsPerMeter.text = IsoCamera.PixelsPerMeter.toString();
+            }
+
+            private function Close():void
+            {
+            	PopUpManager.removePopUp(this);
+            }
+
+          	private function CloseDialog(event : Event) : void
+          	{
+            	Close();
+          	}
+
+          	private function SaveAndClose(event : Event) : void
+          	{
+				GameModel.CellSizeMeters = parseFloat(myCellSizeInMeters.text);
+                IsoCamera.PixelsPerMeter = parseFloat(myPixelsPerMeter.text);
+
+                // Informamos hacia afuera
+            	dispatchEvent(new Event("MapPreferencesSaved"));
+
+                Close();
+          	}
+
+          	private var mController : EditorController;
+		]]>
+	</mx:Script>
+
+	<mx:Form width="100%" height="75%" id="myForm">
+		<mx:FormItem label="CellSizeInMeters:">
+			<mx:TextInput id="myCellSizeInMeters"/>
+		</mx:FormItem>
+		<mx:FormItem label="PixelsPerMeter:">
+			<mx:TextInput id="myPixelsPerMeter"/>
+		</mx:FormItem>
+	</mx:Form>
+
+	<mx:Canvas width="100%">
+		<mx:Button width="70" label="OK" horizontalCenter="-40" click="SaveAndClose(event)"/>
+		<mx:Button width="70" label="Cancel" horizontalCenter="+40" click="CloseDialog(event)"/>
+	</mx:Canvas>
+
+
+</mx:TitleWindow>

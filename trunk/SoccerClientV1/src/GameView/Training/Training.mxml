@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:GameView="GameView.*"
+		 xmlns:Training="GameView.Training.*"
+		 width="100%" height="100%"
+		 creationComplete="CreationCompleteHandler(event)">
+	
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import GameModel.TrainingModel;
+		
+		import GameView.HierarchyUtils;
+		
+		import SoccerServerV1.TransferModel.vo.PendingTraining;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.FlexEvent;
+		
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();	
+			mTrainingModel = mMainGameModel.TheTrainingModel;
+			
+			for (var c:int=0; c < MyTrainingItemsGroup.numElements; c++)
+			{
+				var trItem : TrainingItem = MyTrainingItemsGroup.getElementAt(c) as TrainingItem;
+				
+				if (trItem != null)
+					trItem.TheTrainingDefinition = mTrainingModel.TrainingDefinitions[c];
+			}
+			
+			BindingUtils.bindSetter(RefreshItemsState, mTrainingModel, "CurrentPendingTraining");
+		}
+		
+		protected function Trainingitem_clickHandler(event:MouseEvent):void
+		{
+			var theTrainingItem : TrainingItem = (event.currentTarget as TrainingItem);
+			
+			if (theTrainingItem.currentState == "Normal")
+				mTrainingModel.Train((event.currentTarget as TrainingItem).TheTrainingDefinition.Name, null);			
+		}
+		
+		private function RefreshItemsState(currTraining : PendingTraining) : void
+		{
+			if (currTraining != null)
+			{
+				for (var c:int=0; c < MyTrainingItemsGroup.numElements; c++)
+				{
+					var trItem : TrainingItem = MyTrainingItemsGroup.getElementAt(c) as TrainingItem;
+					
+					if (trItem != null)
+					{
+						if (trItem.TheTrainingDefinition.TrainingDefinitionID == currTraining.TrainingDefinition.TrainingDefinitionID)
+							trItem.currentState = "Training";
+						else
+							trItem.currentState = "NotAvailable";
+					}
+				}
+			}
+			else
+			{
+				for (c=0; c < MyTrainingItemsGroup.numElements; c++)
+				{
+					trItem = MyTrainingItemsGroup.getElementAt(c) as TrainingItem;
+					
+					if (trItem != null)
+						trItem.currentState = "Normal";
+				}	
+			}				
+		}
+		
+		[Bindable] private var mMainGameModel : MainGameModel;
+		[Bindable] private var mTrainingModel : TrainingModel;
+		
+	]]></fx:Script>
+	
+	<s:Panel title="ENTRENAMIENTOS" skinClass="GameView.Skins.DefaultPanelSkin" top="10" bottom="10" left="10" width="740" height="420">
+		
+		<s:Label x="20" y="14" width="700" text="Es importante tener tu equipo bien entrenado: un valor entrenamiento bajo modificará negativamente los valores medios de tu equipo. Accede aquí periódicamente y selecciona el entrenamiento que quieres que realicen tus jugadores." styleName="whiteBoldBig" textAlign="center" />
+		
+		<s:Group x="10" y="64" id="MyTrainingItemsGroup">
+			<s:layout>
+				<s:TileLayout columnWidth="355" rowHeight="115" horizontalGap="10" verticalGap="10"/>
+			</s:layout>
+			
+			<Training:TrainingItem click="Trainingitem_clickHandler(event)"/>
+			<Training:TrainingItem click="Trainingitem_clickHandler(event)"/>
+			<Training:TrainingItem click="Trainingitem_clickHandler(event)"/>
+			
+			<Training:TrainingItem click="Trainingitem_clickHandler(event)"/>
+			<Training:TrainingItem click="Trainingitem_clickHandler(event)"/>
+			<Training:TrainingItem click="Trainingitem_clickHandler(event)"/>
+		</s:Group>
+		
+	</s:Panel>	
+	
+</s:Group>

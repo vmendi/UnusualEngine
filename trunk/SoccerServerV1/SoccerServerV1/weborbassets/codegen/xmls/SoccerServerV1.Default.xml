@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespaces>
+  <runtime path="C:/Users/vmendi/Documents/UnusualSVN/UnusualEngine/trunk/SoccerServerV1/SoccerServerV1/" serverRootURL="http://localhost/SoccerServerV1" serverPort="80" />
+  <namespace name="SoccerServerV1" fullname="SoccerServerV1">
+    <datatype name="SoccerDataModelDataContext" fullname="SoccerServerV1.SoccerDataModelDataContext" typeNamespace="SoccerServerV1">
+      <field name="LeagueRankings" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.LeagueRanking&gt;" />
+      <field name="TrainingDefinitions" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.TrainingDefinition&gt;" />
+      <field name="Matches" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.Match&gt;" />
+      <field name="MatchParticipations" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.MatchParticipation&gt;" />
+      <field name="OfficialMatchParticipations" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.OfficialMatchParticipation&gt;" />
+      <field name="OfficialMatches" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.OfficialMatch&gt;" />
+      <field name="OfficialWeeks" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.OfficialWeek&gt;" />
+      <field name="PendingTrainings" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.PendingTraining&gt;" />
+      <field name="Players" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.Player&gt;" />
+      <field name="PredefinedSoccerPlayers" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.PredefinedSoccerPlayer&gt;" />
+      <field name="PredefinedTeams" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.PredefinedTeam&gt;" />
+      <field name="Sessions" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.Session&gt;" />
+      <field name="SoccerPlayers" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.SoccerPlayer&gt;" />
+      <field name="SpecialTrainingDefinitions" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.SpecialTrainingDefinition&gt;" />
+      <field name="SpecialTrainings" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.SpecialTraining&gt;" />
+      <field name="Teams" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.Table&lt;SoccerServerV1.BDDModel.Team&gt;" />
+    </datatype>
+    <namespace name="BDDModel" fullname="SoccerServerV1.BDDModel">
+      <datatype name="LeagueRanking" fullname="SoccerServerV1.BDDModel.LeagueRanking" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="OfficialRankingPositionID" type="int" fulltype="int" nativetype="int" />
+        <field name="PredefinedTeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="Points" type="int" fulltype="int" nativetype="int" />
+        <field name="Goals" type="int" fulltype="int" nativetype="int" />
+        <field name="MatchesCount" type="int" fulltype="int" nativetype="int" />
+        <field name="WinningsCount" type="int" fulltype="int" nativetype="int" />
+        <field name="DrawsCount" type="int" fulltype="int" nativetype="int" />
+        <field name="VirtualPoints" type="int" fulltype="int" nativetype="int" />
+        <field name="VirtualGoals" type="int" fulltype="int" nativetype="int" />
+        <field name="VirtualMatchesCount" type="int" fulltype="int" nativetype="int" />
+        <field name="VirtualWinningsCount" type="int" fulltype="int" nativetype="int" />
+        <field name="VirtualDrawsCount" type="int" fulltype="int" nativetype="int" />
+        <field name="PredefinedTeam" type="PredefinedTeam" fulltype="SoccerServerV1.BDDModel.PredefinedTeam" nativetype="SoccerServerV1.BDDModel.PredefinedTeam" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="PredefinedTeam" fullname="SoccerServerV1.BDDModel.PredefinedTeam" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="PredefinedTeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="Name" type="String" fulltype="String" nativetype="String" />
+        <field name="LeagueRankings" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.LeagueRanking&gt;" />
+        <field name="OfficialMatchParticipations" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.OfficialMatchParticipation&gt;" />
+        <field name="PredefinedSoccerPlayers" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.PredefinedSoccerPlayer&gt;" />
+        <field name="Teams" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.Team&gt;" />
+      </datatype>
+      <datatype name="OfficialMatchParticipation" fullname="SoccerServerV1.BDDModel.OfficialMatchParticipation" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="OfficialMatchParticipationID" type="int" fulltype="int" nativetype="int" />
+        <field name="OfficialMatchID" type="int" fulltype="int" nativetype="int" />
+        <field name="PredefinedTeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="AsHome" type="Boolean" fulltype="Boolean" nativetype="bool" />
+        <field name="Goals" type="Number" fulltype="Number" nativetype="Nullable&lt;int&gt;" />
+        <field name="OfficialMatch" type="OfficialMatch" fulltype="SoccerServerV1.BDDModel.OfficialMatch" nativetype="SoccerServerV1.BDDModel.OfficialMatch" typeNamespace="SoccerServerV1.BDDModel" />
+        <field name="PredefinedTeam" type="PredefinedTeam" fulltype="SoccerServerV1.BDDModel.PredefinedTeam" nativetype="SoccerServerV1.BDDModel.PredefinedTeam" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="OfficialMatch" fullname="SoccerServerV1.BDDModel.OfficialMatch" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="OfficialMatchID" type="int" fulltype="int" nativetype="int" />
+        <field name="OfficialWeekID" type="int" fulltype="int" nativetype="int" />
+        <field name="OfficialMatchParticipations" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.OfficialMatchParticipation&gt;" />
+        <field name="OfficialWeek" type="OfficialWeek" fulltype="SoccerServerV1.BDDModel.OfficialWeek" nativetype="SoccerServerV1.BDDModel.OfficialWeek" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="OfficialWeek" fullname="SoccerServerV1.BDDModel.OfficialWeek" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="OfficialWeekID" type="int" fulltype="int" nativetype="int" />
+        <field name="DateStart" type="Date" fulltype="Date" nativetype="DateTime" />
+        <field name="DateEnd" type="Date" fulltype="Date" nativetype="DateTime" />
+        <field name="OfficialMatches" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.OfficialMatch&gt;" />
+      </datatype>
+      <datatype name="PredefinedSoccerPlayer" fullname="SoccerServerV1.BDDModel.PredefinedSoccerPlayer" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="PredefinedSoccerPlayerID" type="int" fulltype="int" nativetype="int" />
+        <field name="Name" type="String" fulltype="String" nativetype="String" />
+        <field name="PredefinedTeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="Type" type="int" fulltype="int" nativetype="int" />
+        <field name="IsSubstitute" type="Boolean" fulltype="Boolean" nativetype="bool" />
+        <field name="Number" type="int" fulltype="int" nativetype="int" />
+        <field name="PredefinedTeam" type="PredefinedTeam" fulltype="SoccerServerV1.BDDModel.PredefinedTeam" nativetype="SoccerServerV1.BDDModel.PredefinedTeam" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="Team" fullname="SoccerServerV1.BDDModel.Team" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="TeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="PredefinedTeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="Name" type="String" fulltype="String" nativetype="String" />
+        <field name="Formation" type="String" fulltype="String" nativetype="String" />
+        <field name="TrueSkill" type="int" fulltype="int" nativetype="int" />
+        <field name="XP" type="int" fulltype="int" nativetype="int" />
+        <field name="SkillPoints" type="int" fulltype="int" nativetype="int" />
+        <field name="Energy" type="int" fulltype="int" nativetype="int" />
+        <field name="Fitness" type="int" fulltype="int" nativetype="int" />
+        <field name="Mean" type="Number" fulltype="Number" nativetype="double" />
+        <field name="StandardDeviation" type="Number" fulltype="Number" nativetype="double" />
+        <field name="MatchParticipations" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.MatchParticipation&gt;" />
+        <field name="PendingTraining" type="PendingTraining" fulltype="SoccerServerV1.BDDModel.PendingTraining" nativetype="SoccerServerV1.BDDModel.PendingTraining" typeNamespace="SoccerServerV1.BDDModel" />
+        <field name="SoccerPlayers" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.SoccerPlayer&gt;" />
+        <field name="SpecialTrainings" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.SpecialTraining&gt;" />
+        <field name="Player" type="Player" fulltype="SoccerServerV1.BDDModel.Player" nativetype="SoccerServerV1.BDDModel.Player" typeNamespace="SoccerServerV1.BDDModel" />
+        <field name="PredefinedTeam" type="PredefinedTeam" fulltype="SoccerServerV1.BDDModel.PredefinedTeam" nativetype="SoccerServerV1.BDDModel.PredefinedTeam" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="MatchParticipation" fullname="SoccerServerV1.BDDModel.MatchParticipation" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="MatchParticipationID" type="int" fulltype="int" nativetype="int" />
+        <field name="MatchID" type="int" fulltype="int" nativetype="int" />
+        <field name="TeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="AsHome" type="Boolean" fulltype="Boolean" nativetype="bool" />
+        <field name="Goals" type="int" fulltype="int" nativetype="int" />
+        <field name="TurnsPlayed" type="int" fulltype="int" nativetype="int" />
+        <field name="Match" type="Match" fulltype="SoccerServerV1.BDDModel.Match" nativetype="SoccerServerV1.BDDModel.Match" typeNamespace="SoccerServerV1.BDDModel" />
+        <field name="Team" type="Team" fulltype="SoccerServerV1.BDDModel.Team" nativetype="SoccerServerV1.BDDModel.Team" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="Match" fullname="SoccerServerV1.BDDModel.Match" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="MatchID" type="int" fulltype="int" nativetype="int" />
+        <field name="DateStarted" type="Date" fulltype="Date" nativetype="DateTime" />
+        <field name="DateEnded" type="Object" fulltype="Object" nativetype="Object" />
+        <field name="MatchParticipations" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.MatchParticipation&gt;" />
+      </datatype>
+      <datatype name="PendingTraining" fullname="SoccerServerV1.BDDModel.PendingTraining" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="TeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="TrainingDefinitionID" type="int" fulltype="int" nativetype="int" />
+        <field name="TimeStart" type="Date" fulltype="Date" nativetype="DateTime" />
+        <field name="TimeEnd" type="Date" fulltype="Date" nativetype="DateTime" />
+        <field name="TrainingDefinition" type="TrainingDefinition" fulltype="SoccerServerV1.BDDModel.TrainingDefinition" nativetype="SoccerServerV1.BDDModel.TrainingDefinition" typeNamespace="SoccerServerV1.BDDModel" />
+        <field name="Team" type="Team" fulltype="SoccerServerV1.BDDModel.Team" nativetype="SoccerServerV1.BDDModel.Team" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="TrainingDefinition" fullname="SoccerServerV1.BDDModel.TrainingDefinition" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="TrainingDefinitionID" type="int" fulltype="int" nativetype="int" />
+        <field name="Name" type="String" fulltype="String" nativetype="String" />
+        <field name="Description" type="String" fulltype="String" nativetype="String" />
+        <field name="FitnessDelta" type="int" fulltype="int" nativetype="int" />
+        <field name="Time" type="int" fulltype="int" nativetype="int" />
+        <field name="PendingTrainings" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.PendingTraining&gt;" />
+      </datatype>
+      <datatype name="SoccerPlayer" fullname="SoccerServerV1.BDDModel.SoccerPlayer" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="SoccerPlayerID" type="int" fulltype="int" nativetype="int" />
+        <field name="TeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="Name" type="String" fulltype="String" nativetype="String" />
+        <field name="Number" type="int" fulltype="int" nativetype="int" />
+        <field name="Type" type="int" fulltype="int" nativetype="int" />
+        <field name="FieldPosition" type="int" fulltype="int" nativetype="int" />
+        <field name="Weight" type="int" fulltype="int" nativetype="int" />
+        <field name="Sliding" type="int" fulltype="int" nativetype="int" />
+        <field name="Power" type="int" fulltype="int" nativetype="int" />
+        <field name="IsInjured" type="Boolean" fulltype="Boolean" nativetype="bool" />
+        <field name="Team" type="Team" fulltype="SoccerServerV1.BDDModel.Team" nativetype="SoccerServerV1.BDDModel.Team" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="SpecialTraining" fullname="SoccerServerV1.BDDModel.SpecialTraining" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="SpecialTrainingID" type="int" fulltype="int" nativetype="int" />
+        <field name="TeamID" type="int" fulltype="int" nativetype="int" />
+        <field name="SpecialTrainingDefinitionID" type="int" fulltype="int" nativetype="int" />
+        <field name="EnergyCurrent" type="int" fulltype="int" nativetype="int" />
+        <field name="IsCompleted" type="Boolean" fulltype="Boolean" nativetype="bool" />
+        <field name="SpecialTrainingDefinition" type="SpecialTrainingDefinition" fulltype="SoccerServerV1.BDDModel.SpecialTrainingDefinition" nativetype="SoccerServerV1.BDDModel.SpecialTrainingDefinition" typeNamespace="SoccerServerV1.BDDModel" />
+        <field name="Team" type="Team" fulltype="SoccerServerV1.BDDModel.Team" nativetype="SoccerServerV1.BDDModel.Team" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="SpecialTrainingDefinition" fullname="SoccerServerV1.BDDModel.SpecialTrainingDefinition" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="SpecialTrainingDefinitionID" type="int" fulltype="int" nativetype="int" />
+        <field name="Name" type="String" fulltype="String" nativetype="String" />
+        <field name="Description" type="String" fulltype="String" nativetype="String" />
+        <field name="RequiredXP" type="int" fulltype="int" nativetype="int" />
+        <field name="EnergyStep" type="int" fulltype="int" nativetype="int" />
+        <field name="EnergyTotal" type="int" fulltype="int" nativetype="int" />
+        <field name="SpecialTrainings" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.SpecialTraining&gt;" />
+      </datatype>
+      <datatype name="Player" fullname="SoccerServerV1.BDDModel.Player" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="PlayerID" type="int" fulltype="int" nativetype="int" />
+        <field name="Name" type="String" fulltype="String" nativetype="String" />
+        <field name="Surname" type="String" fulltype="String" nativetype="String" />
+        <field name="FacebookID" type="String" fulltype="String" nativetype="String" />
+        <field name="CreationDate" type="Date" fulltype="Date" nativetype="DateTime" />
+        <field name="LastLoginDate" type="Date" fulltype="Date" nativetype="DateTime" />
+        <field name="Liked" type="Boolean" fulltype="Boolean" nativetype="bool" />
+        <field name="Sessions" type="ArrayCollection" fulltype="ArrayCollection" nativetype="System.Data.Linq.EntitySet&lt;SoccerServerV1.BDDModel.Session&gt;" />
+        <field name="Team" type="Team" fulltype="SoccerServerV1.BDDModel.Team" nativetype="SoccerServerV1.BDDModel.Team" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+      <datatype name="Session" fullname="SoccerServerV1.BDDModel.Session" typeNamespace="SoccerServerV1.BDDModel">
+        <field name="SessionID" type="int" fulltype="int" nativetype="int" />
+        <field name="PlayerID" type="int" fulltype="int" nativetype="int" />
+        <field name="FacebookSession" type="String" fulltype="String" nativetype="String" />
+        <field name="Player" type="Player" fulltype="SoccerServerV1.BDDModel.Player" nativetype="SoccerServerV1.BDDModel.Player" typeNamespace="SoccerServerV1.BDDModel" />
+      </datatype>
+    </namespace>
+    <service name="Default" fullname="SoccerServerV1.Default" namespace="SoccerServerV1" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+      <method name="AddOnPreRenderCompleteAsync" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="beginHandler" type="Object" nativetype="Object" />
+        <arg name="endHandler" type="Object" nativetype="Object" />
+        <arg name="state" type="Object" nativetype="Object" />
+      </method>
+      <method name="ApplyStyleSheetSkin" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="page" type="Object" nativetype="Object" />
+      </method>
+      <method name="CreateHtmlTextWriterFromType" type="Object" nativetype="Object" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="tw" type="Object" nativetype="Object" />
+        <arg name="writerType" type="Object" nativetype="Object" />
+      </method>
+      <method name="DataBind" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="DesignerInitialize" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="Dispose" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="EnsurePlayerIsCreated" type="Player" nativetype="SoccerServerV1.BDDModel.Player" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="theContext" type="SoccerDataModelDataContext" nativetype="SoccerServerV1.SoccerDataModelDataContext" />
+        <arg name="facebookUserID" type="String" nativetype="String" />
+        <arg name="theFBUser" type="GetFBUserDelegate" nativetype="SoccerServerV1.GetFBUserDelegate" />
+      </method>
+      <method name="EnsureSessionIsCreated" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="theContext" type="SoccerDataModelDataContext" nativetype="SoccerServerV1.SoccerDataModelDataContext" />
+        <arg name="thePlayer" type="Player" nativetype="SoccerServerV1.BDDModel.Player" />
+        <arg name="sessionKey" type="String" nativetype="String" />
+      </method>
+      <method name="ExecuteRegisteredAsyncTasks" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="FindControl" type="Object" nativetype="Object" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="id" type="String" nativetype="String" />
+      </method>
+      <method name="Focus" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="GetDataItem" type="Object" nativetype="Object" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="GetPostBackClientEvent" type="String" nativetype="String" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+        <arg name="argument" type="String" nativetype="String" />
+      </method>
+      <method name="GetPostBackClientHyperlink" type="String" nativetype="String" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+        <arg name="argument" type="String" nativetype="String" />
+      </method>
+      <method name="GetPostBackEventReference" type="String" nativetype="String" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+        <arg name="argument" type="String" nativetype="String" />
+      </method>
+      <method name="GetTypeHashCode" type="int" nativetype="int" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="GetValidators" type="ArrayCollection" nativetype="Object[]" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="validationGroup" type="String" nativetype="String" />
+      </method>
+      <method name="HasControls" type="Boolean" nativetype="bool" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="IsClientScriptBlockRegistered" type="Boolean" nativetype="bool" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="key" type="String" nativetype="String" />
+      </method>
+      <method name="IsStartupScriptRegistered" type="Boolean" nativetype="bool" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="key" type="String" nativetype="String" />
+      </method>
+      <method name="LoadControl" type="Object" nativetype="Object" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="virtualPath" type="String" nativetype="String" />
+      </method>
+      <method name="LoadTemplate" type="Object" nativetype="Object" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="virtualPath" type="String" nativetype="String" />
+      </method>
+      <method name="MapPath" type="String" nativetype="String" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="virtualPath" type="String" nativetype="String" />
+      </method>
+      <method name="ParseControl" type="Object" nativetype="Object" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="content" type="String" nativetype="String" />
+      </method>
+      <method name="ProcessRequest" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="context" type="Object" nativetype="Object" />
+      </method>
+      <method name="ReadStringResource" type="Object" nativetype="Object" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="t" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterArrayDeclaration" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="arrayName" type="String" nativetype="String" />
+        <arg name="arrayValue" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterAsyncTask" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="task" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterClientScriptBlock" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="key" type="String" nativetype="String" />
+        <arg name="script" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterHiddenField" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="hiddenFieldName" type="String" nativetype="String" />
+        <arg name="hiddenFieldInitialValue" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterOnSubmitStatement" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="key" type="String" nativetype="String" />
+        <arg name="script" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterRequiresControlState" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterRequiresPostBack" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterRequiresRaiseEvent" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterRequiresViewStateEncryption" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="RegisterStartupScript" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="key" type="String" nativetype="String" />
+        <arg name="script" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterViewStateHandler" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx" />
+      <method name="RenderControl" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="writer" type="Object" nativetype="Object" />
+      </method>
+      <method name="RequiresControlState" type="Boolean" nativetype="bool" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="ResolveClientUrl" type="String" nativetype="String" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="relativeUrl" type="String" nativetype="String" />
+      </method>
+      <method name="ResolveUrl" type="String" nativetype="String" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="relativeUrl" type="String" nativetype="String" />
+      </method>
+      <method name="SetFocus" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="clientID" type="String" nativetype="String" />
+      </method>
+      <method name="SetRenderMethodDelegate" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="renderMethod" type="Object" nativetype="Object" />
+      </method>
+      <method name="TestDeviceFilter" type="Boolean" nativetype="bool" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="filterName" type="String" nativetype="String" />
+      </method>
+      <method name="UnregisterRequiresControlState" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="Validate" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="validationGroup" type="String" nativetype="String" />
+      </method>
+      <method name="VerifyRenderingInServerForm" type="void" nativetype="Void" containsvalues="0" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+    </service>
+  </namespace>
+</namespaces>

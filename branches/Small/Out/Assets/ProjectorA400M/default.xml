@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequences>
+	<sequence>
+		<step kind="video">
+			<url>Assets/ProjectorA400M/6_entradaGrua.flv</url>
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian3.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian4.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian5.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian6.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian7.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian8.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/7_salidabarco.flv</url>
+		</step>
+		<step kind="video">
+			<url>Assets/ProjectorA400M/Cierre.flv</url>
+		</step>
+	</sequence>
+	<sequence>
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/4_subiendo_M-109.flv</url>
+		</step>	
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational3.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational4.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational5.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/5_twoTiger.flv</url>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational5.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational7.swf</url>
+			<showTime>2</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational6.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational8.swf</url>
+			<showTime>6</showTime>
+		</step>		
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/5_salidastryker.flv</url>
+		</step>
+		<step kind="video">
+			<url>Assets/ProjectorA400M/Cierre.flv</url>
+		</step>
+	</sequence>
+	
+	<sequence>
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/1_rodillosCompleto.flv</url>
+		</step>
+		<step kind="video">
+			<url>Assets/ProjectorA400M/Cierre.flv</url>
+		</step>
+	</sequence>
+	
+	<sequence>
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/6_entradaGrua.flv</url>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian3.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian4.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian5.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian6.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian7.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Humanitarian/cartelasHumanitarian8.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/7_salidabarco.flv</url>
+		</step>
+		
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/4_subiendo_M-109.flv</url>
+		</step>	
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational3.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational4.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational5.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/5_twoTiger.flv</url>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational5.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational7.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational6.swf</url>
+			<showTime>6</showTime>
+		</step>
+		<step kind="swf">
+			<url>Assets/ProjectorA400M/Operational/cartelasOperational8.swf</url>
+			<showTime>6</showTime>
+		</step>		
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/5_salidastryker.flv</url>
+		</step>
+		
+		
+		<step kind="video">
+			<overlaySWF>Assets/ProjectorA400M/logoA400M.swf</overlaySWF>
+			<url>Assets/ProjectorA400M/1_rodillosCompleto.flv</url>
+		</step>
+		
+		<step kind="video">
+			<url>Assets/ProjectorA400M/Cierre.flv</url>
+		</step>
+		
+	</sequence>
+
+</sequences>

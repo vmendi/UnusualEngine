@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:MenuBar xmlns:mx="http://www.adobe.com/2006/mxml" dataProvider="{TopMenuBarData}"
+	labelField="@label" showRoot="false" itemClick="OnItemClick(event);"  >
+
+<mx:XML id="TopMenuBarData" xmlns="">
+<menuitem label="Menu">
+	<menuitem label="File">
+		<menuitem label="New" command="New"/>
+	    <menuitem label="Open Level..." command="OpenProject"/>
+	    <menuitem label="Save Level" command="SaveProject"/>
+	    <menuitem label="Save Level as..." command="SaveAsProject"/>
+	    <menuitem type="separator"/>
+	    <menuitem label="Map Preferences..." command="MapPreferences"/>
+	    <menuitem type="separator"/>
+	    <menuitem label="Open Quiz Editor..." command="OpenQuizEditor"/>
+	    <menuitem type="separator"/>
+	</menuitem>
+
+	<Library label="Library">
+		<menuitem label="Import Bundle..." command="ImportAssetBundle"/>
+	    <menuitem label="Export Bundle..." command="ExportAssetBundle"/>
+	    <menuitem type="separator"/>
+	    <menuitem label="Add SWF..." command="AddAssetBundleToLibrary"/>
+	</Library>
+
+	<Background label="Background">
+		<ToggleEditBackground label="Edit Background..." command="EditBackground"/>
+		<menuitem type="separator"/>
+		<SelectBackgroundSWF label="Select Background SWF..." command="SelectBackgroundSWF"/>
+		<DeleteBackground label="Erase Background SWF" command="DeleteBackground"/>
+		<menuitem type="separator"/>
+		<ToggleGridRendering label="No Grid" command="ToggleGridRendering"/>
+		<ToggleWalkableRendering label="No Walkable" command="ToggleWalkableRendering"/>
+	</Background>
+
+	<Game label="Game">
+	    <Run label="Run" command="PlayGame"/>
+	    <Pause label="Pause" command="PauseGame" enabled="false"/>
+	    <Stop label="Stop" command="StopGame" enabled="false"/>
+	</Game>
+</menuitem>
+</mx:XML>
+
+<mx:Script>
+	<![CDATA[
+	import mx.core.Application;
+	import mx.managers.PopUpManager;
+	import mx.core.IFlexDisplayObject;
+	import Editor.QuizEditor.QuizEditor;
+	import mx.events.MenuEvent;
+
+	public function Init(controller : EditorController, windowHelper:IWindowHelper) : void
+	{
+		mController = controller;
+		mWindowHelper = windowHelper;
+
+		RefreshGridAndWalkable();
+	}
+
+	private function RefreshGridAndWalkable() : void
+	{
+		RefreshGridRenderingEnabled(mController.TheGameModel.TheIsoCamera.TheIsoBackground.GridRenderingEnabled);
+		RefreshWalkableRenderingEnabled(mController.TheGameModel.TheIsoCamera.TheIsoBackground.WalkableRenderingEnabled);
+	}
+
+	private function RefreshGridRenderingEnabled(enabled : Boolean):void
+	{
+		if (enabled)
+			TopMenuBarData.child("Background").child("ToggleGridRendering").@label = "No Grid";
+		else
+			TopMenuBarData.child("Background").child("ToggleGridRendering").@label = "Grid";
+	}
+
+	private function RefreshWalkableRenderingEnabled(enabled : Boolean) : void
+	{
+		if (enabled)
+			TopMenuBarData.child("Background").child("ToggleWalkableRendering").@label = "No Walkable";
+		else
+			TopMenuBarData.child("Background").child("ToggleWalkableRendering").@label = "Walkable";
+	}
+
+	protected function OnItemClick(event:MenuEvent) : void
+	{
+		if (event.item.@command == "EditBackground")
+		{
+			var isOn : Boolean = mController.ToggleEditBackground();
+
+			if (isOn)
+			{
+				TopMenuBarData.child("Background").child("ToggleEditBackground").@label = "Exit background edition...";
+
+				TopMenuBarData.child("File").@enabled = false;
+				TopMenuBarData.child("Library").@enabled = false;
+				TopMenuBarData.child("Game").@enabled = false;
+				this.dataProvider.refresh();
+			}
+			else
+			{
+				TopMenuBarData.child("Background").child("ToggleEditBackground").@label = "Edit Background...";
+
+				TopMenuBarData.child("File").@enabled = true;
+				TopMenuBarData.child("Library").@enabled = true;
+				TopMenuBarData.child("Game").@enabled = true;
+				this.dataProvider.refresh();
+			}
+
+			RefreshGridAndWalkable();
+		}
+		else
+		if (event.item.@command == "ToggleGridRendering")
+		{
+			RefreshGridRenderingEnabled(mController.ToggleGridRendering());
+		}
+		else
+		if(event.item.@command == "ToggleWalkableRendering")
+		{
+			RefreshWalkableRenderingEnabled(mController.ToggleWalkableRendering());
+		}
+		else
+		if (event.item.@command == "PlayGame")
+		{
+			mController.PlayGame();
+
+			TopMenuBarData.child("Game").child("Run").@enabled = false;
+			TopMenuBarData.child("Game").child("Pause").@enabled = true;
+			TopMenuBarData.child("Game").child("Stop").@enabled = true;
+
+			TopMenuBarData.child("Background").@enabled = false;
+			this.dataProvider.refresh();
+		}
+		else
+		if (event.item.@command == "StopGame")
+		{
+			mController.StopGame();
+
+			TopMenuBarData.child("Game").child("Run").@enabled = true;
+			TopMenuBarData.child("Game").child("Pause").@enabled = false;
+			TopMenuBarData.child("Game").child("Stop").@enabled = false;
+
+			TopMenuBarData.child("Background").@enabled = true;
+			this.dataProvider.refresh();
+		}
+		else
+		if (event.item.@command == "PauseGame")
+		{
+			var isPaused : Boolean = mController.TheGameModel.TogglePause();
+			if (isPaused)
+				TopMenuBarData.child("Game").child("Pause").@label = "Resume";
+			else
+				TopMenuBarData.child("Game").child("Pause").@label = "Pause";
+		}
+		else
+		if (event.item.@command == "DeleteBackground")
+		{
+			mController.DeleteBackground();
+		}
+		else
+		if (event.item.@command == "OpenQuizEditor")
+		{
+			// Como es "Otra vista" no tenemos que pasarlo por el controlador, la vista está autorizada
+			// a abrir otras vistas o a modificarse a sí misma sin informar al controlador/modelo
+			var quizEditor : QuizEditor = new QuizEditor();
+			quizEditor.Init(mController.TheLoadSaveController.TheLoadSaveHelper, mWindowHelper);
+			mWindowHelper.OpenWindow("Quiz Editor", 1024, 768, quizEditor);
+		}
+		else
+		if (event.item.@command == "MapPreferences")
+		{
+			var mapPrefForm : MapPreferences = PopUpManager.createPopUp(Application.application.parent,
+																		MapPreferences, true) as MapPreferences;
+			mapPrefForm.Init(mController);
+			mapPrefForm.addEventListener("MapPreferencesSaved", OnMapPreferencesSaved, false, 0, true);
+		}
+		else
+		if (event.item.@command == "ImportAssetBundle" || 
+			event.item.@command == "ExportAssetBundle" ||
+			event.item.@command == "AddAssetBundleToLibrary")
+		{
+			mController.TheAssetBundleController[event.item.@command]();
+		}
+		else
+		{
+			mController.TheLoadSaveController[event.item.@command]();
+		}
+	}
+
+	private function OnMapPreferencesSaved(e:Event):void
+	{
+		mController.ForceModelRefresh();
+	}
+
+
+	private var mController : EditorController;
+	private var mWindowHelper : IWindowHelper;
+
+	]]>
+</mx:Script>
+
+</mx:MenuBar>

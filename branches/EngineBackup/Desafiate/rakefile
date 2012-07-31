@@ -1,0 +1,116 @@
+BUILD_OUTPUT_DIR = 'build/'
+RELEASE_FOLDER = 'bin-release/'
+SRC_DIR = '../Out/'
+PROJECT_FOLDER = 'Desafiate/'
+PROJECT_MAIN_EXE = 'Desafiate'
+
+REMOTE_DIR = '/cygdrive/c/inetpub/wwwroot'
+REMOTE_HOST = '82.223.211.112'
+REMOTE_USER = 'ftpuser'
+
+task :clean do
+	puts 'Deleting output dir...'
+
+	if File.directory?(BUILD_OUTPUT_DIR)
+		remove_dir(BUILD_OUTPUT_DIR)
+	end
+end
+
+task :prepareBuildOutputDir => [:clean] do
+	puts 'Creating build output dir...'
+
+	unless File.directory?(BUILD_OUTPUT_DIR)
+		mkdir_p BUILD_OUTPUT_DIR
+	end
+end
+
+task :exeCopy => [:prepareBuildOutputDir] do
+	puts 'Copying main files'
+
+	cp SRC_DIR + 'crossdomain.xml', BUILD_OUTPUT_DIR
+	cp SRC_DIR + PROJECT_MAIN_EXE + '.swf', BUILD_OUTPUT_DIR
+	
+	cp Dir.glob(SRC_DIR + '*.html'), BUILD_OUTPUT_DIR
+	cp Dir.glob(SRC_DIR + '*.css'), BUILD_OUTPUT_DIR
+	
+	# Queremos evitar la copia del .svn, por eso montamos este pifostio... 
+	# ...Por no saber hacer un glob (o lo que sea) excluyendo	
+	targetImagesDir = BUILD_OUTPUT_DIR + "images/"
+	unless File.directory?(targetImagesDir)
+		mkdir_p targetImagesDir
+	end
+	cp Dir.glob(SRC_DIR + 'images/*.*'), targetImagesDir
+	
+	targetJS = BUILD_OUTPUT_DIR + "js/"
+	unless File.directory?(targetJS)
+		mkdir_p targetJS
+	end
+	cp Dir.glob(SRC_DIR + 'js/*.*'), targetJS
+	
+	targetLogros = BUILD_OUTPUT_DIR + "logros/"
+	unless File.directory?(targetLogros)
+		mkdir_p targetLogros
+	end
+	cp Dir.glob(SRC_DIR + 'logros/*.*'), targetLogros
+end
+
+task :releaseCopy do
+	puts 'Copying release .swf'
+	
+	cp RELEASE_FOLDER + PROJECT_MAIN_EXE + '.swf', BUILD_OUTPUT_DIR
+end
+
+task :assetCopy => [:prepareBuildOutputDir] do
+  	puts 'Copying assets...'
+
+  	# Let's copy all the Map definitions
+  	targetMapsDir = BUILD_OUTPUT_DIR + 'Maps/' + PROJECT_FOLDER
+
+  	unless File.directory?(targetMapsDir)
+		mkdir_p targetMapsDir
+	end
+
+	cp_r Dir.glob(SRC_DIR + 'Maps/' + PROJECT_FOLDER + "*.xml"), targetMapsDir
+
+	# Now we copy the assets: swf, jpg, flv, xml, mp3
+	targetAssetsDir = BUILD_OUTPUT_DIR + "Assets/" + PROJECT_FOLDER
+	srcAssetsDir = SRC_DIR + "Assets/" + PROJECT_FOLDER
+
+  	FileList[srcAssetsDir + '**/*.swf',
+  			 srcAssetsDir + '**/*.html',
+  			 srcAssetsDir + '**/*.jpg',
+  			 srcAssetsDir + '**/*.flv',
+  			 srcAssetsDir + '**/*.xml',
+  			 srcAssetsDir + '**/*.mp3'].each do |src|
+
+  		# Puesto que estamos cogiendo subdirectorios, tenemos que crearlos en el destino
+  		targetSubDir = (File.dirname(src)+'/').gsub(srcAssetsDir, '')
+ 		targetSubDir = targetAssetsDir + targetSubDir
+
+  		unless File.directory?(targetSubDir)
+  			mkdir_p targetSubDir
+  		end
+
+  		# Y ahora la copia del archivo en sí mismo... estaría bien que cp creara el subdirectorio destino, pero no lo hace,
+  		# así que hay que crearlo con lo anterior
+  		cp src, targetSubDir
+	end
+end
+
+task :publish do
+	puts 'RSyncing...'
+
+	rsync_cmd = 'rsync -avz --rsync-path=\'CYGWIN=nontsec rsync\' --rsh=\'ssh -o StrictHostKeyChecking=no\' ' +
+             	 BUILD_OUTPUT_DIR + ' ' + REMOTE_USER + '@' +
+             	 REMOTE_HOST + ':' + REMOTE_DIR
+
+	system rsync_cmd
+end
+
+task :release => [:assetCopy, :exeCopy, :releaseCopy, :publish] do
+	puts 'End release build'
+end
+
+task :default => [:assetCopy, :exeCopy, :publish] do
+	puts 'End default build'
+end

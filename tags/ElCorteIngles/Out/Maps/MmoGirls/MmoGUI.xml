@@ -1,0 +1,32 @@
+<AssetBundle>
+      <ImportURL/>
+      <SWFURL>Assets/MmoGirls/MmoGUI.swf</SWFURL>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>GUINavegacion</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Render2DComponent</ClassName>
+          <Attrib>
+            <Name>ScreenPos</Name>
+            <Value>(x=0, y=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ZOrder</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HideOnStart</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+</AssetBundle>

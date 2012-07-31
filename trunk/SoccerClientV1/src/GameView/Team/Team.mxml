@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:GameView="GameView.*"
+		 xmlns:Team="GameView.Team.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%"
+		 creationComplete="CreationCompleteHandler(event)" >
+	
+	<fx:Style source="../styles.css"/>
+	
+	<fx:Script><![CDATA[
+		import GameModel.SpecialTrainingModel;
+		import GameModel.TeamModel;
+		
+		import GameView.HierarchyUtils;
+		import GameView.MainView;
+		import GameView.Skins.ButtonDarkGreySkin;
+		import GameView.Skins.ButtonGreySkin;
+		
+		import mx.events.FlexEvent;
+
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mTeamModel = SoccerClientV1.GetMainGameModel().TheTeamModel;
+			mSpecialTrainingModel = SoccerClientV1.GetMainGameModel().TheSpecialTrainingModel;
+		}
+		
+		protected function ClickHandler(event:MouseEvent):void
+		{
+			(HierarchyUtils.FindParentOfType(this, "GameView::MainView") as MainView).ChangeStateToSpecialTrainings();
+		}
+		
+		[Bindable]
+		private var mTeamModel : TeamModel;
+		
+		[Bindable]
+		private var mSpecialTrainingModel : SpecialTrainingModel;
+
+	]]></fx:Script>
+
+	<s:Group top="10" bottom="10" left="10">
+		<s:layout><s:VerticalLayout gap="10"/></s:layout>
+		
+		<s:Panel title="TÁCTICAS" skinClass="GameView.Skins.DefaultPanelSkin" controlBarVisible="true" width="188" height="142">
+<!--		<s:controlBarContent>
+				<s:Button label="?" width="30" skinClass="GameView.Skins.ButtonDarkGreySkin" />
+			</s:controlBarContent>-->
+			<s:layout><s:VerticalLayout paddingTop="15" gap="15" horizontalAlign="center"  /></s:layout>
+			<Team:FormationSelector />
+			<s:Label width="168" text="Desbloquea nuevas alineaciones aumentando tu nivel de XP" 
+					 maxDisplayedLines="3" textAlign="center" styleName="whiteBoldMediumArial" />
+		</s:Panel>
+
+		<s:Panel title="HABILIDADES" skinClass="GameView.Skins.DefaultPanelSkin" controlBarVisible="true" width="188" height="318">
+<!--		<s:controlBarContent>
+				<s:Button label="?" width="30" skinClass="GameView.Skins.ButtonDarkGreySkin" />
+			</s:controlBarContent>-->
+			<s:layout><s:VerticalLayout horizontalAlign="center" paddingTop="19" gap="15" /></s:layout>
+			<GameView:SpecialSkillsBrowser SpecialSkillIDs="{mSpecialTrainingModel.CompletedSpecialTrainingIDs}"/>
+			<s:Label width="158" textAlign="center" maxDisplayedLines="3"
+					 text="Consigue nuevas habilidades entrenando a tu equipo" styleName="whiteBoldMediumArial" />
+			<s:Button width="168" height="27" label="ENTRENAR HABILIDADES" skinClass="GameView.Skins.ButtonGreySkin"
+					  click="ClickHandler(event)"/>
+		</s:Panel>
+	</s:Group>	
+
+	<Team:Field top="0" horizontalCenter="0" dataProvider="{mTeamModel.FieldSoccerPlayers}"/> 
+	<Team:Substitutes top="364" horizontalCenter="0" dataProvider="{mTeamModel.SubstituteSoccerPlayers}"/>
+
+	<Team:CapPanel width="188" right="10" top="10" bottom="10" title="JUGADOR"/>
+	
+</s:Group>

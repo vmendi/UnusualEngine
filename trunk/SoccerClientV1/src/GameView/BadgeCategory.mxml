@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Script><![CDATA[
+		import mx.events.FlexEvent;
+		
+		[Bindable]
+		public function get TrueSkill() : Number { return mTrueSkill; }		
+		public function set TrueSkill(trueSkill : Number) : void
+		{
+			mTrueSkill = trueSkill;
+			
+			var normalized : int = Math.floor((mTrueSkill / 2000)) + 1;
+
+			if (normalized > 5)
+				normalized = 5;
+			
+			MyBitmap.visible = true;
+			(MyBitmap.content as MovieClip).gotoAndStop("categoria"+normalized.toString());			
+		}
+		
+		private var mTrueSkill : int = -1;
+
+	]]></fx:Script>
+	
+	<mx:Image id="MyBitmap" width="64" visible="false"
+			  source="@Embed(source='/Assets/General.swf', symbol='Categories')" scaleContent="false" />
+</s:Group>

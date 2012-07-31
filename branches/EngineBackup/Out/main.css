@@ -1,0 +1,399 @@
+@charset "utf-8";
+/* CSS Document */
+
+/************ ZONA GENERAL ************/
+
+	body {
+		font-family: Helvetica, Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		margin: 0;
+		padding: 0;
+		background-color: #efefe5;
+	}
+	ul {
+		list-style-type: none;
+	}
+	li {
+		float: left;
+		margin-left: 20px;
+		color: #999;
+		font-size: 12px;
+	}
+	a {
+		color: #999;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	img {
+		border: 0;
+	}
+
+/************ ZONA INDEX ************/
+
+	#wrapper_content {
+		top: 0;
+		width: 99%;
+		z-index: 5;
+		position: absolute;
+		left: 0;
+	}
+	#page_content {
+		margin: auto;
+		width: 1010px;
+		height: 801px;
+		background-image: url('images/NuevaHome_Composicion.jpg');
+		background-repeat: no-repeat;
+	}
+	#flash_zone {
+		width: 1010px;
+		height: 200px;
+		z-index: 1;
+	}
+	#welcome_logged {
+		margin-top: 145px;
+		margin-left: 634px;
+		width: 363px;
+		height: 124px;
+		background-image: url('images/NuevaHome_BotonJugar.jpg');
+		background-repeat: no-repeat;
+		cursor: pointer;
+		position:absolute;
+		z-index: 4;
+	}
+	#welcome_zone {
+		margin-top: 145px;
+		margin-left: 640px;
+		width: 289px;
+		height: 106px;
+		text-align: right;
+		font-size: 16px;
+		color: #666;
+		background-image: url('images/NuevaHome_BotonFacebook.jpg');
+		background-repeat: no-repeat;
+		padding-top: 53px;
+		padding-right: 50px;
+		position: absolute;
+		z-index: 5;
+	}
+	#footer {
+		clear: both;
+		margin: auto;
+		width: 990px;
+		margin-top: 40px;
+		margin-bottom: 10px;
+		padding-left: 0px;
+	}
+	#nav_bar {
+		width: 1010px;
+		height: 10px;
+		margin-top: 600px;
+	}
+	#logo_zone {
+		float: left;
+	}
+	#footer_links {
+		float: right;
+	}
+	#copyright {
+		color: #999;
+		font-size: 12px;
+		float: left;
+		margin-top: 8px;
+		padding: 5px;
+		padding-right: 10px;
+		border-right: 1px solid #999;
+	}
+
+	#share_comp {
+		float: right;
+		margin-top: 15px;
+		margin-right: 10px;
+	}
+	/*#desafiate_text {
+		width: 200px;
+		height: 58px;
+		margin-top: 0px;
+		margin-right: 40px;
+		cursor: pointer;
+		float: right;
+		border: 1px solid black;
+	}*/
+	#micro_text {
+		width: 200px;
+		height: 100px;
+		margin-top: 0px;
+		margin-left: 0px;
+		float: left;
+		cursor: pointer;		
+	}
+	
+	#bases_text {
+		width: 176px;
+		height: 38px;
+		margin-top: 40px;
+		cursor: pointer;
+		float: right;
+	}
+	#bases_text2 {
+		clear: right; 
+		width: 400px;
+		height: 170px;
+		margin-top: 20px;
+		cursor: pointer;
+		float: right;
+	}	
+	#hof_text {
+		clear: right;
+		width: 176px;
+		height: 48px;
+		margin-top: 0px;
+		margin-right: 120px;
+		cursor: pointer;
+		float: right;
+		z-index: 3;
+	}
+	#instrucciones_text {
+		width: 176px;
+		height: 38px;
+		margin-top: 40px;
+		margin-left: 10px;
+		cursor: pointer;
+		float: right;		
+	}
+	#reglink {
+		margin-top: 10px;
+		height: 20px;
+		cursor: pointer;
+	}
+	
+/********************** ZONA HOF **********************/
+	
+	#page_content_hof {
+		text-align: left;
+		width: 900px;
+		margin: auto;
+		position: relative;
+		margin-top: 20px;
+		padding-left: 20px;
+/*		margin-top: 50px;*/
+	}
+	#home_text_hof {
+		width: 100px;
+		height: 38px;
+		margin-top: 310px;
+		margin-left: 80px;
+		cursor: pointer;
+		float: left;
+	}
+	#bases_text_hof {
+		width: 186px;
+		height: 38px;
+		margin-top: 310px;
+		margin-left: 0px;
+		cursor: pointer;
+		float: left;
+	}
+	#hof_text_hof {
+		width: 176px;
+		height: 38px;
+		margin-top: 315px;
+		margin-left: 0px;
+		cursor: pointer;
+		float: left;
+	}
+	#reglink_hof {
+		height: 20px;
+		cursor: pointer;
+	}
+	#main_content_hof {
+	background-image: url(images/hof.jpg);
+	width: 921px;
+	height: 478px;
+	margin: auto;
+	float: left;
+	}
+	#hoftable_hof {
+		font-size: 17px; 
+		margin-left: 300px; 
+		margin-top: 148px;
+	}
+	#hoftable_hof tr {
+		height: 38px;
+	}
+
+/******************* ZONA BASES *******************/
+
+	#wrapper_content_content {
+		width: 99%;
+		z-index: 5;
+		position: absolute;
+		left: 0;
+	}
+	#page_content_bases {
+		margin: auto;
+		width: 921px;
+		padding-left: 20px;
+/*		margin-top: 50px;*/
+	}
+	#flash_zone_content {
+		width: 693px;
+		height: 390px;
+		margin: auto;
+		margin-top: 0;
+		padding-top: 0;
+		background-image: url('images/content_header.jpg');
+		background-repeat: no-repeat;
+	}
+	#desafiate_text_content {
+		width: 200px;
+		height:108px;
+		margin-top: 0px;
+		margin-right: 40px;
+		margin-bottom: 235px;
+		cursor: pointer;
+	}
+
+	#footer_content {
+		margin: auto;
+		width: 680px;
+		padding-right: 10px;
+		margin-top: 40px;
+		padding-bottom: 50px;
+		clear: both;
+	}
+	#nav_bar_content {
+		width: 680px;
+		height: 10px;
+		margin: auto;
+	}
+	#home_text_bases {
+		width: 100px;
+		height: 38px;
+		margin-top: 310px;
+		margin-left: 80px;
+		cursor: pointer;
+		float: left;
+	}
+	#bases_text_bases {
+		width: 186px;
+		height: 38px;
+		margin-top: 310px;
+		margin-left: 0px;
+		cursor: pointer;
+		float: left;
+	}
+	#hof_text_bases {
+		width: 176px;
+		height: 38px;
+		margin-top: 315px;
+		margin-left: 0px;
+		cursor: pointer;
+		float: left;
+	}
+	#reglink_bases {
+		height: 20px;
+		cursor: pointer;
+	}
+	#main_header_bases {
+		background-image: url(images/bases_header.jpg);
+		width: 920px;
+		height: 151px;
+		margin: auto;
+		margin-top: 10px;
+	}
+	#main_content_bases {
+		background-image: url(images/bases_tile.jpg);
+		width: 520px;
+		margin: auto;
+		padding: 20px 200px;
+	}
+	#main_footer_bases {
+		background-image: url(images/bases_footer.jpg);
+		width: 920px;
+		height: 362px;
+		margin: auto;
+	}
+
+/***************** ZONA INSTRUCCIONES ****************/
+
+	#main_header_instrucciones {
+		background-image: url(images/instrucciones_header.jpg);
+		width: 719px;
+		height: 140px;
+		margin: auto;
+		margin-top: 10px;
+	}
+	#main_content_instrucciones {
+		background-image: url(images/instrucciones_tile.jpg);
+		width: 639px;
+		margin: auto;
+		padding: 20px 40px;
+	}
+	#main_content_instrucciones p {
+		padding-left: 30px;
+		padding-right: 100px;
+	}
+	#main_footer_instrucciones {
+		background-image: url(images/instrucciones_bottom.jpg);
+		width: 719px;
+		height: 114px;
+		margin: auto;
+	}
+
+/***************** ZONA DESAFIATE ********************/
+
+	#wrapper_content_des {
+		top: 20px;
+		width: 99%;
+		z-index: 5;
+		position: absolute;
+		left: 0;
+	}
+	#page_content_des {
+		margin: auto;
+		width: 960px;
+		height: 591px;
+		background-image: url(images/marquee.jpg);
+	}
+	
+	#flash_zone_des {
+		width: 960px;
+		height: 591px;
+		overflow: hidden;
+	}
+	#desafiate_text_game {
+		width: 250px;
+		height:50px;
+		margin-top: 0px;
+		margin-right: 40px;
+		cursor: pointer;
+
+	}
+	#flash_movie_des {
+		margin-top: 17px;
+		margin-left: 21px;
+		width: 915px;
+		height: 508px;
+		background: black;
+	}
+	#flash_container_des {
+		width: 915px;
+		height: 508px;
+	}
+	#footer_des {
+		clear: both;
+		margin: auto;
+		width: 940px;
+		margin-top: 90px;
+	}
+	#nav_bar_des {
+		width: 954px;
+		background-image: url(images/sombra.jpg);
+		background-repeat: no-repeat;
+		background-position: 100% 0%;
+		height: 10px;
+		margin-left: 6px;
+		
+	}

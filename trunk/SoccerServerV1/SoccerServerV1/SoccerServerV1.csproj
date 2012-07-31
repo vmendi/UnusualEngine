@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E8FF811B-43D3-4512-B7A8-6DCD32005D79}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SoccerServerV1</RootNamespace>
+    <AssemblyName>SoccerServerV1</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PackageAsSingleFile>true</PackageAsSingleFile>
+    <DesktopBuildPackageLocation>Deploy\Debug\SoccerServerV1.zip</DesktopBuildPackageLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DesktopBuildPackageLocation>Deploy\Release\SoccerServerV1.zip</DesktopBuildPackageLocation>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="SoccerV1ConnectionString-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="dbFullSql">
+            <PreSource Path="Data Source=localhost%3bInitial Catalog=SoccerV1%3bIntegrated Security=True" ScriptSchema="True" ScriptData="True" CopyAllFullTextCatalogs="False" />
+            <Source Path="obj\Release\AutoScripts\SoccerV1ConnectionString-Deployment_SchemaAndData.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <PackageAsSingleFile>true</PackageAsSingleFile>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Facebook.Web, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=5.0.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Npgsql, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL" />
+    <Reference Include="Spring.Core, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="weborb, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\weborb.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Data\Backup.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Deauthorize.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="InviteFriends.aspx" />
+    <Content Include="News.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="NotLoggedInFacebook.aspx" />
+    <Content Include="ServerStats.aspx" />
+    <Content Include="ServerStatsDaily.aspx" />
+    <Content Include="ServerStatsGlobalMatches.aspx" />
+    <Content Include="ServerStatsMatchesControl.ascx" />
+    <Content Include="ServerStatsProfile.aspx" />
+    <Content Include="ServerStatsRanking.aspx" />
+    <Content Include="TestCreateSession.aspx" />
+    <Content Include="TestForm.aspx" />
+    <Content Include="TrueSkillHelper.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Deauthorize.aspx.cs">
+      <DependentUpon>Deauthorize.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Deauthorize.aspx.designer.cs">
+      <DependentUpon>Deauthorize.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="InviteFriends.aspx.cs">
+      <DependentUpon>InviteFriends.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InviteFriends.aspx.designer.cs">
+      <DependentUpon>InviteFriends.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MainService.cs" />
+    <Compile Include="MainServiceRanking.cs" />
+    <Compile Include="MainServiceTeam.cs" />
+    <Compile Include="MainServiceTraining.cs" />
+    <Compile Include="NetEngine\BufferManager.cs" />
+    <Compile Include="NetEngine\INetClientApp.cs" />
+    <Compile Include="NetEngine\NetEngineMain.cs" />
+    <Compile Include="NetEngine\NetMessageHandler.cs" />
+    <Compile Include="NetEngine\NetMessageHandlerPolicyServer.cs" />
+    <Compile Include="NetEngine\NetPlug.cs" />
+    <Compile Include="NetEngine\NetServer.cs" />
+    <Compile Include="NotLoggedInFacebook.aspx.cs">
+      <DependentUpon>NotLoggedInFacebook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NotLoggedInFacebook.aspx.designer.cs">
+      <DependentUpon>NotLoggedInFacebook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Realtime.cs" />
+    <Compile Include="RealtimeMatch.cs" />
+    <Compile Include="RealtimeMatchResult.cs" />
+    <Compile Include="RealtimeMatchBridge.cs" />
+    <Compile Include="RealtimeTests.cs" />
+    <Compile Include="ServerStats.aspx.cs">
+      <DependentUpon>ServerStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerStats.aspx.designer.cs">
+      <DependentUpon>ServerStats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerStatsDaily.aspx.cs">
+      <DependentUpon>ServerStatsDaily.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerStatsDaily.aspx.designer.cs">
+      <DependentUpon>ServerStatsDaily.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerStatsGlobalMatches.aspx.cs">
+      <DependentUpon>ServerStatsGlobalMatches.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerStatsGlobalMatches.aspx.designer.cs">
+      <DependentUpon>ServerStatsGlobalMatches.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerStatsMatchesControl.ascx.cs">
+      <DependentUpon>ServerStatsMatchesControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerStatsMatchesControl.ascx.designer.cs">
+      <DependentUpon>ServerStatsMatchesControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerStatsProfile.aspx.cs">
+      <DependentUpon>ServerStatsProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerStatsProfile.aspx.designer.cs">
+      <DependentUpon>ServerStatsProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerStatsRanking.aspx.cs">
+      <DependentUpon>ServerStatsRanking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerStatsRanking.aspx.designer.cs">
+      <DependentUpon>ServerStatsRanking.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SoccerServerAuthHandler.cs" />
+    <Compile Include="TestCreateSession.aspx.cs">
+      <DependentUpon>TestCreateSession.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestCreateSession.aspx.designer.cs">
+      <DependentUpon>TestCreateSession.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TransferModel.cs" />
+    <Compile Include="SoccerDataModel.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoccerDataModel.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="TestForm.aspx.cs">
+      <DependentUpon>TestForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestForm.aspx.designer.cs">
+      <DependentUpon>TestForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TrueSkillHelper.aspx.cs">
+      <DependentUpon>TrueSkillHelper.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TrueSkillHelper.aspx.designer.cs">
+      <DependentUpon>TrueSkillHelper.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SoccerDataModel.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>SoccerDataModel.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SoccerDataModel.dbml.layout">
+      <DependentUpon>SoccerDataModel.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Skills\Skills.csproj">
+      <Project>{15AD1345-984C-48ED-AF9A-2EAB44E5AA2B}</Project>
+      <Name>Skills</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3252</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

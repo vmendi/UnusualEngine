@@ -1,0 +1,31 @@
+30/04/2010 16:25:00: Inicio de sesión [127.0.0.1:123]
+30/04/2010 16:25:00: Comprobacion de sesión fallida: []
+30/04/2010 16:27:30: Inicio de sesión [127.0.0.1:111]
+30/04/2010 16:27:30: Comprobacion de sesión fallida: []
+30/04/2010 16:34:53: Inicio de sesión [127.0.0.1:1234]
+30/04/2010 16:34:53: Comprobacion de sesión fallida: [KO]
+30/04/2010 16:35:30: Excepcion creacion de sesión
+Facebook.Utility.FacebookException: Session key invalid or no longer valid
+   en Facebook.Utility.Utilities.ParseException(String response, Boolean JSONFormat)
+   en Facebook.Rest.RestBase.processResponse(WebResponse webResponse)
+   en Facebook.Rest.RestBase.SendRequestSynchronous(IDictionary`2 parameterDictionary, Boolean useSession)
+   en Facebook.Rest.RestBase.SendRequest[T](IDictionary`2 parameterDictionary, Boolean useSession)
+   en Facebook.Rest.Users.GetInfo(String uids, Boolean isAsync, GetInfoCallback callback, Object state)
+   en Facebook.Rest.Users.GetInfo(String uids)
+   en Facebook.Rest.Users.GetInfo(Int64 uid)
+   en Facebook.Rest.Users.GetInfo()
+   en Desafiate.MainService.CreateSession(String MyUserID, String MyUserSessionKey) en C:\Users\MCz\Documents\SVN\UnusualEngine\DesafiateWS\Desafiate\MainService.asmx.cs:línea 65
+30/04/2010 16:35:30: Inicio de sesión [127.0.0.1:12345]
+30/04/2010 16:35:30: Comprobacion de sesión fallida: [KO]
+30/04/2010 16:39:27: Excepcion creacion de sesión
+Facebook.Utility.FacebookException: Session key invalid or no longer valid
+   en Facebook.Utility.Utilities.ParseException(String response, Boolean JSONFormat)
+   en Facebook.Rest.RestBase.processResponse(WebResponse webResponse)
+   en Facebook.Rest.RestBase.SendRequestSynchronous(IDictionary`2 parameterDictionary, Boolean useSession)
+   en Facebook.Rest.RestBase.SendRequest[T](IDictionary`2 parameterDictionary, Boolean useSession)
+   en Facebook.Rest.Users.GetInfo(String uids, Boolean isAsync, GetInfoCallback callback, Object state)
+   en Facebook.Rest.Users.GetInfo(String uids)
+   en Facebook.Rest.Users.GetInfo(Int64 uid)
+   en Facebook.Rest.Users.GetInfo()
+   en Desafiate.MainService.CreateSession(String MyUserID, String MyUserSessionKey) en C:\Users\MCz\Documents\SVN\UnusualEngine\DesafiateWS\Desafiate\MainService.asmx.cs:línea 66
+30/04/2010 16:39:27: Comprobacion de sesión fallida: [KO]

@@ -1,0 +1,393 @@
+------------------------------------------------------------------------------------------
+TODO:																			21/09/2010
+------------------------------------------------------------------------------------------
+BUGS:
+- Implementado reseteo del timeout, inmediatamente en el WaitResponse y subido versión cliente y servidor.
+
+- Doble ServerShoot: Se reciben dos server-shoot con los mismos parámetros exactos. Rarísimo
+- Timeout: Se recibe un ServerShoot e inmediatamente un TimeOut. 
+		- Verificar si realmente es inmediatamente. No temos precisión en el tiempo, se muestra en segundos.
+		- Solo 
+
+
+TASK LIST FALTAS:
+
+- Detección de falta: Detección de impacto con una fuerza determinada sin previamente tocar la pelota
+- Detener el juego (la física) al detectar la falta.
+- Reglas de turno de falta : (Cambiar de turno como si de un robo de balón se tratase)
+	- No atravesar bandas
+	- No colisionar con otros jugadores
+- Recolocación de jugador que produce la falta (retroceso en la dirección de ataque comprobando posición válida):
+- Inserción de cartel de interfaz de prueba (el mismo que en el robo de balón)
+- Integración de carteles reales con sus datos de conflicto
+- Diferentes tipos de falta en función de velocidad/jugadores/zona del campo
+- Contabilizar tarjetas
+- Expulsar jugadores
+- Desvanecer jugadores en expulsión
+- Diferentes casos en las faltas 
+- Caso especial de falta al portero. Saque de puerta
+- Carteles de falta en el caso de saque de puerta por falta
+- Recolocación de pasos teniendo en cuenta la posición del balón
+- Fallo al llevar las chapas expulsadas a una misma posición
+- Cartelito de doble amarilla
+- No pitar falta al rozar chapas : Comprobación de ángulos
+- Pintar tarjetas amarillas en la información del jugador
+- Poner tamaño de area correcto
+
+Pendiente:
+	
+	- 1 tiro más en el saque de puerta por falta.
+	
+	- Penalties sin finalmente se hacen
+
+
+- Las skills pueden ser invocadas varias veces si hicieses click muy rápido.
+	Mientras que vuelve el mensaje, se deberían desactivar 
+
+- Los cambios de turno se deben confirmar por red
+- El TimeOut debería funcionar en el servidor
+    
+    
+
+- EVALUAR: Implicaciones de acabar 1er tiempo. Si estamos esperando algun mensaje como timeout o gol, que puede pasar? 
+
+- IMPORTANT: Eventos que se lanzan al servidor pero tenemos que esperar a que lleguen. Deberíamos pausar el timeout
+  mientras esperamos.
+    - Puede llegar el timeout
+    - Puede llegar el fin del tiempo (Dangerous)
+
+- Las acciones de entrada de disparos (todas) deben validar la entrada de usuario activa o no, y al comenzar el envío por red del disparo
+  deben bloquear el interface hasta que termine la simulación, para evitar que con la latencia de red envíe nuevas ordenes 
+
+
+
+- Queda algun detalle en el shutdown : tween-lite
+
+
+- El controlador de posicionamiento del portero debería utilizar la posicion instantanea de la chapa, en vez de guardarla al principio, ya que sino
+  al recibir por red el cambio de la posición del portero se producirá un salto.
+ 
+
+
+- FRAMEWORK ADD
+   - Controlador de animación completo : Player + callbacks, loops, pasar siempre el movieclip a los callback, sencillez (no obligar a retener variables, ni desregistrar, ...
+     cuidado el frame inicial es 1, no 0!!!
+
+
+LANZAR JUEGO
+
+
+- Jugador1: Ejecutar proyecto flash SoccerClienteV1
+- Jugador2: Abrir otra página de navegación cambiando la URL fakesession=2
+- Ir a la pestaña Partido
+- Seleccionar al jugador1
+- Lanzar Reto
+- Cambiar pestaña al jugador 2
+- Ir a la pestaña Partido
+- Aceptar reto
+
+URLS's
+
+http://localhost/SoccerServerV1/TestForm.aspx?FakeSessionKey=1	--> Entorno de desarrollo contra localhost
+http://apps.facebook.com/mahoudev			--> Facebook total pero tirando contra localhost
+
+
+
+- Si al cargar la solution el VS2010 del servidor no consigue cargar un proyecto debido al IIS, debes arrancar el VS2010 con privilegios de administrador 
+
+INTEGRACION RED
+ 
+ - Server Side
+ 
+   - Match.cs : La lógica de mi partido en el lado del servidor
+   - MainRealTimeMatch.cs : Puente en el servidor para pasar todas las llamadas entrantes de los clientes al servidor de juego
+   - MainRealTime.cs : Creación del cliente de chapas (objeto Match) 
+
+PREOCUPACIONES:
+
+- La sincronía entre partidas mezclando física y tick de juego
+- La sincronización del tiempo EXACTO de partido. (Tal vez no debería visualizar números reales), además si queremos tener en cuenta las pausas de juego
+  para transiciones al marcar gol y demas necesitaremos pausar, si lo controla el servidor necesitamos incrementar la comunicación
+
+
+
+------------------------------------------------------------------------------------------
+DONE:																			21/09/2010
+------------------------------------------------------------------------------------------
+
+- Concepto de música
+- Detener sonido de ambiente al finalizar
+- Asignar posicion al iniciar del controlador de disparo para evitar usar la anterior
+- No contabilizar tiempo mientras que están los carteles de timeout
+- Problema de pulsacion de los botones
+
+
+- Los controladores reconocen eventos fuera de la película
+- Sonido de ambiente
+
+- Perdida de un turno en los robos de balón. El PlaceBall consume un turno tanto en pase al pie como en robo. Cuidado al solucionar esto con los detalles de no
+  romper nada en el pase al pie
+
+- Skills no disponibles mientras que se espera respuesta de mensajes ni cuando el interface está desactivado
+- Sonorización
+
+- Desincronia con el tiempo del server y el cliente. Mandar tiempo cada poco tiempo
+- TESTEAR Pase al pie con conflicto (pero no robo)
+FISICA:
+- Deteccion continua activada
+- Mas grosor en los limitadores de campo, las porterias y sus sensores
+JUEGO:
+- Soporte de Declaracion de tiro a puerta anidado en el mismo turno 
+
+- Conflictos de ataque 
+- Usar equipaciones secundarias. 
+
+- Las skills no estan activas:
+	- Mientras simulamos, en turno de colocación de portero
+	- Mientras están los controladores activos
+- En el servidor esperamos a que termine la simulación para declarar el fin del tiempo
+- No pitar cambio de turno, ni fin de parte, ni fin de partido hasta que la simulación de un jugador termine
+
+
+- No permitir lanzar la chapa hasta que la simulación esté completamente detenida!!!!! Puede desincronizar!!
+- Game informará si llega un shutdown sin haber cerrado la conexión
+- Funciones de llamada a servidor diferentes de las del cliente
+- Poner efectos cuando haya conflicto de robo de balón, se resuelva como se resuelva
+- Testear saque de puerta. Ahora se comprueba que el interface esté activo
+- Solo nos puede robar la pelota el enemigo más cercano
+
+- Recalcular tiempo visual del quesito del timeout al obtener tiempo extra
+- No cancelar interface al mostrar cartel de catenaccio
+- Flechas de direccion detras de los carteles
+- Tiempo para colocar portero 10 segundos
+- Utilizar tiempo real para el Timeout y tiempo de partido
+- Cuando el contrario selecciona "Catenaccio" en mi turno, dejo de poder interactuar con mis chapas
+- Boton de tiro a puerta se activa/desactiva cuando debe
+- Habilidad especial mano de dios
+- Goles no válidos si no has declarado tiro a puerta
+
+- Porterias no se pintan por encima
+- Hacer los radios de la física independientes de la parte visual
+- Pintar chapa de portero diferente
+- Pintar en color inválido la chapa del portero cuando la posicionas en posición inválida
+- Física a 30 fps
+- Física segura en Frame Rate Independent Motion a false.--> 
+
+
+- Saque de puerta con goles inválidos
+- Botón tiro a puerta
+	  
+	- No permitir declarar tiro a puerta anidados
+	- Cuando se está colocando el portero o el balón y se cancela la operación por timeout antes de terminarlo se dá por váido.
+	  Necesitaríamos diferenciar la cancelación por interrupción de la finalización correcta!  
+	- Activar / desactivar botón de declaración de tiro a puerta
+	- Colocación de portero al declarar tiro a puerta
+	- En el cambio de turno, solo 1 turno disponible
+	- Mitad de tiempo para colocar el portero
+	- No colocar el portero si no está dentro del area
+	- Timeout mientras colocas portero o cualquier otro "Interruptor"
+
+- Botón abandonar : Testear!
+- Una vez envíado el timeout no permitir entrada de interface
+
+- Corrección de problema de crash && desincronía con El timeout: 
+   en el cliente me parece muy peligroso. Si lanzo un disparo, llega al servidor, lo remanda y en lo que llega se produce el timeout:
+   --> Cambiaremos de turno, y luego nos llegará un Shoot de alquien que no es el jugador activo sino el otro y se ejecutará en una chapa erronea
+   --> Deberíamos hacer que las ordenes llevasen el identificador de jugador y validarlo con el jugador activo
+   --> Esto puede ocurrir tambien con el Posicionamiento de balón??
+   -------------> El timeout se debe mandar al servidor, solo por el cliente local que posee el turno
+- Reenvíar mensaje de PushedDisconnected
+- Poner cartel de robo 
+- Poner Carteles de pase al pie/robo 
+- Pase al pie no necesita rebotar
+- Influencias según el nuevo sistema de pase al pie
+- No perder el tiro al tocar la pelota
+
+- Poder cancelar el interface de juego de disparo (otro color antes de salir del radio de la chapa)
+- Solo 2 tiros como máximo
+ 
+ 
+- Distintas alineaciones
+- La habilidad que modifica los radios (de pase al pie y otros) resetea los valores antes de que se lleguen a utilizar
+- Resetear las habilidades especiales en el momento correcto
+- Habilidad tiro a gol desde tu campo
+- Siempre que existe pase al pie se sigue podiendo tirar
+- Goles desde el medio campo no valen (+comodin!)
+- No perder turno si alguien que no eres tu toca la pelota
+- Extra-turno cuando pasa al pie si es el último
+- Al meter gol en el último subturno no saca el jugador adecuado
+
+- Radios mostar solo cuando potencialmente pueda ocurrir el pase al pie o robo 
+   Pase al pie: debes haber rebotado primero
+   Robo: Primero debe efectuarse un pase al pie??? 
+  
+- Areas: Deben ser iguales en los dos clientes (- Reglas de juego de cuando mostrar influencias y cuales )
+- Influencias igual en los 2 clientes
+- Corregido bug de influencias
+- No mostrar influencias si no hay simulacion de disparo
+- No mostrar influencia de pase al pie en jugador que dispara
+- Cambio de campo en la segunda parte
+- Limitar las habilidades a tu turno. Ahora puedes lanzar un extra-turno o time al otro jugador
+- A VECES NO PUEDO SELECCIONAR ALGUNAS DE LAS CHAPAS DE MI EQUIPO. ES EL EQUIPO CORRECTO SEGURO (Curteam) pq SI PUEDO MOVER OTRAS. 
+  NO SE VE EL CONTROLADOR DE DISPARO EN ELLAS
+  ¿PUEDE TENER ALGO QUE VER CON LOS TIROS MUY CORTOS? -> Al final era porque delante estaba con alpha:0 el panel de QuedanTurnos. Usar siempre 
+  TweenLite con visible=false --> Ver como es!
+- Soportar todos los modos de cierre y devolver resultado
+- Devolver en el servidor los datos que necesita Tuchi. En interface que mantengo
+- Dejar solo las habilidades que llegan desde el server
+- Testear pase al pie
+
+- Timeout debe resetear nada mas disparar (no cuando termine el tiro)
+- Mensajes de tiros disponibles en los turnos (ConsumeTurn)
+- Resetear timeout al disparar + No tener en cuenta el timeout mientras se está simulando un disparo
+- Shutdown de la aplicación (staticos - single-on, tween-lite, sonidos, timers, ...)
+- Dos jugadores se desincroniza el tiempo sin hacer nada. (Creo que es por el shutdown)
+- Eliminar auto-pase
+- PushedOpponentDisconnected?? ( )
+- Invertir direccionamiento del control de lanzamiento
+
+- En el fin del partido destruir juego cliente y volver al manager
+- Controlar que no se detecta más de un gol! Debido a los contactos físicos pueden declararse más de un gol!!
+- Inicializar semillas de aleatorios
+- Coger tiempo de partido y turno desde el manager
+- Quitar pintado de lineas de porterias
+- Quitar botón de cierre pelotita.
+
+
+- Integrar formula de robo y revisar funcionamiento en red
+
+- Uso de skills 
+- Goles y botón tiro a puerta
+- TimeOut del turno
+- Pase al pie en red
+- Robo de balón en red
+
+- Interface Visual
+	- Marcador
+	- Información de jugador
+	- Eventos (fin partido / cambio de parte)
+
+- Integración de red
+
+- Bucle de juego (Inicialización / desarrollo / Fin ) 
+
+
+- Tiempo + cambio de parte controlado en servidor
+
+- Reglas de juego
+	- Sistema de turnos
+	- Pase al pie
+
+- Colocación de pelota al obtener pase al pie
+
+- Mostrar radios de acción al pasar la pelota
+
+- Activar Entrada de usuario después de pase al pie
+- No permitr colocar el balón fuera del campo
+
+- Estructura de aplicación
+- Cargar interface visual
+
+- Inicializar jugadores
+- Inicializar chapas de cada jugador
+    - Posicionamiento + pintado
+    - Alineación
+    
+    
+- Interface de entrada (Flecha direccional para aplicar impulsos)
+
+- Integración de física con Box2D
+
+
+------------------------------------------------------------------------------------------
+ACTUALIZAR D
+------------------------------------------------------------------------------------------
+
+PROCESO 1:
+- Arrancar SQL Server Management Studio
+- Pulsar Connect
+- Expandir en el arbol izquierdo Databases
+- Menu contextual de Databases/SoccerV1. Seleccionar Tasks/Restore/Database....
+- Seleccionar "From Device" y pulsar botón "..."
+- Seleccionar fichero "SoccerV1.bak" en  "D:\svn\Unusual\SoccerServerV1\SoccerServerV1\App_Data"
+- Seleccionar pagina "Options"
+- Marcar "Overwrite full database " ....
+- Pulsar Ok
+- Si falla la restauración por necesitar exclusividad tienes que:
+	1. Restaurar servicio IIS
+		- Ejecutar "Administrador de Internet Information Server (IIS)"
+		- En el lateral derecho, panel de acciones pulsar "Reiniciar"
+	2. Restaurar servicio SQL
+		- Ejecutar "SQL Server Configuration Manager"
+		- En la lista de servicios sacar menú contextual de "SQL Server (SQL Express)" y pulsar "Restart"
+	3 Volver a restaurar la BBDD	
+ 
+
+
+------------------------------------------------------------------------------------------
+POSTMORTEM
+------------------------------------------------------------------------------------------
+
+- Uso de assets embebidos muy comodos
+- Dependencias de proyectos 
+- Propiedades de proyectos
+- Librería de Framework
+- Timeout siempre en servidor!!! Todas las acciones que interrumpen cualquier otra accón TimeOut, FinDeJuego, FinDeParte deben siempre controlarse en el 
+  servidor para simplificar
+- El Servidor tiene que conocer el turno de los jugadores
+- Sistema de máquinas de estados:
+	- Soporte para al cambiar de estado pasar parámetros de usuario que modifican el estado.
+	- Control de tiempo en un estado (Cuanto tiempo lleva ejecutandose)
+	- Flujo sencillo pero posibilidad de StartState, RunState, EndState
+		- Start comodidad y muy típico para hacer solo la primera vez (lanzar una animación)
+		- Run: El grueso --> Controlará cuando termina la animación
+		- End para flujo seguro  (restaurar cosas), liberar, resetear variables, ...
+- Fusionar cambios del Framework
+- Sistema de Accion + Interrupciones (señales) + Finalizadores? Cancelers? --> Pensar en la lógica de un comportamiento
+- Agilizar sistema de red
+		- Esperar respuesta
+		- deshabilitar interface para evitar multiples entradas mientras esperamos la respuesta del server (grupos de controles pertenecientes a una familia: Skills, Actions, .... )
+			- Tal vez en vez de implementar logica acciones por red, tenemos que implementar controles por red. La pulsación siempre ocurre cuando se recibe por red??? El problema es q 
+			  aqui el servidor no puede añadir parametros a la acción
+- MovieClip de assets embebidos deben tener al menos 2 frames para poder convertirlos
+			  
+- El sistema de un solo concepto de GameAction usado en el Poker ha dado ventajas sobre metodos independientes. Al no estar centralizado, no puedes hacer
+  cosas globales cuando se reciben, pero lo de que sean funciones tiene la ventaja de definir funciones con parametros que se comprueba en tiempo de compilacion
+  en vezde usar variables dentro de Object's
+
+Template de NetProject
+
+- Game
+- Capas de pintado
+- Acciones
+- Game: Punto centralizado de recepción de acciones
+	- Init
+	- Run
+	- Shutdown
+	
+	- Flujo de que el servidor nos mande los datos de la partida. Comenzar!
+	- Cargar!
+	- Flujo de control de espera de todos los jugadores han cargado
+	- Flujo de control de espera de todos los jugadores están listos. <Sync>
+	
+	- Flujo de abortar juego y cierre normal
+	
+	- Control de modo OffLine (Es posible usar código condicional?)
+
+- Consola embebida en el proyecto
+	
+- Interface de red (LocaUserId)
+- Interface de usuario (local)
+
+
+para juego por turnos:
+
+- Enable interface
+- Current User
+- Sistema de turnos
+
+
+Framework
+
+ 
+

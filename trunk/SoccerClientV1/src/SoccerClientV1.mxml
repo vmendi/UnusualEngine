@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:local="*"
+			   width="760" height="620"
+			   applicationComplete="ApplicationCompleteHandler(event)"
+			   preloader="ProgressPreloader"
+			   frameRate="30">
+
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import GameModel.RealtimeModel;
+		
+		import GameView.MainView;
+		
+		import SoccerServerV1.DataTypeInitializer;
+		
+		import mx.events.FlexEvent;
+		import mx.messaging.config.ServerConfig;
+		
+		protected function ApplicationCompleteHandler(event:FlexEvent):void
+		{
+			//FPSCounter.Init(this.stage, new Point(0,0));
+												
+			if(loaderInfo.hasOwnProperty("uncaughtErrorEvents"))
+				IEventDispatcher(loaderInfo["uncaughtErrorEvents"]).addEventListener("uncaughtError", ErrorMessages.UncaughtErrorHandler);
+			
+			ErrorMessages.OnCleaningShutdownSignal.addOnce(RemoveMainView);
+
+			var dataTypeInit : DataTypeInitializer = new DataTypeInitializer();
+			
+			if (parameters.hasOwnProperty("Remote") && parameters["Remote"] == "true")
+			{
+				if (!parameters.hasOwnProperty("FakeSessionKey"))
+					throw new Error("Si Remote, necesitas FakeSessionKey");
+				
+				ServerConfig.xml[0].channels.channel.(@id=='my-amf').endpoint.@uri = "http://mahouligachapas.unusualwonder.com/weborb.aspx";
+				
+				RealtimeModel.SetDefaultURI("mahouligachapas.unusualwonder.com:2020");
+			}
+			
+			if (parameters.hasOwnProperty("Test"))
+			{
+				mFacebookFacade = new FacebookFacade();
+				mMainGameModel = new MainGameModel();
+				
+				MyServerTests.visible = true;
+				MyServerTests.ExecuteTest(parameters["Test"]);
+			}
+			else
+			{
+				mFacebookFacade = new FacebookFacade();
+				mFacebookFacade.Init(OnFacebookInitSuccess);
+			}
+		}
+		
+		private function OnFacebookInitSuccess():void
+		{				
+			mMainGameModel = new MainGameModel();
+			mMainGameModel.InitialRefresh(OnInitialRefreshSuccess);
+			
+			function OnInitialRefreshSuccess() : void
+			{
+				mMainView = new MainView();
+				addElement(mMainView);
+			}
+		}
+				
+		private function OnCleaningShutdown() : void
+		{
+			RemoveMainView();
+			
+			if (mMainGameModel != null)
+			{
+				mMainGameModel.OnCleaningShutdown();
+				mMainGameModel = null;
+			}
+		}
+		
+		private function RemoveMainView() : void
+		{
+			if (mMainView != null)
+				removeElement(mMainView);
+			mMainView = null;
+		}
+		
+		private var mMainView : MainView;
+		
+		/// En vez de andar pasándolo por ahí en Inits, singletonizamos
+		static private var mMainGameModel : MainGameModel;
+		static public function GetMainGameModel() : MainGameModel {	return mMainGameModel; }
+		
+		// Idem
+		static private var mFacebookFacade : FacebookFacade;
+		static public function GetFacebookFacade() : FacebookFacade { return mFacebookFacade; }
+	
+	]]></fx:Script>
+	
+	<local:ServerTests id="MyServerTests" visible="false" width="100%" height="100%"/>
+			
+</s:Application>

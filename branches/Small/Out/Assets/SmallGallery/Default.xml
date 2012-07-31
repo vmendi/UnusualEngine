@@ -1,0 +1,29 @@
+<smallGallery>
+	<library>Assets/SmallGallery/destacadoLogos.swf</library>
+	<button>
+		<libraryName>botonAirbus_A400MWebsite</libraryName>
+		<content>Assets/SmallGallery/A400MWebsite.swf</content>
+		<link>/Works/tabid/224/language/es-ES/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonShell</libraryName>
+		<content>Assets/SmallGallery/Shell.swf</content>
+		<link>/Work/ShellHomeRacer/tabid/228/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonOpel</libraryName>
+		<content>Assets/SmallGallery/opel.swf</content>
+		<link>/Work/OpelInsignia/tabid/181/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonAirbus</libraryName>
+		<content>Assets/SmallGallery/A400M.swf</content>
+		<link>/Work/A400MTheGame/tabid/161/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonMapfre</libraryName>
+		<content>Assets/SmallGallery/ComunidadMapfre.swf</content>
+		<link>/Work/ComunidadVirtualMapfre/tabid/227/Default.aspx</link>
+	</button>
+</smallGallery>
+

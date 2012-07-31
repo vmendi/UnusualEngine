@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespaces>
+  <runtime path="F:/UnusualSVN/UnusualEngine/trunk/SoccerServerV1/SoccerServerV1/" weborbRootURL="http://localhost/" />
+  <namespace name="Weborb" fullname="Weborb">
+    <namespace name="Management" fullname="Weborb.Management">
+      <namespace name="Configuration" fullname="Weborb.Management.Configuration">
+        <namespace name="AbstractClassMapping" fullname="Weborb.Management.Configuration.AbstractClassMapping">
+          <datatype name="AbstractClassMappingItem" fullname="Weborb.Management.Configuration.AbstractClassMapping.AbstractClassMappingItem" typeNamespace="Weborb.Management.Configuration.AbstractClassMapping">
+            <field name="MappedClassName" type="String" fulltype="String" nativetype="String" />
+            <field name="ClassName" type="String" fulltype="String" nativetype="String" />
+            <field name="ReadOnly" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="ClassMapping" fullname="Weborb.Management.Configuration.ClassMapping">
+          <datatype name="ClassMappingItem" fullname="Weborb.Management.Configuration.ClassMapping.ClassMappingItem" typeNamespace="Weborb.Management.Configuration.ClassMapping">
+            <field name="ServerClass" type="String" fulltype="String" nativetype="String" />
+            <field name="ClientClass" type="String" fulltype="String" nativetype="String" />
+            <field name="ReadOnly" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="CustomSerializers" fullname="Weborb.Management.Configuration.CustomSerializers">
+          <datatype name="CustomSerializer" fullname="Weborb.Management.Configuration.CustomSerializers.CustomSerializer" typeNamespace="Weborb.Management.Configuration.CustomSerializers">
+            <field name="WriterClassName" type="String" fulltype="String" nativetype="String" />
+            <field name="ClassName" type="String" fulltype="String" nativetype="String" />
+            <field name="ReadOnly" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="CodeGeneration" fullname="Weborb.Management.Configuration.CodeGeneration">
+          <datatype name="ActionScriptMapping" fullname="Weborb.Management.Configuration.CodeGeneration.ActionScriptMapping" typeNamespace="Weborb.Management.Configuration.CodeGeneration">
+            <field name="NetType" type="String" fulltype="String" nativetype="String" />
+            <field name="ASType" type="String" fulltype="String" nativetype="String" />
+          </datatype>
+          <datatype name="SilverLightMapping" fullname="Weborb.Management.Configuration.CodeGeneration.SilverLightMapping" typeNamespace="Weborb.Management.Configuration.CodeGeneration">
+            <field name="NetType" type="String" fulltype="String" nativetype="String" />
+            <field name="SLType" type="String" fulltype="String" nativetype="String" />
+          </datatype>
+          <datatype name="CodeGenerationSettings" fullname="Weborb.Management.Configuration.CodeGeneration.CodeGenerationSettings" typeNamespace="Weborb.Management.Configuration.CodeGeneration">
+            <field name="CreateDynamicDestinations" type="Boolean" fulltype="Boolean" nativetype="bool" />
+            <field name="EnableWebORBAuthentication" type="Boolean" fulltype="Boolean" nativetype="bool" />
+            <field name="NetToAsTypes" type="ArrayCollection" fulltype="ArrayCollection" nativetype="List&lt;Weborb.Management.Configuration.CodeGeneration.ActionScriptMapping&gt;" />
+            <field name="NetToSlTypes" type="ArrayCollection" fulltype="ArrayCollection" nativetype="List&lt;Weborb.Management.Configuration.CodeGeneration.SilverLightMapping&gt;" />
+          </datatype>
+        </namespace>
+        <namespace name="Activators" fullname="Weborb.Management.Configuration.Activators">
+          <datatype name="ActivatorDescription" fullname="Weborb.Management.Configuration.Activators.ActivatorDescription" typeNamespace="Weborb.Management.Configuration.Activators">
+            <field name="ActivationMode" type="String" fulltype="String" nativetype="String" />
+            <field name="ActivatorName" type="String" fulltype="String" nativetype="String" />
+          </datatype>
+        </namespace>
+        <namespace name="ServiceAliasing" fullname="Weborb.Management.Configuration.ServiceAliasing">
+          <datatype name="ServiceAlias" fullname="Weborb.Management.Configuration.ServiceAliasing.ServiceAlias" typeNamespace="Weborb.Management.Configuration.ServiceAliasing">
+            <field name="Service" type="String" fulltype="String" nativetype="String" />
+            <field name="Alias" type="String" fulltype="String" nativetype="String" />
+            <field name="ReadOnly" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="ServiceBrowsers" fullname="Weborb.Management.Configuration.ServiceBrowsers">
+          <datatype name="ServiceBrowserDefinition" fullname="Weborb.Management.Configuration.ServiceBrowsers.ServiceBrowserDefinition" typeNamespace="Weborb.Management.Configuration.ServiceBrowsers">
+            <field name="serviceBrowserClass" type="String" fulltype="String" nativetype="String" />
+            <field name="properties" type="ArrayCollection" fulltype="ArrayCollection" nativetype="Dictionary&lt;String,List&lt;String&gt;&gt;" />
+          </datatype>
+          <datatype name="AssemblyPreferences" fullname="Weborb.Management.Configuration.ServiceBrowsers.AssemblyPreferences" typeNamespace="Weborb.Management.Configuration.ServiceBrowsers">
+            <field name="assemblyName" type="String" fulltype="String" nativetype="String" />
+            <field name="exlude" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="Destinations" fullname="Weborb.Management.Configuration.Destinations">
+          <datatype name="ServiceDestination" fullname="Weborb.Management.Configuration.Destinations.ServiceDestination" typeNamespace="Weborb.Management.Configuration.Destinations">
+            <field name="ServiceId" type="String" fulltype="String" nativetype="String" />
+            <field name="DestinationId" type="String" fulltype="String" nativetype="String" />
+            <field name="ReadOnly" type="Boolean" fulltype="Boolean" nativetype="bool" />
+            <field name="Channel" type="String" fulltype="String" nativetype="String" />
+            <field name="Roles" type="ArrayCollection" fulltype="ArrayCollection" nativetype="Object[]" />
+          </datatype>
+        </namespace>
+        <namespace name="ServiceFactories" fullname="Weborb.Management.Configuration.ServiceFactories">
+          <datatype name="ServiceFactory" fullname="Weborb.Management.Configuration.ServiceFactories.ServiceFactory" typeNamespace="Weborb.Management.Configuration.ServiceFactories">
+            <field name="ServiceFactoryClassName" type="String" fulltype="String" nativetype="String" />
+            <field name="ClassName" type="String" fulltype="String" nativetype="String" />
+            <field name="ReadOnly" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="GeneralSettings" fullname="Weborb.Management.Configuration.GeneralSettings">
+          <datatype name="GenericSettingsDefinition" fullname="Weborb.Management.Configuration.GeneralSettings.GenericSettingsDefinition" typeNamespace="Weborb.Management.Configuration.GeneralSettings">
+            <field name="HotDeploy" type="Boolean" fulltype="Boolean" nativetype="bool" />
+            <field name="CompressionAlgorithm" type="String" fulltype="String" nativetype="String" />
+            <field name="Threshold" type="int" fulltype="int" nativetype="int" />
+            <field name="InstrumentationEnabled" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="Logging" fullname="Weborb.Management.Configuration.Logging">
+          <datatype name="LoggingCategory" fullname="Weborb.Management.Configuration.Logging.LoggingCategory" typeNamespace="Weborb.Management.Configuration.Logging">
+            <field name="Name" type="String" fulltype="String" nativetype="String" />
+            <field name="Enable" type="Boolean" fulltype="Boolean" nativetype="bool" />
+          </datatype>
+        </namespace>
+        <namespace name="Serialization" fullname="Weborb.Management.Configuration.Serialization">
+          <datatype name="SerializationSettings" fullname="Weborb.Management.Configuration.Serialization.SerializationSettings" typeNamespace="Weborb.Management.Configuration.Serialization">
+            <field name="Prefix" type="String" fulltype="String" nativetype="String" />
+            <field name="SerializePrivateFields" type="Boolean" fulltype="Boolean" nativetype="bool" />
+            <field name="CollectionAsArrayCollection" type="Boolean" fulltype="Boolean" nativetype="bool" />
+            <field name="EnumSerializationType" type="String" fulltype="String" nativetype="String" />
+            <field name="Keywords" type="ArrayCollection" fulltype="ArrayCollection" nativetype="ICollection&lt;String&gt;" />
+          </datatype>
+        </namespace>
+      </namespace>
+      <namespace name="CodeGen" fullname="Weborb.Management.CodeGen">
+        <datatype name="CodegenFormat" fullname="Weborb.Management.CodeGen.CodegenFormat" typeNamespace="Weborb.Management.CodeGen">
+          <field name="id" type="int" fulltype="int" nativetype="int" />
+          <field name="name" type="String" fulltype="String" nativetype="String" />
+          <field name="xslt" type="String" fulltype="String" nativetype="String" />
+          <field name="excludedServiceBrowsers" type="String" fulltype="String" nativetype="String" />
+          <field name="keepFile" type="Boolean" fulltype="Boolean" nativetype="bool" />
+        </datatype>
+      </namespace>
+      <service name="ConfigurationService" fullname="Weborb.Management.ConfigurationService" namespace="Weborb.Management" url="http://localhost/console/weborb.aspx">
+        <method name="addAbstractClassMapping" type="AbstractClassMappingItem" nativetype="Weborb.Management.Configuration.AbstractClassMapping.AbstractClassMappingItem" containsvalues="0">
+          <arg name="abstractClassMappingItem" type="AbstractClassMappingItem" nativetype="Weborb.Management.Configuration.AbstractClassMapping.AbstractClassMappingItem" />
+        </method>
+        <method name="addClassMapping" type="ClassMappingItem" nativetype="Weborb.Management.Configuration.ClassMapping.ClassMappingItem" containsvalues="0">
+          <arg name="classMappingItem" type="ClassMappingItem" nativetype="Weborb.Management.Configuration.ClassMapping.ClassMappingItem" />
+        </method>
+        <method name="addCodegenFormat" type="CodegenFormat" nativetype="Weborb.Management.CodeGen.CodegenFormat" containsvalues="0">
+          <arg name="format" type="CodegenFormat" nativetype="Weborb.Management.CodeGen.CodegenFormat" />
+        </method>
+        <method name="addCustomSerializer" type="CustomSerializer" nativetype="Weborb.Management.Configuration.CustomSerializers.CustomSerializer" containsvalues="0">
+          <arg name="serviceFactory" type="CustomSerializer" nativetype="Weborb.Management.Configuration.CustomSerializers.CustomSerializer" />
+        </method>
+        <method name="addKeyword" type="String" nativetype="String" containsvalues="0">
+          <arg name="keyword" type="String" nativetype="String" />
+        </method>
+        <method name="addNetToASType" type="ActionScriptMapping" nativetype="Weborb.Management.Configuration.CodeGeneration.ActionScriptMapping" containsvalues="0">
+          <arg name="netType" type="String" nativetype="String" />
+          <arg name="asType" type="String" nativetype="String" />
+        </method>
+        <method name="addNetToSLType" type="SilverLightMapping" nativetype="Weborb.Management.Configuration.CodeGeneration.SilverLightMapping" containsvalues="0">
+          <arg name="netType" type="String" nativetype="String" />
+          <arg name="slType" type="String" nativetype="String" />
+        </method>
+        <method name="addServiceActivator" type="ActivatorDescription" nativetype="Weborb.Management.Configuration.Activators.ActivatorDescription" containsvalues="0">
+          <arg name="activator" type="ActivatorDescription" nativetype="Weborb.Management.Configuration.Activators.ActivatorDescription" />
+        </method>
+        <method name="addServiceAlias" type="ServiceAlias" nativetype="Weborb.Management.Configuration.ServiceAliasing.ServiceAlias" containsvalues="0">
+          <arg name="serviceAlias" type="ServiceAlias" nativetype="Weborb.Management.Configuration.ServiceAliasing.ServiceAlias" />
+        </method>
+        <method name="addServiceBrowser" type="ServiceBrowserDefinition" nativetype="Weborb.Management.Configuration.ServiceBrowsers.ServiceBrowserDefinition" containsvalues="0">
+          <arg name="def" type="ServiceBrowserDefinition" nativetype="Weborb.Management.Configuration.ServiceBrowsers.ServiceBrowserDefinition" />
+        </method>
+        <method name="addServiceDestination" type="ServiceDestination" nativetype="Weborb.Management.Configuration.Destinations.ServiceDestination" containsvalues="0">
+          <arg name="serviceDestination" type="ServiceDestination" nativetype="Weborb.Management.Configuration.Destinations.ServiceDestination" />
+        </method>
+        <method name="addServiceFactory" type="ServiceFactory" nativetype="Weborb.Management.Configuration.ServiceFactories.ServiceFactory" containsvalues="0">
+          <arg name="serviceFactory" type="ServiceFactory" nativetype="Weborb.Management.Configuration.ServiceFactories.ServiceFactory" />
+        </method>
+        <method name="addServiceInvoker" type="String" nativetype="String" containsvalues="0">
+          <arg name="invoker" type="String" nativetype="String" />
+        </method>
+        <method name="deleteAbstractClassMapping" type="void" nativetype="Void" containsvalues="0">
+          <arg name="abstractClassMappingItem" type="AbstractClassMappingItem" nativetype="Weborb.Management.Configuration.AbstractClassMapping.AbstractClassMappingItem" />
+        </method>
+        <method name="deleteClassMapping" type="void" nativetype="Void" containsvalues="0">
+          <arg name="classMappingItem" type="ClassMappingItem" nativetype="Weborb.Management.Configuration.ClassMapping.ClassMappingItem" />
+        </method>
+        <method name="deleteCodegenFormat" type="void" nativetype="Void" containsvalues="0">
+          <arg name="format" type="CodegenFormat" nativetype="Weborb.Management.CodeGen.CodegenFormat" />
+        </method>
+        <method name="deleteCustomSerializer" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceFactory" type="CustomSerializer" nativetype="Weborb.Management.Configuration.CustomSerializers.CustomSerializer" />
+        </method>
+        <method name="deleteKeyword" type="void" nativetype="Void" containsvalues="0">
+          <arg name="keyword" type="String" nativetype="String" />
+        </method>
+        <method name="deleteNetToASType" type="void" nativetype="Void" containsvalues="0">
+          <arg name="netType" type="String" nativetype="String" />
+        </method>
+        <method name="deleteNetToSLType" type="void" nativetype="Void" containsvalues="0">
+          <arg name="netType" type="String" nativetype="String" />
+        </method>
+        <method name="deleteServiceActivator" type="void" nativetype="Void" containsvalues="0">
+          <arg name="activator" type="ActivatorDescription" nativetype="Weborb.Management.Configuration.Activators.ActivatorDescription" />
+        </method>
+        <method name="deleteServiceAlias" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceAlias" type="ServiceAlias" nativetype="Weborb.Management.Configuration.ServiceAliasing.ServiceAlias" />
+        </method>
+        <method name="deleteServiceBrowser" type="void" nativetype="Void" containsvalues="0">
+          <arg name="def" type="ServiceBrowserDefinition" nativetype="Weborb.Management.Configuration.ServiceBrowsers.ServiceBrowserDefinition" />
+        </method>
+        <method name="deleteServiceDestination" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceDestination" type="ServiceDestination" nativetype="Weborb.Management.Configuration.Destinations.ServiceDestination" />
+        </method>
+        <method name="deleteServiceFactory" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceFactory" type="ServiceFactory" nativetype="Weborb.Management.Configuration.ServiceFactories.ServiceFactory" />
+        </method>
+        <method name="deleteServiceInvoker" type="void" nativetype="Void" containsvalues="0">
+          <arg name="invoker" type="String" nativetype="String" />
+        </method>
+        <method name="enableCollectionsAsArrayCollections" type="Boolean" nativetype="bool" containsvalues="0">
+          <arg name="enable" type="Boolean" nativetype="bool" />
+        </method>
+        <method name="enableDynamicDestinations" type="Boolean" nativetype="bool" containsvalues="0">
+          <arg name="enable" type="Boolean" nativetype="bool" />
+        </method>
+        <method name="enableHotDeployment" type="Boolean" nativetype="bool" containsvalues="0">
+          <arg name="enable" type="Boolean" nativetype="bool" />
+        </method>
+        <method name="enableInstrumentation" type="Boolean" nativetype="bool" containsvalues="0">
+          <arg name="enable" type="Boolean" nativetype="bool" />
+        </method>
+        <method name="enablePrivatFieldSerialization" type="Boolean" nativetype="bool" containsvalues="0">
+          <arg name="enable" type="Boolean" nativetype="bool" />
+        </method>
+        <method name="enableWebORBAuthentication" type="Boolean" nativetype="bool" containsvalues="0">
+          <arg name="enable" type="Boolean" nativetype="bool" />
+        </method>
+        <method name="excludeAssembly" type="void" nativetype="Void" containsvalues="0">
+          <arg name="assembly" type="String" nativetype="String" />
+          <arg name="exclude" type="Boolean" nativetype="bool" />
+        </method>
+        <method name="getAbstractClassMappings" type="ArrayCollection" nativetype="Weborb.Management.Configuration.AbstractClassMapping.AbstractClassMappingItem[]" containsvalues="0" />
+        <method name="getAssembliesPreferences" type="ArrayCollection" nativetype="List&lt;Weborb.Management.Configuration.ServiceBrowsers.AssemblyPreferences&gt;" containsvalues="0" />
+        <method name="getClassMappings" type="ArrayCollection" nativetype="Weborb.Management.Configuration.ClassMapping.ClassMappingItem[]" containsvalues="0" />
+        <method name="getCodeGenerationSettings" type="CodeGenerationSettings" nativetype="Weborb.Management.Configuration.CodeGeneration.CodeGenerationSettings" containsvalues="0" />
+        <method name="getCustomSerializers" type="ArrayCollection" nativetype="Weborb.Management.Configuration.CustomSerializers.CustomSerializer[]" containsvalues="0" />
+        <method name="getFileList" type="ArrayCollection" nativetype="List&lt;String&gt;" containsvalues="0" />
+        <method name="getFileParams" type="ArrayCollection" nativetype="Object[]" containsvalues="0">
+          <arg name="fileName" type="String" nativetype="String" />
+        </method>
+        <method name="getGeneralSettings" type="GenericSettingsDefinition" nativetype="Weborb.Management.Configuration.GeneralSettings.GenericSettingsDefinition" containsvalues="0" />
+        <method name="getLog" type="String" nativetype="String" containsvalues="0">
+          <arg name="fileName" type="String" nativetype="String" />
+          <arg name="page" type="int" nativetype="int" />
+        </method>
+        <method name="getLoggingCategories" type="ArrayCollection" nativetype="Weborb.Management.Configuration.Logging.LoggingCategory[]" containsvalues="0" />
+        <method name="getLoggingPolicy" type="ArrayCollection" nativetype="Object[]" containsvalues="0" />
+        <method name="getSerializationSettings" type="SerializationSettings" nativetype="Weborb.Management.Configuration.Serialization.SerializationSettings" containsvalues="0" />
+        <method name="getServiceActivators" type="ArrayCollection" nativetype="Weborb.Management.Configuration.Activators.ActivatorDescription[]" containsvalues="0" />
+        <method name="getServiceAliases" type="ArrayCollection" nativetype="Weborb.Management.Configuration.ServiceAliasing.ServiceAlias[]" containsvalues="0" />
+        <method name="getServiceBrowserNames" type="ArrayCollection" nativetype="List&lt;String&gt;" containsvalues="0" />
+        <method name="getServiceBrowsers" type="ArrayCollection" nativetype="List&lt;Weborb.Management.Configuration.ServiceBrowsers.ServiceBrowserDefinition&gt;" containsvalues="0" />
+        <method name="getServiceChannels" type="ArrayCollection" nativetype="Object[]" containsvalues="0" />
+        <method name="getServiceDestinations" type="ArrayCollection" nativetype="Object[]" containsvalues="0" />
+        <method name="getServiceFactories" type="ArrayCollection" nativetype="Weborb.Management.Configuration.ServiceFactories.ServiceFactory[]" containsvalues="0" />
+        <method name="getServiceInvokers" type="ArrayCollection" nativetype="List&lt;String&gt;" containsvalues="0" />
+        <method name="getServiceRoles" type="ArrayCollection" nativetype="String[]" containsvalues="0" />
+        <method name="serializeEnumAs" type="String" nativetype="String" containsvalues="0">
+          <arg name="enumSerializationType" type="String" nativetype="String" />
+        </method>
+        <method name="setCompressionAlgorithm" type="String" nativetype="String" containsvalues="0">
+          <arg name="algorithm" type="String" nativetype="String" />
+        </method>
+        <method name="setLoggingPolicy" type="String" nativetype="String" containsvalues="0">
+          <arg name="loggingPolicy" type="Object" nativetype="Object" />
+        </method>
+        <method name="setPrefix" type="String" nativetype="String" containsvalues="0">
+          <arg name="prefix" type="String" nativetype="String" />
+        </method>
+        <method name="setThreshold" type="int" nativetype="int" containsvalues="0">
+          <arg name="threshold" type="int" nativetype="int" />
+        </method>
+        <method name="updateAbstractClassMapping" type="void" nativetype="Void" containsvalues="0">
+          <arg name="abstractClassMappingItem" type="AbstractClassMappingItem" nativetype="Weborb.Management.Configuration.AbstractClassMapping.AbstractClassMappingItem" />
+          <arg name="newAbstractClassMappingItem" type="AbstractClassMappingItem" nativetype="Weborb.Management.Configuration.AbstractClassMapping.AbstractClassMappingItem" />
+        </method>
+        <method name="updateClassMapping" type="void" nativetype="Void" containsvalues="0">
+          <arg name="classMappingItem" type="ClassMappingItem" nativetype="Weborb.Management.Configuration.ClassMapping.ClassMappingItem" />
+          <arg name="newClassMappingItem" type="ClassMappingItem" nativetype="Weborb.Management.Configuration.ClassMapping.ClassMappingItem" />
+        </method>
+        <method name="updateCodegenFormat" type="void" nativetype="Void" containsvalues="0">
+          <arg name="format" type="CodegenFormat" nativetype="Weborb.Management.CodeGen.CodegenFormat" />
+          <arg name="newFormat" type="CodegenFormat" nativetype="Weborb.Management.CodeGen.CodegenFormat" />
+        </method>
+        <method name="updateCustomSerializer" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceFactory" type="CustomSerializer" nativetype="Weborb.Management.Configuration.CustomSerializers.CustomSerializer" />
+          <arg name="newAbstractClassMappingItem" type="CustomSerializer" nativetype="Weborb.Management.Configuration.CustomSerializers.CustomSerializer" />
+        </method>
+        <method name="updateInvokersSequence" type="void" nativetype="Void" containsvalues="0">
+          <arg name="invoker" type="String" nativetype="String" />
+          <arg name="position" type="int" nativetype="int" />
+        </method>
+        <method name="updateKeyword" type="void" nativetype="Void" containsvalues="0">
+          <arg name="keyword" type="String" nativetype="String" />
+          <arg name="newKeyword" type="String" nativetype="String" />
+        </method>
+        <method name="updateLoggingCategory" type="void" nativetype="Void" containsvalues="0">
+          <arg name="loggingCategory" type="LoggingCategory" nativetype="Weborb.Management.Configuration.Logging.LoggingCategory" />
+        </method>
+        <method name="updateNetToASType" type="void" nativetype="Void" containsvalues="0">
+          <arg name="netType" type="String" nativetype="String" />
+          <arg name="newNetType" type="String" nativetype="String" />
+          <arg name="newASType" type="String" nativetype="String" />
+        </method>
+        <method name="updateNetToSLType" type="void" nativetype="Void" containsvalues="0">
+          <arg name="netType" type="String" nativetype="String" />
+          <arg name="newNetType" type="String" nativetype="String" />
+          <arg name="newSLType" type="String" nativetype="String" />
+        </method>
+        <method name="updateServiceActivator" type="void" nativetype="Void" containsvalues="0">
+          <arg name="activator" type="ActivatorDescription" nativetype="Weborb.Management.Configuration.Activators.ActivatorDescription" />
+          <arg name="newActivator" type="ActivatorDescription" nativetype="Weborb.Management.Configuration.Activators.ActivatorDescription" />
+        </method>
+        <method name="updateServiceAlias" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceAlias" type="ServiceAlias" nativetype="Weborb.Management.Configuration.ServiceAliasing.ServiceAlias" />
+          <arg name="newServiceAlias" type="ServiceAlias" nativetype="Weborb.Management.Configuration.ServiceAliasing.ServiceAlias" />
+        </method>
+        <method name="updateServiceBrowser" type="void" nativetype="Void" containsvalues="0">
+          <arg name="def" type="ServiceBrowserDefinition" nativetype="Weborb.Management.Configuration.ServiceBrowsers.ServiceBrowserDefinition" />
+          <arg name="newDef" type="ServiceBrowserDefinition" nativetype="Weborb.Management.Configuration.ServiceBrowsers.ServiceBrowserDefinition" />
+        </method>
+        <method name="updateServiceDestination" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceDestination" type="ServiceDestination" nativetype="Weborb.Management.Configuration.Destinations.ServiceDestination" />
+          <arg name="newServiceDestination" type="ServiceDestination" nativetype="Weborb.Management.Configuration.Destinations.ServiceDestination" />
+        </method>
+        <method name="updateServiceFactory" type="void" nativetype="Void" containsvalues="0">
+          <arg name="serviceFactory" type="ServiceFactory" nativetype="Weborb.Management.Configuration.ServiceFactories.ServiceFactory" />
+          <arg name="newAbstractClassMappingItem" type="ServiceFactory" nativetype="Weborb.Management.Configuration.ServiceFactories.ServiceFactory" />
+        </method>
+        <method name="updateServiceInvoker" type="void" nativetype="Void" containsvalues="0">
+          <arg name="invoker" type="String" nativetype="String" />
+          <arg name="newInvoker" type="String" nativetype="String" />
+        </method>
+      </service>
+    </namespace>
+  </namespace>
+  <namespace name="Weborb.Util" fullname="Weborb.Util">
+    <datatype name="KeyValuePair" fullname="Weborb.Util.KeyValuePair" typeNamespace="Weborb.Util">
+      <field name="key" type="String" fulltype="String" nativetype="String" />
+      <field name="value" type="ArrayCollection" fulltype="ArrayCollection" nativetype="List&lt;String&gt;" />
+    </datatype>
+  </namespace>
+</namespaces>

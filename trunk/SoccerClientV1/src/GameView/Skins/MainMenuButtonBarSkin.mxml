@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+    xmlns:fb="http://ns.adobe.com/flashbuilder/2009" minWidth="21" minHeight="21" alpha.disabledStates="0.5">
+	
+    <fx:Metadata>[HostComponent("spark.components.ButtonBarButton")]</fx:Metadata>
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+						
+		.mainMenuButton {
+			fontFamily: MyFontHelveticaNeueLTBold; 
+			fontSize:14pt;
+			font-weight:bold;
+			color:#FFFFFF;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<s:GlowFilter id="MyGlowFilter" blurX="4" blurY="4" strength="2" color="0xFFFFFF" alpha=".50"/>
+		
+		<s:AnimateFilter id="MyFilterAnim" 
+						 target="{labelDisplay}"
+						 repeatCount="1"
+						 duration="1000"
+						 bitmapFilter="{MyGlowFilter}">
+			<s:SimpleMotionPath property="blurX" valueFrom="1" valueTo="4"/>
+			<s:SimpleMotionPath property="blurY" valueFrom="1" valueTo="4"/>
+		</s:AnimateFilter>
+	</fx:Declarations>
+
+    <s:states>
+        <s:State name="up" />
+        <s:State name="over" stateGroups="overStates" />
+        <s:State name="down" stateGroups="downStates" />
+        <s:State name="disabled" stateGroups="disabledStates" />
+        <s:State name="upAndSelected" stateGroups="selectedStates, selectedUpStates" />
+        <s:State name="overAndSelected" stateGroups="overStates, selectedStates" />
+        <s:State name="downAndSelected" stateGroups="downStates, selectedStates" />
+        <s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
+    </s:states>
+	
+	<s:transitions>
+		<s:Transition fromState="todo" toState="todo">
+			<s:Parallel>{MyFilterAnim}</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+	    
+    <s:Graphic includeIn="up, overStates, downStates">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='MainMenuButton')" fillMode="clip" />
+	</s:Graphic>
+	
+	<s:Graphic includeIn="selectedStates, selectedUpStates">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='MainMenuButtonSelected')" fillMode="clip" />
+	</s:Graphic>
+		
+    <s:Label id="labelDisplay"
+             textAlign="center"
+             verticalAlign="middle"
+             maxDisplayedLines="1"
+             horizontalCenter="0" verticalCenter="0"
+             left="10" right="10" top="2" bottom="2" styleName="mainMenuButton" filters.selectedStates="{[MyGlowFilter]}" >
+    </s:Label>
+	
+	<fx:Script><![CDATA[
+			
+	]]></fx:Script>
+    
+</s:SparkSkin>

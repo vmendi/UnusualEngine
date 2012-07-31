@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="ftp://mahouligachapas.unusualwonder.com/wwwmahou" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Arsys02" publishMethod="FTP" replaceMatchingFiles="True" userName="ftpuser" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA5dhX5x/c00i48Wa9CP+TDAAAAAACAAAAAAAQZgAAAAEAACAAAAB7FiVYzIS7T5O1IgaOy1sHUWNUMzak1n3qU5YMlsWvSQAAAAAOgAAAAAIAACAAAABA+mcDCYW535AW3PQDGz2IdHLK9PSIqCWlfXzpilhCFTAAAABriY7eLMDY1ZLSdr7CqwWgubh/S+GiHuPkCAQQo2L7iYx7YGAKSq/Us/mhHzgv6ShAAAAAz9yXwLCJqecSba6jEz6sssDPzz17Dj5Qeh3mvpuwXpvw4FeL+vUYYoU+0mqhEXbrNSRpMtbtj7hRJAXda0uk6w==" SelectedForPublish="True">
+    <file relUrl="bin/MySql.Data.dll" publishTime="03/10/2011 15:27:34" />
+    <file relUrl="Global.asax" publishTime="03/10/2011 15:27:48" />
+    <file relUrl="bin/Spring.Core.dll" publishTime="03/10/2011 15:27:34" />
+    <file relUrl="bin/weborb.dll" publishTime="05/18/2011 14:56:26" />
+    <file relUrl="TrueSkillHelper.aspx" publishTime="05/20/2011 22:09:26" />
+    <file relUrl="ServerStatsGlobalMatches.aspx" publishTime="03/27/2011 20:07:12" />
+    <file relUrl="ServerStatsDaily.aspx" publishTime="04/01/2011 14:30:58" />
+    <file relUrl="bin/Common.Logging.dll" publishTime="03/10/2011 15:27:34" />
+    <file relUrl="News.xml" publishTime="07/12/2011 11:25:48" />
+    <file relUrl="ServerStatsProfile.aspx" publishTime="04/27/2011 18:23:10" />
+    <file relUrl="TestForm.aspx" publishTime="03/10/2011 15:27:48" />
+    <file relUrl="NotLoggedInFacebook.aspx" publishTime="03/10/2011 15:27:48" />
+    <file relUrl="ServerStats.aspx" publishTime="05/25/2011 19:48:30" />
+    <file relUrl="bin/Moserware.Skills.dll" publishTime="07/12/2011 11:28:32" />
+    <file relUrl="ServerStatsMatchesControl.ascx" publishTime="03/26/2011 01:41:22" />
+    <file relUrl="bin/Mono.Security.dll" publishTime="03/10/2011 15:27:34" />
+    <file relUrl="bin/Facebook.dll" publishTime="03/10/2011 15:27:34" />
+    <file relUrl="Default.aspx" publishTime="03/10/2011 15:27:48" />
+    <file relUrl="InviteFriends.aspx" publishTime="03/10/2011 15:27:48" />
+    <file relUrl="bin/App_Data/Backup.sql" publishTime="04/28/2011 06:01:28" />
+    <file relUrl="bin/Npgsql.dll" publishTime="03/10/2011 15:27:36" />
+    <file relUrl="Deauthorize.aspx" publishTime="03/10/2011 15:27:48" />
+    <file relUrl="bin/SoccerServerV1.dll" publishTime="10/04/2011 10:02:26" />
+    <file relUrl="bin/Facebook.Web.dll" publishTime="03/10/2011 15:27:34" />
+    <file relUrl="TestCreateSession.aspx" publishTime="03/10/2011 15:27:48" />
+    <file relUrl="ServerStatsRanking.aspx" publishTime="04/26/2011 00:03:46" />
+    <file relUrl="Web.config" publishTime="07/12/2011 11:31:14" />
+  </publishProfile>
+</publishData>

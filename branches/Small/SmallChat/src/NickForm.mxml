@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow title="Introduzca Nick" showCloseButton="true" close="CloseDialog(event)"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="272" height="144" creationComplete="CreationComplete(event)">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.SystemManager;
+			import mx.managers.IFocusManager;
+			import mx.managers.FocusManager;
+			import mx.managers.PopUpManager;
+          	import mx.events.CloseEvent;
+
+          	private function CreationComplete(e:Event):void
+          	{
+                PopUpManager.centerPopUp(this);
+
+                myNickInput.addEventListener(KeyboardEvent.KEY_DOWN, OnKeyDown);
+            }
+
+            private function OnKeyDown(e:KeyboardEvent):void
+            {
+            	if (e.charCode == Keyboard.ENTER)
+					Close();
+            }
+
+            private function Close():void
+            {
+            	PopUpManager.removePopUp(this);
+
+				// Informamos hacia afuera
+            	dispatchEvent(new Event("NickFormClosed"));
+            }
+
+          	private function CloseDialog(event : Event) : void
+          	{
+            	Close();
+          	}
+		]]>
+	</mx:Script>
+
+	<mx:Form width="100%" height="58" id="myForm">
+		<mx:FormItem label="Nick:">
+			<mx:TextInput id="myNickInput"/>
+		</mx:FormItem>
+	</mx:Form>
+
+	<mx:Canvas width="100%">
+		<mx:Button label="OK" horizontalCenter="0" click="CloseDialog(event)"/>
+	</mx:Canvas>
+
+
+</mx:TitleWindow>

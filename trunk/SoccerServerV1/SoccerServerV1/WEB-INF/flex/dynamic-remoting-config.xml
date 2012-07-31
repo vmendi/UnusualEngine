@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service id="dynamic-service" class="Weborb.V3Types.Core.RemotingHandler" messageTypes="flex.messaging.messages.RemotingMessage">
+	<adapters />
+ 	<default-channels>
+		<channel ref="my-amf"/>
+		<channel ref="my-secure-amf"/>
+	</default-channels>
+
+</service>

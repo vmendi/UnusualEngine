@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+    <title>DESAF&Iacute;ATE</title>
+    <link rel="stylesheet" href="main.css" />
+    
+    <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+    <script type="text/javascript" src="js/AC_OETags.js"></script>
+    <script type="text/javascript" src="js/swfobject.js"></script>
+    <script language="JavaScript" type="text/javascript">
+    
+		var requiredMajorVersion = 9;
+		// Minor version of Flash required
+		var requiredMinorVersion = 0;
+		// Minor version of Flash required
+		var requiredRevision = 0;
+
+        var hasReqestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
+    
+        silverRun = false;
+        function getSilver () {
+            return silverRun;
+        }
+        function loadFB() {
+            var loc = window.location.toString();
+            if (loc.substr(0,4) != 'file')
+            {
+                var FBsessionkey = null;
+                FB.init("0311c819f5d81865ec7a0183543a5d54");
+                FB.ensureInit(function() {
+                    FB.Connect.get_status().waitUntilReady( function( status ) {
+                        switch ( status ) {
+                            case FB.ConnectState.connected:
+                                loggedIn = true;
+                                break;
+                            case FB.ConnectState.appNotAuthorized:
+                                alert ("Aplicacion desautorizada, verifique la configuración de sus aplicaciones en Facebook");
+                            case FB.ConnectState.userNotLoggedIn:
+                                FB.Connect.requireSession();
+                                loggedIn = false;
+                        }
+                        if (loggedIn == false) 
+                        { 
+                            window.location.href = '/index.html';
+                        }
+                        else 
+                        {
+                            session = FB.Facebook.apiClient.get_session();
+                            if (session != null) {
+                                FBsessionkey = session.session_key;
+                                var fields = ["first_name", "middle_name", "last_name", "sex"];
+                                username = null;
+                                FB.Facebook.apiClient.users_getInfo(session.uid, fields, function(result) { 
+                                    if (result != null) {
+                                        first_name = (result[0].first_name); 
+                                        middle_name = (result[0].middle_name); 
+                                        last_name = (result[0].last_name); 
+                                        sex = (result[0].sex); 
+										//alert(FBsessionkey + ' : ' + session.uid);
+                                        var flashvars = {
+                                            session_key : FBsessionkey,
+                                            first_name : first_name,
+                                            middle_name : middle_name,
+                                            last_name : last_name,
+                                            sex : sex,
+                                            user_uid : session.uid
+                                        };
+                                        var params = {
+                                            scale : 'noscale',
+                                            wmode : 'opaque',
+                                            align : 'middle',
+                                            quality : 'high',
+                                            bgcolor : '#000000',
+                                            pluginurl : 'http://www.adobe.com/go/getflashplayer',
+                                            allowScriptAccess : 'sameDomain',
+                                            name : 'name',
+                                            type : 'application/x-shockwave-flash',
+                                            pluginspace : 'http://www.adobe.com/go/getflashplayer'
+                                        };
+                                        var attributes = {};
+                                        if (hasReqestedVersion) {
+                                            swfobject.embedSWF("Desafiate.swf", "flash_container_des", "300", "120", "9.0.0", false, flashvars, params, attributes);
+                                        } else {
+                                            var alternateContent = '<div style="color: white; padding: 200px; text-align: center;">Este contenido requiere Flash Player 9 o superior'
+                                                + '<br/><br/><a href=http://www.adobe.com/go/getflash/>Get Flash</a></div>';
+                                            document.getElementById('flash_container_des').innerHTML = alternateContent;  // insert non-flash content
+                                        }
+    
+                                    } else {
+                                        window.location.href = '/index.html';
+                                    }
+                                });
+                            } else {
+                                window.location.href = '/index.html';
+                            }
+                        }
+                   });
+                });
+            } else {
+                
+                function makeSwf () {
+                    var flashvars = {
+                        session_key : 'sessionkey',
+                        first_name : 'first_name',
+                        middle_name : 'middle_name',
+                        last_name : 'last_name',
+                        sex : 'hombre',
+                        user_uid : 'uid'
+                    };
+                    var params = {
+                        scale : 'noscale',
+                        wmode : 'opaque',
+                        align : 'middle',
+                        quality : 'high',
+                        bgcolor : '#000000',
+                        pluginurl : 'http://www.adobe.com/go/getflashplayer',
+                        allowScriptAccess : 'sameDomain',
+                        name : 'name',
+                        type : 'application/x-shockwave-flash',
+                        pluginspace : 'http://www.adobe.com/go/getflashplayer'
+                    };
+                    var attributes = {};
+                    swfobject.embedSWF("Desafiate.swf", "flash_container_des", "300", "120", "9.0.0", false, flashvars, params, attributes);
+    
+            }
+                makeSwf();
+            }
+        }
+        function publishStream (name, caption, imgLogro) {
+            showPublish = true;
+			pubName = name;
+            var attachment = {	'name':name,
+                                'href':'http://www.desafiate.es/',
+                                'caption':caption,
+                                'media': [{	'type':'image',
+                                            'src':imgLogro,
+                                            'href':'http://www.desafiate.es/'
+                                         }]};
+            FB.Connect.streamPublish(
+                null, attachment, null, null, 'Publica tu logro en facebook', function (response) { 
+					showPublish = false ; 
+					if (response != null)  {
+						if (pubName == '¡Contratado!')
+							isrc = "http://clk.atdmt.com/MSA/go/236033924/direct/01/";
+						else if (pubName == '¡Esquivados!')
+							isrc = "http://clk.atdmt.com/MSA/go/236033925/direct/01/";
+						else if (pubName == '¡Hacker!')
+							isrc = "http://clk.atdmt.com/MSA/go/236033926/direct/01/";
+						else if (pubName == '¡Miembro del consejo!')
+							isrc = "http://clk.atdmt.com/MSA/go/236033927/direct/01/";
+						else if (pubName == '¡Héroe de la compañía!')
+							isrc = "http://clk.atdmt.com/MSA/go/236033928/direct/01/";
+						else if (pubName == '¡Dios del Código!')
+							isrc = "http://clk.atdmt.com/MSA/go/236033938/direct/01/";
+						else if (pubName == '¡Empleado del mes!')
+							isrc = "http://clk.atdmt.com/MSA/go/236033945/direct/01/";
+						//alert(pubName);
+						document.getElementById('stats_i').src = isrc;
+					}
+					pubName = null;
+				}, false
+            );
+        };
+        showPublish = false;
+		pubName = null;
+        function getPublishStatus () {
+            return showPublish;
+        }
+    
+    </script>
+</head>
+<body onload="loadFB()">
+<iframe width="1" height="1" style="visibility:hidden;" id="stats_i"></iframe>
+    <div id="wrapper_content_des">
+    	<div id="page_content_des">
+	       	<div id="flash_zone_des">
+            	<div id="desafiate_text_game" onclick="window.location.href='http://clk.atdmt.com/MSA/go/236033955/direct/01/'"></div>
+            	<div id="flash_movie_des">
+                	<div id="flash_container_des">
+                		<img src="images/LogoUE.gif" style="margin-left: 410px; margin-top: 160px;"/>
+                    </div>
+				</div>
+			</div>
+            <div id="nav_bar_des">
+            	<a href="bases.html" target="_blank"><img src="images/bases_game.jpg" align="left" /></a><a href="halloffame.html" target="_blank"><img src="images/hof_game.jpg" align="left"/></a><a href="instrucciones.html" target="_blank"><img src="images/instruc_game.jpg" align="left" /></a>
+                <div id="share_comp" style="margin-top: 25px;">
+                    <!-- AddThis Button BEGIN -->
+                    <div class="addthis_toolbox addthis_default_style">
+                        <a class="addthis_button_live"></a>
+                        <a class="addthis_button_delicious"></a>
+                        <a class="addthis_button_facebook"></a>
+                        <a class="addthis_button_twitter"></a>
+                        <a class="addthis_button_digg"></a>
+                        <a class="addthis_button_stumbleupon"></a>
+                        <a class="addthis_button_blogger"></a>
+                        <!--<span class="addthis_separator">|</span>
+                        <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4bbb627f52fc1a5f" class="addthis_button_compact">Compartir</a>-->
+                   	</div>
+					<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4bbb627f52fc1a5f"></script>
+				</div>
+            </div>
+        </div>
+        <div id="footer_des">
+        	<div id="logo_zone">
+           	<div id="copyright">
+            		&copy; 2010 Microsoft
+                </div>
+            	<a href="http://www.microsoft.com"><img src="images/logo.jpg"/></a>
+            </div>
+            <div id="footer_links">
+            	<ul>
+                	<li><a href="http://www.microsoft.com/spain/misc/avisolegal.htm">Condiciones de uso</a></li>
+                	<li><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/es-es.mspx">Marcas registradas</a></li>
+                	<li><a href="http://privacy.microsoft.com/es-es/default.aspx">Privacidad</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

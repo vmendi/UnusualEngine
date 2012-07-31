@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<s:BorderContainer width="100%" height="100%" borderStyle="solid" cornerRadius="5">
+		<s:layout>
+			<s:VerticalLayout paddingBottom="3" paddingTop="3" paddingLeft="3" paddingRight="3"/>
+		</s:layout>
+		<mx:MenuBar id="myMenuBar" dataProvider="{AssetBundleMenuXML}" labelField="@label"
+					itemClick="OnMenuBarClick(event);"
+					showRoot="false" width="100%" height="20" left="0" right="0" />
+		<s:List id="myBundlesList" width="100%" height="100%" borderVisible="false" rollOverColor="0xFFFFFF"/>
+	</s:BorderContainer>
+	
+	<fx:Declarations>
+		<fx:XML id="AssetBundleMenuXML" xmlns="">
+			<RootEntry label="Add">
+				<Add label="Add">
+					<CreateInternalBundle label="Create Internal..." command="CreateInternalBundle"/>
+					<AddExternalBundle label="Add External..." command="AddExternalBundle"/>	
+				</Add>
+				<View label="View">
+					<ViewAll label="All" command="ViewAll" type="radio" group="view" toggled="true"/>
+					<ViewInternal label="Internal" command="ViewInternal" type="radio" group="view"/>
+					<ViewExternal label="External" command="ViewExternal" type="radio" group="view"/>
+				</View>
+			</RootEntry>
+		</fx:XML>
+	</fx:Declarations>
+	
+	<fx:Script><![CDATA[
+		import Model.AssetBundle;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.controls.Label;
+		import mx.events.MenuEvent;
+		
+		import spark.components.Label;
+		import spark.events.IndexChangeEvent;
+		import spark.events.RendererExistenceEvent;
+		import spark.skins.spark.DefaultItemRenderer;
+		
+		private const EXPORT_BUNDLE : String = "Export to XML bundle";
+		private const REPLACE_BUNDLE : String = "Replace with XML bundle";
+		private const SAVE_BUNDLE : String = "Save to disk";
+		private const REMOVE_BUNDLE : String = "Remove";
+		private const CONVERT_BUNDLE : String = "Convert to internal";
+
+		public function Init(controller : AssetBundleController) : void
+		{
+			mController = controller;
+						
+			mContextMenu = new ContextMenu();
+			
+			mExportNativeMenuItem = new NativeMenuItem(EXPORT_BUNDLE);
+			mExportNativeMenuItem.addEventListener(Event.SELECT, OnContextMenuItemSelected);
+			mContextMenu.addItem(mExportNativeMenuItem);
+			
+			mReplaceNativeMenuItem = new NativeMenuItem(REPLACE_BUNDLE);
+			mReplaceNativeMenuItem.addEventListener(Event.SELECT, OnContextMenuItemSelected);
+			mContextMenu.addItem(mReplaceNativeMenuItem);
+			
+			mContextMenu.addItem(new NativeMenuItem("", true));
+			
+			var theItem : NativeMenuItem = new NativeMenuItem(REMOVE_BUNDLE);
+			theItem.addEventListener(Event.SELECT, OnContextMenuItemSelected);
+			mContextMenu.addItem(theItem);			
+			
+			myBundlesList.contextMenu = mContextMenu;			
+
+			myBundlesList.addEventListener(IndexChangeEvent.CHANGE, OnSelectionChange);									
+			myBundlesList.dataProvider = mController.FilteredAssetBundlesDisplayNames;
+						
+			myBundlesList.dataGroup.addEventListener(RendererExistenceEvent.RENDERER_ADD, OnRendererAdded);
+			myBundlesList.dataGroup.addEventListener(RendererExistenceEvent.RENDERER_REMOVE, OnRendererRemoved);
+			
+			BindingUtils.bindSetter(OnSelectedAssetBundleChanged, mController, "SelectedAssetBundle");
+		}
+		
+		private function OnSelectedAssetBundleChanged(newSelected:AssetBundle):void
+		{
+			myBundlesList.selectedIndex = mController.FilteredAssetBundles.getItemIndex(newSelected);
+			
+			if (myBundlesList.selectedIndex != -1)
+				myBundlesList.contextMenu = mContextMenu;
+			else
+				myBundlesList.contextMenu = null;
+		}
+	
+		private function OnRendererAdded(e:RendererExistenceEvent):void
+		{
+			e.renderer.addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, OnRightMouseDown);	
+		}
+		private function OnRendererRemoved(e:RendererExistenceEvent):void
+		{
+			e.renderer.removeEventListener(MouseEvent.RIGHT_MOUSE_DOWN, OnRightMouseDown);
+		}
+	
+		private function OnRightMouseDown(e:MouseEvent):void
+		{
+			if (e.currentTarget is DefaultItemRenderer)
+			{
+				mController.SelectedAssetBundle = mController.FilteredAssetBundles[(e.currentTarget as DefaultItemRenderer).itemIndex];
+			}
+			
+			if (mController.SelectedAssetBundle.ImportURL.length != 0)
+			{
+				// Es un externo
+				mExportNativeMenuItem.label = SAVE_BUNDLE;
+				mReplaceNativeMenuItem.label = CONVERT_BUNDLE;
+			}
+			else
+			{
+				// Es un interno 
+				mExportNativeMenuItem.label = EXPORT_BUNDLE;
+				mReplaceNativeMenuItem.label = REPLACE_BUNDLE;
+			}
+		}
+
+		private function OnSelectionChange(event:IndexChangeEvent):void
+		{
+			mController.SelectedAssetBundle = mController.FilteredAssetBundles[event.newIndex];
+		}
+			
+		private function OnMenuBarClick(e:MenuEvent):void
+		{
+			if (e.item.@command == "ViewAll")
+				mController.SelectedBundleGroupName = mController.ALL;
+			else
+			if (e.item.@command == "ViewInternal")
+				mController.SelectedBundleGroupName = mController.INTERNAL;
+			else
+			if (e.item.@command == "ViewExternal")
+				mController.SelectedBundleGroupName = mController.EXTERNAL;
+			else
+			if (e.item.@command == "CreateInternalBundle")
+				mController.AddAssetBundleToLibrary();
+			else
+			if (e.item.@command == "AddExternalBundle")
+				mController.ImportAssetBundle();
+		}
+		
+		private function OnContextMenuItemSelected(e:Event):void
+		{			
+			var nativeItem : NativeMenuItem = (e.currentTarget as NativeMenuItem);
+			
+			if (nativeItem == null)
+				return;
+			
+			if (nativeItem.label == REMOVE_BUNDLE)
+			{
+				mController.RemoveAssetBundleFromLibrary(mController.FilteredAssetBundles[myBundlesList.selectedIndex]);
+			}
+			else
+			if (nativeItem.label == EXPORT_BUNDLE)
+			{
+				mController.ExportSelectedAssetBundle();
+			}
+			else
+			if (nativeItem.label == SAVE_BUNDLE)
+			{
+				mController.SaveSelectedAssetBundle();
+			}
+			
+		}
+		
+		private var mContextMenu : ContextMenu;
+		private var mExportNativeMenuItem : NativeMenuItem;
+		private var mReplaceNativeMenuItem : NativeMenuItem;
+		
+		private var mController : AssetBundleController;
+
+	]]></fx:Script>
+	
+</s:Group>

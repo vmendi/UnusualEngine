@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 creationComplete="CreationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:Team="GameView.Team.*" width="356" height="212" xmlns:GameView="GameView.*">
+	
+	<fx:Style source="../styles.css"/>
+	
+	<fx:Declarations>
+		<s:Elastic id="MyElasticEasing"/>
+		<s:Power id="MyPowerEasing" easeInFraction="1" exponent="5" />
+		<s:Animate id="MyAnimateEffect"
+				   target="{this}" repeatCount="1" 
+				   repeatBehavior="loop"
+				   duration="1500" easer="{MyElasticEasing}">
+			<s:motionPaths>
+				<s:SimpleMotionPath id="MyMotionPath" property="x"/>
+			</s:motionPaths>
+		</s:Animate>
+	</fx:Declarations>
+	
+	<fx:Script><![CDATA[
+		import com.greensock.TweenLite;
+		
+		import mx.controls.Alert;
+		import mx.core.FlexGlobals;
+		import mx.core.IFlexDisplayObject;
+		import mx.core.IFlexModule;
+		import mx.core.UIComponent;
+		import mx.events.EffectEvent;
+		import mx.events.FlexEvent;
+		import mx.managers.PopUpManager;
+		
+		public static function Show(matchResult : Object, winner : Boolean, oppName : String) : void
+		{
+			var dialog : MatchEndDialog = new MatchEndDialog();
+			var parent : Sprite = FlexGlobals.topLevelApplication as Sprite;
+			
+			dialog.moduleFactory = IFlexModule(parent).moduleFactory;
+			dialog.addEventListener(FlexEvent.CREATION_COMPLETE, static_creationCompleteHandler);
+			
+			dialog.mMatchResult = matchResult;
+			dialog.mWinner = winner;
+			dialog.mOpponentName = oppName;
+			
+			(parent as UIComponent).setStyle("modalTransparencyDuration", "500");
+			PopUpManager.addPopUp(dialog, parent, true, null);
+		}
+		
+		static private function static_creationCompleteHandler(event:FlexEvent) : void
+		{
+			if (event.target is IFlexDisplayObject && event.eventPhase == EventPhase.AT_TARGET)
+			{
+				var dialog:MatchEndDialog = MatchEndDialog(event.target);
+				dialog.removeEventListener(FlexEvent.CREATION_COMPLETE, static_creationCompleteHandler);
+				
+				dialog.MyMotionPath.valueFrom = -dialog.width*0.5 - 100;
+				dialog.MyMotionPath.valueTo = (dialog.parentApplication).width*0.5 - dialog.width*0.5;
+				dialog.y = (dialog.parentApplication).height*0.5 - dialog.height*0.5;				
+				dialog.MyAnimateEffect.startDelay = 500;
+				dialog.MyAnimateEffect.play();
+			}
+		}
+		
+		protected function AceptarClickHandler(event:MouseEvent):void
+		{
+			MyMotionPath.valueFrom = x;
+			MyMotionPath.valueTo = parentApplication.width;
+			MyAnimateEffect.easer = MyPowerEasing;
+			MyAnimateEffect.startDelay = 0;
+			MyAnimateEffect.addEventListener(EffectEvent.EFFECT_END, OnEffectEnd);
+			MyAnimateEffect.play();			
+		}
+		
+		protected function PublicarClickHandler(event:MouseEvent):void
+		{
+			AceptarClickHandler(event);
+			
+			var msgToPublish : Object = (currentState == "WinnerAbandoned") ? 
+										PublishMessages.PUBLISH_MESSAGE_ABANDONO : PublishMessages.PUBLISH_MESSAGE_PARTIDOGANADO;
+			
+			msgToPublish.daDescription = (msgToPublish.daDescription as String).replace("CONTRARIO", mOpponentName);
+			msgToPublish.daDescription = (msgToPublish.daDescription as String).replace("RESULTADO", mMatchResult.ResultPlayer1.Goals + 
+																									 "-" + 
+																									 mMatchResult.ResultPlayer2.Goals);			
+			PublishMessages.Publish(msgToPublish);
+		}
+				
+		protected function CreationCompleteHandler(event:Event):void
+		{
+			// WasTooManyTimes: Estos dos jugadores han jugado ya mas de N veces en el dia de hoy, asi que no les damos puntos.
+			// WasJust: el resultado es justo... o sea, q la diff de niveles no era exagerada, o q sí lo era pero gano o empato el de menor nivel
+			// WasAbandonedSameIP: Los dos jugadores tenían la misma IP
+			// WasAbandoned: 
+			
+			if (mMatchResult.WasAbandonedSameIP)
+			{
+				currentState = "SameIP";
+				// El abandono de mi contrario debería favorecerme a mi, pero ha sido ilegal
+				Titular = "¡ HA HABIDO UN ABANDONO !";
+				Texto = "Ambos jugadores estáis en la misma red, por lo que no habrá reparto de puntos. ";
+			}
+			else 
+			{			
+				if (mWinner)
+				{
+					if (mMatchResult.WasAbandoned)
+					{
+						if (mMatchResult.WasJust)
+						{
+							// Mi contrincante ha abandonado y me merezco los puntos
+							if (!mMatchResult.WasTooManyTimes)
+							{
+								Titular = "¡ TU RIVAL HA ABANDONADO !";
+								Texto = "Seguro que no ha podido soportar la presión.";
+								currentState = "WinnerAbandoned";
+							}
+							else
+							{
+								Titular = "¡ TU RIVAL HA ABANDONADO !";
+								Texto = "Pero no habrá reparto de puntos porque has superado el número máximo de partidos diarios que puedes jugar contra este rival.";
+								currentState = "WinnerAbandoned";
+							}
+						}
+						else
+						{
+							// Mi contrintante ha abandonado pero no me merezco los puntos
+							Titular = "¡ TU RIVAL HA ABANDONADO !";
+							Texto = "Tu habilidad es muy superior a la suya y no habrá reparto de puntos ¡Métete con alguien de tu tamaño!";
+							currentState = "NoJust";
+						}
+					}
+					else
+					{
+						if (mMatchResult.WasJust)
+						{
+							// He ganado a mi contrincante y me merezco los puntos
+							if (!mMatchResult.WasTooManyTimes)
+							{
+								Titular = "¡ HAS GANADO !";
+								Texto = "¡Enhorabuena! Estos son los puntos que obtienes.";
+								currentState = "Winner";
+							}
+							else
+							{
+								Titular = "¡ HAS GANADO !";
+								Texto = "Pero no habrá reparto de puntos porque has superado el número máximo de partidos diarios que puedes jugar contra este rival.";
+								currentState = "Winner";
+							}
+						}
+						else
+						{
+							// He ganado a mi contrincante pero no me merezco los puntos
+							Titular = "¡ HAS GANADO !";
+							Texto = "Tu habilidad es muy superior a la suya y no habrá reparto de puntos ¡Busca rivales de tu mismo nivel!";
+							currentState = "NoJust";
+						}
+					}
+				}
+				else
+				{
+					if (mMatchResult.WasAbandoned)
+					{
+						if (mMatchResult.WasJust)
+						{
+							// He abandonado
+							Titular = "¡ HAS ABANDONADO !";
+							Texto = "";
+							currentState = "Loser";
+						}
+						else
+						{
+							// He abandonado, pero nadie se lleva nada
+							Titular = "¡ HAS ABANDONADO !";
+							Texto = "";
+							currentState = "Loser";
+						}
+					}
+					else
+					{
+						if (mMatchResult.WasJust)
+						{
+							// Ha ganado mi contrincante y se merece los puntos	
+							Titular = "¡ RESULTADO !";
+							Texto = "";
+							currentState = "Loser";
+						}
+						else
+						{
+							// Ha ganado mi contrincante pero no se merece ningún punto
+							Titular = "¡ RESULTADO !";
+							Texto = "";
+							currentState = "Loser";
+						}
+					}
+				}
+			}
+			
+			var teams : Array = [ mMatchResult.ResultPlayer1, mMatchResult.ResultPlayer2 ];
+			
+			for (var c:int=0; c < 2; c++)
+			{
+				this["MyName"+c.toString()].text = teams[c].Name;
+				this["MyPredefinedTeamName"+c.toString()].text = teams[c].PredefinedTeamName;
+				(this["MyBadge" + c.toString()] as BadgeTeam).TeamName = teams[c].PredefinedTeamName;
+				this["MyGoals"+c.toString()].text = teams[c].Goals;
+				
+				var appendTo : String = "+";
+				
+				if (teams[c].DiffXP <= 0)
+					appendTo = "";
+				else
+					appendTo = "+";				
+				this["MyXP"+c.toString()].text = appendTo + teams[c].DiffXP;
+				
+				if (teams[c].DiffSkillPoints <= 0)
+					appendTo = "";
+				else
+					appendTo = "+";				
+				this["MySkillPoints"+c.toString()].text = appendTo + teams[c].DiffSkillPoints;
+				
+				if (teams[c].DiffTrueSkill <= 0)
+					appendTo = "";
+				else
+					appendTo = "+";
+				this["MyTrueSkill"+c.toString()].text = appendTo + teams[c].DiffTrueSkill;
+			}			
+		}
+			
+		private function OnEffectEnd(e:Event):void
+		{
+			MyAnimateEffect.removeEventListener(EffectEvent.EFFECT_END, OnEffectEnd);
+			PopUpManager.removePopUp(this);
+		}
+		
+		private var mMatchResult : Object;
+		private var mWinner : Boolean;
+		private var mOpponentName : String;
+		
+		[Bindable]
+		private var Titular : String;
+		[Bindable]
+		private var Texto : String;
+		
+	]]></fx:Script>
+	
+	<s:states>
+		<s:State name="SameIP"/>
+		<s:State name="NoJust"/>
+		<s:State name="Loser"/>
+		<s:State name="Winner"/>
+		<s:State name="WinnerAbandoned"/>
+	</s:states>		
+	
+	<s:BitmapImage x="0" y="0" source="@Embed(source='/Assets/General.swf', symbol='PopupTallDialogBg')" fillMode="clip" />	
+	<s:BitmapImage x="2" y="98" source="@Embed(source='/Assets/General.swf', symbol='MatchEndDialogBg')" fillMode="clip" />
+	
+	<s:Group x="10" y="12" width="336" height="55">
+		<s:layout><s:VerticalLayout gap="2" verticalAlign="middle"/></s:layout>
+		<s:Label width="100%" 
+				 text="{Titular}" 
+				 textAlign="center" styleName="whiteBoldVeryBig" id="PopupTitular" />
+
+		<s:Label width="100%"
+				 text="{Texto}" 
+				 textAlign="center" styleName="whiteBoldBig" id="PopupTexto" excludeFrom="Loser" />
+	</s:Group>
+	
+	<s:Group x="15" y="77">
+		<GameView:BadgeTeam id="MyBadge0" />
+		<s:Label left="40" top="7" width="100" maxDisplayedLines="1" text="Nombre" styleName="whiteBoldBig" id="MyName0"/>
+		<s:Label left="40" top="23" text="Equipo" styleName="greyBoldMedium" id="MyPredefinedTeamName0"/>
+		<s:Label width="35" left="122" top="7" text="3" styleName="whiteBoldHuge" textAlign="right" id="MyGoals0"/>
+	</s:Group>	
+
+	<s:Group x="114" y="134">
+		<s:layout><s:VerticalLayout gap="3"/></s:layout>
+		<s:Label width="50" text="123" styleName="whiteBoldBig" textAlign="right" id="MyXP0"/>
+		<s:Label width="50" text="123" styleName="whiteBoldBig" textAlign="right" id="MySkillPoints0"/>
+		<s:Label width="50" text="123" styleName="whiteBoldBig" textAlign="right" id="MyTrueSkill0"/>
+	</s:Group>
+	
+	<s:Group width="160" x="184" y="77">
+		<GameView:BadgeTeam id="MyBadge1" right="0" />
+		<s:Label right="40" top="7" width="100" maxDisplayedLines="1" text="Nombre" styleName="whiteBoldBig" textAlign="right" id="MyName1"/>
+		<s:Label right="40" top="23" text="Equipo" styleName="greyBoldMedium" textAlign="right" id="MyPredefinedTeamName1" />
+		<s:Label width="35" top="7" text="0" styleName="whiteBoldHuge" textAlign="left" id="MyGoals1"/>
+	</s:Group>	
+	
+	<s:Group right="21" y="134">
+		<s:layout><s:VerticalLayout gap="3"/></s:layout>
+		<s:Label width="50" text="245" styleName="whiteBoldBig" textAlign="right" id="MyXP1"/>
+		<s:Label width="50" text="245" styleName="whiteBoldBig" textAlign="right" id="MySkillPoints1"/>
+		<s:Label width="50" text="245" styleName="whiteBoldBig" textAlign="right" id="MyTrueSkill1"/>
+	</s:Group>	
+	
+	<s:Group left="20" right="20" y="216">
+		<s:layout><s:HorizontalLayout horizontalAlign="center" gap="20" /></s:layout>
+		<s:Button label="Publicar" click="PublicarClickHandler(event)" minWidth="80" skinClass="GameView.Skins.ButtonDarkGreySkin" includeIn="Winner, WinnerAbandoned" />
+		<s:Button label="Continuar" label.Winner="Saltar" label.WinnerAbandoned="Saltar" 
+				  click="AceptarClickHandler(event)" minWidth="80" skinClass="GameView.Skins.ButtonDarkGreySkin" />
+	</s:Group>	
+	
+</s:Group>

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespaces>
+  <runtime path="C:/Users/vmendi/Documents/UnusualSVN/UnusualEngine/trunk/SoccerServerV1/SoccerServerV1/" weborbRootURL="http://localhost/SoccerServerV1" />
+  <namespace name="SoccerServerV1" fullname="SoccerServerV1">
+    <service name="TestCreateSession" fullname="SoccerServerV1.TestCreateSession" namespace="SoccerServerV1" url="http://localhost/SoccerServerV1/console/weborb.aspx">
+      <method name="AddOnPreRenderCompleteAsync" type="void" nativetype="Void" containsvalues="0">
+        <arg name="beginHandler" type="Object" nativetype="Object" />
+        <arg name="endHandler" type="Object" nativetype="Object" />
+        <arg name="state" type="Object" nativetype="Object" />
+      </method>
+      <method name="ApplyStyleSheetSkin" type="void" nativetype="Void" containsvalues="0">
+        <arg name="page" type="Object" nativetype="Object" />
+      </method>
+      <method name="CreateHtmlTextWriterFromType" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="tw" type="Object" nativetype="Object" />
+        <arg name="writerType" type="Object" nativetype="Object" />
+      </method>
+      <method name="DataBind" type="void" nativetype="Void" containsvalues="0" />
+      <method name="DesignerInitialize" type="void" nativetype="Void" containsvalues="0" />
+      <method name="Dispose" type="void" nativetype="Void" containsvalues="0" />
+      <method name="ExecuteRegisteredAsyncTasks" type="void" nativetype="Void" containsvalues="0" />
+      <method name="FindControl" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="id" type="String" nativetype="String" />
+      </method>
+      <method name="Focus" type="void" nativetype="Void" containsvalues="0" />
+      <method name="GetDataItem" type="Object" nativetype="Object" containsvalues="0" />
+      <method name="GetPostBackClientEvent" type="String" nativetype="String" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+        <arg name="argument" type="String" nativetype="String" />
+      </method>
+      <method name="GetPostBackClientHyperlink" type="String" nativetype="String" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+        <arg name="argument" type="String" nativetype="String" />
+      </method>
+      <method name="GetPostBackEventReference" type="String" nativetype="String" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+        <arg name="argument" type="String" nativetype="String" />
+      </method>
+      <method name="GetTypeHashCode" type="int" nativetype="int" containsvalues="0" />
+      <method name="GetValidators" type="ArrayCollection" nativetype="Object[]" containsvalues="0">
+        <arg name="validationGroup" type="String" nativetype="String" />
+      </method>
+      <method name="HasControls" type="Boolean" nativetype="bool" containsvalues="0" />
+      <method name="IsClientScriptBlockRegistered" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="key" type="String" nativetype="String" />
+      </method>
+      <method name="IsStartupScriptRegistered" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="key" type="String" nativetype="String" />
+      </method>
+      <method name="LoadControl" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="virtualPath" type="String" nativetype="String" />
+      </method>
+      <method name="LoadTemplate" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="virtualPath" type="String" nativetype="String" />
+      </method>
+      <method name="MapPath" type="String" nativetype="String" containsvalues="0">
+        <arg name="virtualPath" type="String" nativetype="String" />
+      </method>
+      <method name="ParseControl" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="content" type="String" nativetype="String" />
+      </method>
+      <method name="ProcessRequest" type="void" nativetype="Void" containsvalues="0">
+        <arg name="context" type="Object" nativetype="Object" />
+      </method>
+      <method name="ReadStringResource" type="Object" nativetype="Object" containsvalues="0">
+        <arg name="t" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterArrayDeclaration" type="void" nativetype="Void" containsvalues="0">
+        <arg name="arrayName" type="String" nativetype="String" />
+        <arg name="arrayValue" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterAsyncTask" type="void" nativetype="Void" containsvalues="0">
+        <arg name="task" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterClientScriptBlock" type="void" nativetype="Void" containsvalues="0">
+        <arg name="key" type="String" nativetype="String" />
+        <arg name="script" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterHiddenField" type="void" nativetype="Void" containsvalues="0">
+        <arg name="hiddenFieldName" type="String" nativetype="String" />
+        <arg name="hiddenFieldInitialValue" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterOnSubmitStatement" type="void" nativetype="Void" containsvalues="0">
+        <arg name="key" type="String" nativetype="String" />
+        <arg name="script" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterRequiresControlState" type="void" nativetype="Void" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterRequiresPostBack" type="void" nativetype="Void" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterRequiresRaiseEvent" type="void" nativetype="Void" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="RegisterRequiresViewStateEncryption" type="void" nativetype="Void" containsvalues="0" />
+      <method name="RegisterStartupScript" type="void" nativetype="Void" containsvalues="0">
+        <arg name="key" type="String" nativetype="String" />
+        <arg name="script" type="String" nativetype="String" />
+      </method>
+      <method name="RegisterViewStateHandler" type="void" nativetype="Void" containsvalues="0" />
+      <method name="RenderControl" type="void" nativetype="Void" containsvalues="0">
+        <arg name="writer" type="Object" nativetype="Object" />
+      </method>
+      <method name="RequiresControlState" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="ResolveClientUrl" type="String" nativetype="String" containsvalues="0">
+        <arg name="relativeUrl" type="String" nativetype="String" />
+      </method>
+      <method name="ResolveUrl" type="String" nativetype="String" containsvalues="0">
+        <arg name="relativeUrl" type="String" nativetype="String" />
+      </method>
+      <method name="SetFocus" type="void" nativetype="Void" containsvalues="0">
+        <arg name="clientID" type="String" nativetype="String" />
+      </method>
+      <method name="SetRenderMethodDelegate" type="void" nativetype="Void" containsvalues="0">
+        <arg name="renderMethod" type="Object" nativetype="Object" />
+      </method>
+      <method name="TestDeviceFilter" type="Boolean" nativetype="bool" containsvalues="0">
+        <arg name="filterName" type="String" nativetype="String" />
+      </method>
+      <method name="UnregisterRequiresControlState" type="void" nativetype="Void" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+      <method name="Validate" type="void" nativetype="Void" containsvalues="0">
+        <arg name="validationGroup" type="String" nativetype="String" />
+      </method>
+      <method name="VerifyRenderingInServerForm" type="void" nativetype="Void" containsvalues="0">
+        <arg name="control" type="Object" nativetype="Object" />
+      </method>
+    </service>
+  </namespace>
+</namespaces>

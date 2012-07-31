@@ -1,0 +1,495 @@
+<Map>
+  <AssetLibrary>
+    <AssetBundle>
+      <ImportURL/>
+      <SWFURL>Assets/MmoGirls/MmoBase.swf</SWFURL>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>AvatarChica</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Character</ClassName>
+          <Attrib>
+            <Name>StartOrientation</Name>
+            <Value>SE</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WalkSpeed</Name>
+            <Value>2</Value>
+          </Attrib>
+          <Attrib>
+            <Name>CamFollow</Name>
+            <Value>true</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=-2.5, y=0, z=-1.5)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>1</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>1</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::DisableInteraction</ClassName>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>Teleport</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>DummyBso</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>DummyTxt</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </AssetBundle>
+    <AssetBundle>
+      <ImportURL/>
+      <SWFURL>Assets/IsoRacer/Personajes.swf</SWFURL>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcAvatarFran</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcParedAClass</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcParedBClass</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </AssetBundle>
+    <AssetBundle>
+      <ImportURL/>
+      <SWFURL>Assets/IsoRacer/GranCherokee.swf</SWFURL>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>GranCherokee</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Vehicle</ClassName>
+          <Attrib>
+            <Name>Acceleration</Name>
+            <Value>0.6</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Deceleration</Name>
+            <Value>1</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InitAngle</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>MaxBackSpeed</Name>
+            <Value>-5</Value>
+          </Attrib>
+          <Attrib>
+            <Name>MaxSpeed</Name>
+            <Value>15</Value>
+          </Attrib>
+          <Attrib>
+            <Name>SpeedDecay</Name>
+            <Value>1.05</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </AssetBundle>
+  </AssetLibrary>
+  <TotalBytesInSWFs>2056824</TotalBytesInSWFs>
+  <CellSizeInMeters>0.5</CellSizeInMeters>
+  <PixelsPerMeter>50</PixelsPerMeter>
+  <SceneObjs>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>GranCherokee</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=-1, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Vehicle</ClassName>
+          <Attrib>
+            <Name>Acceleration</Name>
+            <Value>0.6</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Deceleration</Name>
+            <Value>1</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InitAngle</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>MaxBackSpeed</Name>
+            <Value>-5</Value>
+          </Attrib>
+          <Attrib>
+            <Name>MaxSpeed</Name>
+            <Value>15</Value>
+          </Attrib>
+          <Attrib>
+            <Name>SpeedDecay</Name>
+            <Value>1.05</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+  </SceneObjs>
+  <IsoBackground>
+    <SWFName>Assets/IsoRacer/BgCiudad.swf</SWFName>
+    <WalkableRenderingEnabled>true</WalkableRenderingEnabled>
+    <GridRenderingEnabled>false</GridRenderingEnabled>
+    <Cell x="0.5" y="-6"/>
+    <Cell x="0.5" y="-6.5"/>
+    <Cell x="0.5" y="-7"/>
+    <Cell x="0.5" y="-7.5"/>
+    <Cell x="1" y="-7.5"/>
+    <Cell x="1.5" y="-7.5"/>
+    <Cell x="2" y="-7.5"/>
+    <Cell x="2.5" y="-7.5"/>
+    <Cell x="3" y="-7.5"/>
+    <Cell x="3.5" y="-7.5"/>
+    <Cell x="4" y="-7.5"/>
+    <Cell x="4.5" y="-7.5"/>
+    <Cell x="5" y="-8"/>
+    <Cell x="5.5" y="-7.5"/>
+    <Cell x="5.5" y="-7"/>
+    <Cell x="5.5" y="-6.5"/>
+    <Cell x="5.5" y="-6"/>
+    <Cell x="5.5" y="-5.5"/>
+    <Cell x="6" y="-5.5"/>
+    <Cell x="6" y="-5"/>
+    <Cell x="6.5" y="-5"/>
+    <Cell x="6.5" y="-4.5"/>
+    <Cell x="7" y="-4.5"/>
+    <Cell x="7" y="-4"/>
+    <Cell x="7" y="-3.5"/>
+    <Cell x="7" y="-3"/>
+    <Cell x="7" y="-2.5"/>
+    <Cell x="7" y="-2"/>
+    <Cell x="9" y="-2"/>
+    <Cell x="8.5" y="-2"/>
+    <Cell x="8" y="-2"/>
+    <Cell x="7.5" y="-2"/>
+    <Cell x="9.5" y="-1.5"/>
+    <Cell x="10" y="-1.5"/>
+    <Cell x="10" y="-1"/>
+    <Cell x="10.5" y="-1"/>
+    <Cell x="10.5" y="-0.5"/>
+    <Cell x="11" y="0"/>
+    <Cell x="11.5" y="0.5"/>
+    <Cell x="11.5" y="1"/>
+    <Cell x="11.5" y="1.5"/>
+    <Cell x="11.5" y="2"/>
+    <Cell x="11.5" y="2.5"/>
+    <Cell x="11.5" y="3"/>
+    <Cell x="11.5" y="3.5"/>
+    <Cell x="11.5" y="4"/>
+    <Cell x="11" y="4"/>
+    <Cell x="11" y="4.5"/>
+    <Cell x="11" y="5"/>
+    <Cell x="10.5" y="5"/>
+    <Cell x="10" y="5"/>
+    <Cell x="9.5" y="5"/>
+    <Cell x="9" y="5"/>
+    <Cell x="8.5" y="5"/>
+    <Cell x="8" y="5"/>
+    <Cell x="7.5" y="5"/>
+    <Cell x="7" y="5"/>
+    <Cell x="6.5" y="5"/>
+    <Cell x="6" y="5"/>
+    <Cell x="5.5" y="5"/>
+    <Cell x="5" y="4.5"/>
+    <Cell x="5" y="4"/>
+    <Cell x="4.5" y="4"/>
+    <Cell x="4.5" y="3.5"/>
+    <Cell x="4" y="3.5"/>
+    <Cell x="3" y="3"/>
+    <Cell x="3.5" y="3"/>
+    <Cell x="2.5" y="3"/>
+    <Cell x="2.5" y="2.5"/>
+    <Cell x="2.5" y="2"/>
+    <Cell x="2.5" y="1.5"/>
+    <Cell x="2.5" y="1"/>
+    <Cell x="3" y="1"/>
+    <Cell x="3" y="0.5"/>
+    <Cell x="3" y="0"/>
+    <Cell x="3" y="-0.5"/>
+    <Cell x="2.5" y="-0.5"/>
+    <Cell x="2.5" y="-1"/>
+    <Cell x="2" y="-1"/>
+    <Cell x="2" y="-1.5"/>
+    <Cell x="1.5" y="-1.5"/>
+    <Cell x="1" y="-1.5"/>
+    <Cell x="1" y="-2"/>
+    <Cell x="0.5" y="-2"/>
+    <Cell x="0" y="-2"/>
+    <Cell x="0" y="-2.5"/>
+    <Cell x="-0.5" y="-2.5"/>
+    <Cell x="-1" y="-2.5"/>
+    <Cell x="-1" y="-3"/>
+    <Cell x="-1" y="-3.5"/>
+    <Cell x="-1" y="-4"/>
+    <Cell x="-1" y="-4.5"/>
+    <Cell x="-1" y="-5"/>
+    <Cell x="-1" y="-5.5"/>
+    <Cell x="-1" y="-6"/>
+    <Cell x="-0.5" y="-6"/>
+    <Cell x="0" y="-6"/>
+    <Cell x="-8.5" y="1.5"/>
+    <Cell x="-8" y="1.5"/>
+    <Cell x="-5.5" y="1.5"/>
+    <Cell x="-5" y="1.5"/>
+    <Cell x="-4.5" y="1.5"/>
+    <Cell x="-4" y="1.5"/>
+    <Cell x="-3.5" y="1.5"/>
+    <Cell x="-3" y="1.5"/>
+    <Cell x="-2.5" y="1.5"/>
+    <Cell x="-7.5" y="1.5"/>
+    <Cell x="-7" y="1.5"/>
+    <Cell x="-6.5" y="1.5"/>
+    <Cell x="-6" y="1.5"/>
+    <Cell x="-2" y="4"/>
+    <Cell x="-2" y="3.5"/>
+    <Cell x="-2" y="3"/>
+    <Cell x="-2" y="2.5"/>
+    <Cell x="-2" y="2"/>
+    <Cell x="-2" y="1.5"/>
+    <Cell x="-1.5" y="4.5"/>
+    <Cell x="-1.5" y="5"/>
+    <Cell x="-1" y="5"/>
+    <Cell x="-1" y="5.5"/>
+    <Cell x="-0.5" y="5.5"/>
+    <Cell x="0" y="6"/>
+    <Cell x="0" y="6.5"/>
+    <Cell x="0.5" y="6.5"/>
+    <Cell x="0.5" y="7"/>
+    <Cell x="1" y="7"/>
+    <Cell x="1" y="7.5"/>
+    <Cell x="1.5" y="7.5"/>
+    <Cell x="2" y="7.5"/>
+    <Cell x="2.5" y="7.5"/>
+    <Cell x="3" y="7.5"/>
+    <Cell x="3.5" y="7.5"/>
+    <Cell x="4" y="7.5"/>
+    <Cell x="4.5" y="7.5"/>
+    <Cell x="5" y="7.5"/>
+    <Cell x="5.5" y="7.5"/>
+    <Cell x="6" y="7.5"/>
+    <Cell x="6.5" y="7.5"/>
+    <Cell x="7" y="7.5"/>
+    <Cell x="7.5" y="7.5"/>
+    <Cell x="8" y="7.5"/>
+    <Cell x="8.5" y="7.5"/>
+    <Cell x="-9" y="2"/>
+    <Cell x="-9" y="2.5"/>
+    <Cell x="-9" y="3"/>
+    <Cell x="-9.5" y="3.5"/>
+    <Cell x="-9.5" y="4"/>
+    <Cell x="-9.5" y="4.5"/>
+    <Cell x="-9.5" y="5"/>
+    <Cell x="-10" y="5"/>
+    <Cell x="-10.5" y="5"/>
+    <Cell x="-11" y="5"/>
+    <Cell x="-11.5" y="5"/>
+    <Cell x="-9" y="1.5"/>
+  </IsoBackground>
+</Map>

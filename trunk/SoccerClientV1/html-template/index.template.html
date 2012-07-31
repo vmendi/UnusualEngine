@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">	
+    <head>
+        <title>Mahou Liga Chapas</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      	
+		<!-- Include CSS to eliminate any default margins/padding and set the height of the html element and 
+		     the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as 
+			 the percentage of the height of its parent container, which has to be set explicitly.  Initially, 
+			 don't display flashContent div so it won't show if JavaScript disabled.
+		-->
+        <style type="text/css" media="screen"> 
+			html, body	{ height:100%; }
+			body { margin:0; padding:0; overflow:auto; text-align:center; background-color: ${bgcolor}; }
+			#flashContent { display:none; }
+        </style>
+        <script type="text/javascript" src="swfobject.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+		<script type="text/javascript" src="http://connect.facebook.net/es_ES/all.js"></script>
+		
+		<script type="text/javascript">					
+			<!-- Funcionalidad para el raton -->
+			
+			// Nos regisramos a los eventos de raton para pasarselos al movie
+			function RegisterMouseEvents( )
+			{
+				<!-- alert(" Register JS llamado. Rellamando a AS"); -->
+				<!-- OnMouseMove( 0 ) -->;
+				
+				document.onmousemove = OnMouseMove;
+				document.onmouseup = OnMouseUp;
+				
+			}
+			// Nos desregisramos a los eventos de raton para pasarselos al movie
+			function UnregisterMouseEvents( )
+			{
+				<!-- alert("Unregister JS llamado. Rellamando a AS"); -->
+				document.onmousemove = null;
+				document.onmouseup = null;
+			}
+			
+			//
+			// Se ha producido un movimiento de ratón : Las coordenadas vendrán absolutas al corner superior izquierdo
+			// de la página web
+			//
+			function OnMouseMove( e )
+			{
+				if (!e) 
+					var e = window.event;
+				
+				<!-- Llamamos al metodo correspondiente de ActionScript dentro de la Movie. -->
+				<!-- La función debe registrarse para poder ser invocada -->
+				
+				// Obtenemos la película a quien vamos a envíarle el evento
+				var movie = thisMovie("SoccerClientV1");
+				if( movie )
+				{
+					// Hacemos las coordenadas relativas a la posición de la película
+					var x = e.clientX - movie.offsetLeft;
+					var y = e.clientY - movie.offsetTop;
+					
+					// Invocamos al metodo de la pelicula (ActionScript 3)
+					// NOTE: La función debe haberse registrado para poderse llamar externamente
+					movie.OnMouseMoveFromJS( x, y );
+				}
+				
+				//writeData('clientX is ' + e.clientX);
+        		//writeData('clientY is ' + e.clientY);
+        		//writeData('type is ' + e.type);				
+			}
+			
+			function OnMouseUp( e )
+			{
+				if (!e) 
+					var e = window.event;
+			
+				// Obtenemos la película a quien vamos a envíarle el evento
+				var movie = thisMovie("SoccerClientV1");
+				if( movie )
+				{
+					// Hacemos las coordenadas relativas a la posición de la película
+					//var x = e.clientX - movie.offsetLeft;
+					//var y = e.clientY - movie.offsetTop;
+					
+					// Invocamos al metodo de la pelicula (ActionScript 3)
+					movie.OnMouseUpFromJS(  );
+				}
+			}
+			
+			
+			function thisMovie(movieName)
+			{
+			    if (navigator.appName.indexOf("Microsoft") != -1) {
+			        return window[movieName];
+			    } else {
+			        return document[movieName];
+			    }
+			}
+			
+			<!-- Funcionalidad para el raton  -->
+		
+		</script>
+		
+		<script type="text/javascript">
+			function getQueryStringArray()
+			{
+				<!-- http://www.adobe.com/devnet/facebook/articles/first_flex_facebook_web_app_pt2.html -->
+				var ret = {};
+				var strHref = window.location.href;
+				if ( strHref.indexOf("?") > -1 )
+				{
+					var strQueryString = strHref.substr(strHref.indexOf("?")+1);
+					var aQueryString = strQueryString.split("&");				
+					for ( var iParam = 0; iParam < aQueryString.length; iParam++ )
+					{
+					  var aParam = aQueryString[iParam].split("=");
+					  ret[aParam[0]] = aParam[1];
+					}
+				}
+				
+				return ret;
+			}
+		</script>
+		
+        <script type="text/javascript">
+			
+			<!-- The query string as a hash -->
+			var flashVars = getQueryStringArray();			
+							  
+            <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
+            var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
+			
+            <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
+            var xiSwfUrlStr = "${expressInstallSwf}";
+			
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "${bgcolor}";
+            params.allowscriptaccess = "always";
+            params.allowfullscreen = "true";
+            params.wmode = "opaque";
+            
+            var attributes = {};
+            attributes.id = "${application}";
+            attributes.name = "${application}";
+            attributes.align = "middle";
+			
+            swfobject.embedSWF("${swf}.swf", "flashContent", 
+                			   "${width}", "${height}", 
+                			   swfVersionStr, xiSwfUrlStr, 
+                			   flashVars, params, attributes);
+                
+			<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
+			swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+    </head>
+	
+    <body>
+		<div id="fb-root"></div>
+
+		<script type="text/javascript">					
+			 $(document).ready(function()
+			 {
+			 	FB.init({appId: '129447350433277', status: true, cookie: true, xfbml: true});				
+				FB.Event.subscribe('edge.create', function(href, widget)
+				{
+					thisMovie("SoccerClientV1").OnLikeButtonPressed();
+				});
+				
+				if (getQueryStringArray()['liked'] == 'true')
+					$('#likeDiv').hide();
+			 });
+			
+			<!-- http://developers.facebook.com/docs/guides/attachments -->
+			<!-- http://developers.facebook.com/docs/reference/javascript/FB.ui -->
+			function streamPublish(daUserEditableMessage, daName, daDescription, daImgSrc, daUserMessagePrompt)
+			{
+				var daMedia = 
+				[
+					{ 
+					"type": "image", 
+					"src": daImgSrc, 
+					"href": "http://apps.facebook.com/mahouligachapas/"
+					}
+				]
+				
+				var daAttachment =
+				{
+					name: daName,
+					description: daDescription,
+					href: 'http://apps.facebook.com/mahouligachapas/',
+					media: daMedia
+				}
+			
+				FB.ui(
+					{
+						method: 'stream.publish',
+						message: daUserEditableMessage,
+						attachment: daAttachment,
+						user_message_prompt: daUserMessagePrompt
+					},
+					function(response) 
+					{
+						if (response && response.post_id) {
+							//alert('Post was published.');
+						} else {
+							//alert('Post was not published.');
+						}
+					}
+				);
+			 }
+		
+			function thisMovie(movieName)
+			{
+			    if (navigator.appName.indexOf("Microsoft") != -1) {
+			        return window[movieName];
+			    } else {
+			        return document[movieName];
+			    }
+			}
+		</script>
+				
+    	<div style="margin-bottom:10px;width:760px;height:74px;"><img src="Imgs/MainHeader.jpg" width="760" height="74" style="display:block;border:0;"></img></div>
+		
+		<!-- Banner y botón Like mecanismo "complejo" -->
+		<div id="likeDiv" style="width:760px; height:38px; background:url(Imgs/BannerMeGustaBg.png); margin-bottom:10px;">
+			<div style="float:left; padding-left:16px; padding-top:10px; width:150px;">
+				<fb:like layout="button_count" show_faces="false" ref="MahouLikeButton01" href="http://www.facebook.com/mahou.es">
+				</fb:like>
+			</div>
+		</div>
+
+		<!- Navegación -->		
+		<div style="width:760px; height:33px; background:url(Imgs/NavBg.png);" >
+		    <div style="padding-left:39px; float:left; width:203px;"><a href="/InviteFriends.aspx"><img src="Imgs/NavIconInvita.png" width="142" height="33" border="0" /></a></div>
+		    <div style="float:left; width:130px;"><a href="http://www.facebook.com/apps/application.php?id=129447350433277&amp;v=wall" target="_parent"><img src="Imgs/NavIconMuro.png" width="60" height="33" border="0" /></a></div>
+		    <div style="float:left; width:250px;"><a href="http://www.facebook.com/apps/application.php?id=129447350433277&amp;v=info" target="_parent"><img src="Imgs/NavIconInfo.png" width="178" height="33" border="0" /></a></div>
+		    <div style="float:left;"><a href="http://www.facebook.com/apps/application.php?id=129447350433277&amp;v=app_2373072738" target="_parent"><img src="Imgs/NavIconForo.png" width="71" height="33" border="0"/></a></div>
+		</div>
+		    	
+        <!-- 	
+			SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
+			JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
+			when JavaScript is disabled.
+		-->
+        <div id="flashContent">
+        	<p>
+	        	To view this page ensure that Adobe Flash Player version 
+				${version_major}.${version_minor}.${version_revision} or greater is installed. 
+			</p>
+			<script type="text/javascript"> 
+				var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 
+				document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+								+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+			</script> 
+        </div>
+	   			
+       	<noscript>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="${width}" height="${height}" id="${application}">
+                <param name="movie" value="${swf}.swf" />
+                <param name="quality" value="high" />
+                <param name="bgcolor" value="${bgcolor}" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="${swf}.swf" width="${width}" height="${height}">
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="${bgcolor}" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                	<p> 
+                		Either scripts and active content are not permitted to run or Adobe Flash Player version
+                		${version_major}.${version_minor}.${version_revision} or greater is not installed.
+                	</p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+	    </noscript>	
+	    	
+   </body>
+</html>

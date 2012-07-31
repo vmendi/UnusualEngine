@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>VendingMachine</name>
+	<comment></comment>
+	<projects>
+		<project>Utils</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Out</name>
+			<type>2</type>
+			<locationURI>DOCUMENTS/Out</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

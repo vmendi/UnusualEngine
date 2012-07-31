@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 		xmlns:s="library://ns.adobe.com/flex/spark" 
+		 		xmlns:mx="library://ns.adobe.com/flex/mx"
+		 		autoDrawBackground="false"
+		 		creationComplete="CreationCompleteHandler(event)">
+
+	<fx:Style source="../styles.css" />
+	
+	<fx:Declarations>
+		<s:GlowFilter id="NumberStrokeFilter" blurX="2" blurY="2" strength="10" quality="3" color="0x000000" />
+		<s:Linear id="MyLinearEasing"/>
+		<!--
+		<s:Animate id="MyAnimateEffect"
+				   target="{MyNameLabel}" repeatCount="0" 
+				   repeatBehavior="reverse"
+				   easer="{MyLinearEasing}">
+			<s:motionPaths>
+				<s:SimpleMotionPath property="horizontalCenter" valueFrom="-{mHorizDisp}" valueTo="+{mHorizDisp}" />
+			</s:motionPaths>
+		</s:Animate>
+		-->
+	</fx:Declarations>
+
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="selected"/>
+		<s:State name="hovered" />
+	</s:states>
+		
+	<s:Group width="34" height="35" horizontalCenter="0" verticalCenter="0">
+		<mx:SWFLoader top="18" left="17" id="MyCapMC" scaleContent="false"
+					  source="@Embed(source='/Assets/General.swf', symbol='CapBase')"/>
+	</s:Group>
+	
+	<s:Label id="MyBackNumberLabel" text="{data.Number}" horizontalCenter="0" top="10" styleName="whiteBoldMedium" textAlign="center" filters="{NumberStrokeFilter}"/>
+	
+	<!--
+	<s:Group horizontalCenter="0" top="70" width="70" height="19" id="MyNameGroup">
+		<s:BitmapImage horizontalCenter="0" source="@Embed(source='/Assets/General.swf', symbol='CapName')" fillMode="clip" />
+		<s:Label id="MyNameLabel" mask="{MyMask}" text="{data.Name}" horizontalCenter="0" top="3" styleName="whiteBoldArial"/>
+
+		<s:Group left="3" right="3" top="0" height="13" id="MyMask">
+			<s:Rect left="0" right="0" top="0" bottom="0" 
+					topLeftRadiusX="6" topLeftRadiusY="6"
+					topRightRadiusX="6" topRightRadiusY="6"
+					bottomLeftRadiusX="6" bottomLeftRadiusY="6" 
+					bottomRightRadiusX="6" bottomRightRadiusY="6">
+				<s:fill>
+					<s:SolidColor alpha="0" color="#FF0000"/>
+				</s:fill>
+			</s:Rect>
+		</s:Group>
+	</s:Group>
+	-->
+	
+	<s:filters>
+		<s:DropShadowFilter distance="10" angle="124" blurX="8" blurY="8" includeIn="selected"/>
+		<s:DropShadowFilter distance="4" angle="124" blurX="6" blurY="6" includeIn="hovered"/>
+		<s:DropShadowFilter distance="2" angle="124" blurX="6" blurY="6" includeIn="normal"/>
+	</s:filters>
+
+	<fx:Script><![CDATA[
+		import GameModel.TeamModel;
+		
+		import SoccerServerV1.TransferModel.vo.SoccerPlayer;
+		
+		import mx.core.UIComponent;
+		import mx.events.DragEvent;
+		import mx.events.FlexEvent;
+		import mx.managers.DragManager;
+		
+		[Bindable]
+		private var mHorizDisp : Number = 0;
+
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mTeamModel = SoccerClientV1.GetMainGameModel().TheTeamModel;
+			
+			(MyCapMC.content as MovieClip).gotoAndStop(mTeamModel.PredefinedTeamName);
+			
+			addEventListener(MouseEvent.MOUSE_DOWN, FieldCapMouseDownHandler); 
+			addEventListener(DragEvent.DRAG_ENTER, FieldCapDragEnterHandler);
+			addEventListener(DragEvent.DRAG_DROP, FieldCapDragDropHandler);
+			
+			addEventListener(FlexEvent.DATA_CHANGE, OnDataChanged);
+			
+			OnDataChanged(null);
+		}
+		
+		private function OnDataChanged(e:Event):void
+		{
+			/*
+			if (data != null)
+			{
+				MyAnimateEffect.end();
+				var metrics : TextLineMetrics = MyNameLabel.measureText(data.Name);
+
+				if (metrics.width > MyMask.width)
+				{
+					mHorizDisp = metrics.width - MyMask.width + 3;
+					MyAnimateEffect.duration = 1000 * mHorizDisp / 10;	// v=e/t => t=e/v
+					MyAnimateEffect.play();					
+				}
+				else
+					MyNameLabel.horizontalCenter = 0;
+			}
+			*/
+		}
+		
+		private function FieldCapMouseDownHandler(e:MouseEvent):void 
+		{
+			var dragSrc:FieldCap = e.currentTarget as FieldCap;
+			
+			var className:String = getQualifiedClassName(dragSrc);
+			var klass:Class = getDefinitionByName(className) as Class;
+			var proxy:FieldCap = new klass() as FieldCap;
+			
+			proxy.mTeamModel = mTeamModel;
+			
+			proxy.width = dragSrc.width;
+			proxy.height = dragSrc.height;
+						
+			proxy.data = dragSrc.data;
+
+			DragManager.doDrag(dragSrc, null, e, proxy);
+		}
+		
+		private function FieldCapDragEnterHandler(e:DragEvent):void 
+		{
+			DragManager.acceptDragDrop(e.currentTarget as UIComponent);
+		}
+		
+		private function FieldCapDragDropHandler(e:DragEvent):void 
+		{
+			var initiator : FieldCap = e.dragInitiator as FieldCap;
+								
+			if (initiator != this)
+			{
+				var temp : SoccerPlayer = mTeamModel.SelectedSoccerPlayer;
+				mTeamModel.SelectedSoccerPlayer = null;
+				
+				mTeamModel.SwapFormationPosition(data as SoccerPlayer, initiator.data as SoccerPlayer);
+				
+				mTeamModel.SelectedSoccerPlayer = temp;
+			}			
+		}
+		
+		private var mTeamModel : TeamModel;
+
+	]]></fx:Script>
+</s:ItemRenderer>

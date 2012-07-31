@@ -1,0 +1,162 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>WebORB-enabled Web Site</Name>
+    <Description>WebORB-enabled Web Site</Description>
+    <Icon Package="{39c9c826-8ef8-4079-8c95-428f5b1c323f}" ID="4700"/>
+     <ProjectType>Web</ProjectType>
+     <ProjectSubType>CSharp</ProjectSubType>
+     <SortOrder>10</SortOrder>
+     <CreateNewFolder>true</CreateNewFolder>
+     <DefaultName>WebSite</DefaultName>
+     <ProvideDefaultName>true</ProvideDefaultName>
+     <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+     <EnableEditOfLocationField>true</EnableEditOfLocationField>
+     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+     <LocationField>Hidden</LocationField>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="WebSite.webproj" File="WebSite.webproj" ReplaceParameters="true">
+        <Folder Name="App_Data"> </Folder>
+        <Folder Name="bin" TargetFolderName="bin">
+            <ProjectItem ReplaceParameters="false" TargetFileName="weborb.dll">weborb.dll</ProjectItem>
+        </Folder>
+        <Folder Name="console" TargetFolderName="console">
+            <Folder Name="images" TargetFolderName="images">
+                <ProjectItem>consolebar.jpg</ProjectItem>
+                <ProjectItem>examplesoverview.jpg</ProjectItem>
+                <ProjectItem>folder_closed.png</ProjectItem>
+                <ProjectItem>orboverview.jpg</ProjectItem>
+                <ProjectItem>runningwoee.jpg</ProjectItem>
+                <ProjectItem>services.png</ProjectItem>
+				<ProjectItem>testdrive.png</ProjectItem>
+            </Folder>
+            <ProjectItem>AC_OETags.js</ProjectItem>
+            <ProjectItem>configtrouble.htm</ProjectItem>
+            <ProjectItem>console.swf</ProjectItem>
+            <ProjectItem>gettingstarted.htm</ProjectItem>
+            <ProjectItem>introduction.htm</ProjectItem>
+            <ProjectItem>playerProductInstall.swf</ProjectItem>
+            <ProjectItem>troubleshooting.htm</ProjectItem>
+            <ProjectItem>woeeoverview.htm</ProjectItem>
+            <ProjectItem>woeestandalone.htm</ProjectItem>
+            <ProjectItem>yesflex-yesdotnet.htm</ProjectItem>
+        </Folder>
+        <Folder Name="weborbassets" TargetFolderName="weborbassets">
+            <Folder Name="codegen" TargetFolderName="codegen">
+                <Folder Name="wdm" TargetFolderName="wdm">
+                    <Folder Name="client" TargetFolderName="client">
+                        <ProjectItem>codegen.client.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.domain.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.testdrive.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.testdrive.add.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.unittest.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.unittest.app.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.unittest.create.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.unittest.delete.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.unittest.findfirst.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.unittest.findlast.xslt</ProjectItem>
+                        <ProjectItem>codegen.client.ui.unittest.update.xslt</ProjectItem>
+                    </Folder>
+                    <Folder Name="import" TargetFolderName="import">
+                        <ProjectItem>codegen.import.keys.xslt</ProjectItem>
+                    </Folder>
+                    <Folder Name="server" TargetFolderName="server">
+                        <Folder Name="csharp" TargetFolderName="csharp">
+                            <Folder Name="data" TargetFolderName="data">
+                                <Folder Name="mssql" TargetFolderName="mssql">
+                                    <ProjectItem>codegen.server.csharp.data.mssql.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mssql.create.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mssql.findAll.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mssql.findByPrimaryKey.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mssql.load.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mssql.remove.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mssql.save.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mssql.update.xslt</ProjectItem>
+                                </Folder>
+                                <Folder Name="mysql" TargetFolderName="mysql">
+                                    <ProjectItem>codegen.server.csharp.data.mysql.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mysql.create.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mysql.findAll.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mysql.findByPrimaryKey.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mysql.load.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mysql.remove.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mysql.save.xslt</ProjectItem>
+                                    <ProjectItem>codegen.server.csharp.data.mysql.update.xslt</ProjectItem>
+                                </Folder>
+                                <ProjectItem>codegen.server.csharp.data.xslt</ProjectItem>
+                            </Folder>
+                            <ProjectItem>codegen.server.csharp.xslt</ProjectItem>
+                            <ProjectItem>codegen.server.csharp.config.xslt</ProjectItem>
+                            <ProjectItem>codegen.server.csharp.domain.xslt</ProjectItem>
+                            <ProjectItem>codegen.server.csharp.project.xslt</ProjectItem>
+                        </Folder>
+                        <Folder Name="vb" TargetFolderName="vb">
+                            <ProjectItem>codegen.server.vb.project.xslt</ProjectItem>
+                        </Folder>
+                        <ProjectItem>codegen.server.xslt</ProjectItem>
+                    </Folder>
+                    <ProjectItem>codegen.xslt</ProjectItem>
+                </Folder>
+                <ProjectItem>ajax-client.xslt</ProjectItem>
+                <ProjectItem>arp-framework-as3.xslt</ProjectItem>
+                <ProjectItem>arp-framework.xslt</ProjectItem>
+                <ProjectItem>cairngorm-framework.xslt</ProjectItem>
+                <ProjectItem>codegen.xslt</ProjectItem>
+                <ProjectItem>codegen.invoke.xslt</ProjectItem>
+                <ProjectItem>codegen.invoke.ajax.xslt</ProjectItem>
+                <ProjectItem>flashcomm-fms2.xslt</ProjectItem>
+                <ProjectItem>flex-remoting-as2-inline.xslt</ProjectItem>
+                <ProjectItem>flex-remoting-as2.xslt</ProjectItem>
+                <ProjectItem>flex-remoting-as3.xslt</ProjectItem>
+                <ProjectItem>pureMVC.xslt</ProjectItem>
+                <ProjectItem>sl-c-sharp.xslt</ProjectItem>
+            </Folder>
+            <Folder Name="uploads" TargetFolderName="uploads"></Folder>
+            <Folder Name="wdm" TargetFolderName="wdm">
+                <Folder Name="output" TargetFolderName="output"></Folder>
+                <ProjectItem>weborb.swc</ProjectItem>
+            </Folder>
+            <Folder Name="silverlight" TargetFolderName="wdm">
+                <ProjectItem>WeborbClient.dll</ProjectItem>
+            </Folder>
+        </Folder>
+        <Folder Name="App_Code" TargetFolderName="App_Code">
+            <ProjectItem ReplaceParameters="true">SampleService.cs</ProjectItem>
+        </Folder>
+        <Folder Name="Applications" TargetFolderName="Applications">
+            <Folder Name="DataService" TargetFolderName="DataService">
+                <ProjectItem ReplaceParameters="true">app.config</ProjectItem>
+            </Folder>
+            <Folder Name="DataServiceCodegen" TargetFolderName="DataServiceCodegen">
+                <ProjectItem ReplaceParameters="true">app.config</ProjectItem>
+            </Folder>
+            <Folder Name="default" TargetFolderName="default"></Folder>
+            <Folder Name="MessagingService" TargetFolderName="MessagingService">
+                <ProjectItem ReplaceParameters="true">app.config</ProjectItem>
+            </Folder>
+        </Folder>
+        <Folder Name="WEB-INF" TargetFolderName="WEB-INF">
+            <Folder Name="flex" TargetFolderName="flex">
+                <ProjectItem ReplaceParameters="true" TargetFileName="data-management-config.xml">data-management-config.xml</ProjectItem>
+                <ProjectItem ReplaceParameters="true" TargetFileName="messaging-config.xml">messaging-config.xml</ProjectItem>
+                <ProjectItem ReplaceParameters="true" TargetFileName="remoting-config.xml">remoting-config.xml</ProjectItem>
+                <ProjectItem ReplaceParameters="true" TargetFileName="services-config.xml">services-config.xml</ProjectItem>
+                <ProjectItem ReplaceParameters="true" TargetFileName="weborb-services-config.xml">weborb-services-config.xml</ProjectItem>
+            </Folder>
+        </Folder>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx">Default.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx.cs">Default.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Web.config">Web.config</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="weborbconsole.html">weborbconsole.html</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="diagnostics.aspx">diagnostics.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="weborb.config">weborb.config</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Global.asax">Global.asax</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="WebORB.js">WebORB.js</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="WebSite.webproj">WebSite.webproj</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>TMC.Weborb.WizardExtension</Assembly>
+    <FullClassName>TMC.Weborb.WizardExtension.WeborbTemplateParameters</FullClassName>
+  </WizardExtension>
+</VSTemplate>

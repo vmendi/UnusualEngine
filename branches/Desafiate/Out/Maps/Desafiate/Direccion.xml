@@ -1,0 +1,906 @@
+<Map>
+  <AssetLibrary>
+    <AssetBundle>
+      <ImportURL>Maps/Desafiate/MSBase.xml</ImportURL>
+    </AssetBundle>
+    <AssetBundle>
+      <ImportURL>Maps/Desafiate/MSBalloonBase.xml</ImportURL>
+    </AssetBundle>
+    <AssetBundle>
+      <ImportURL/>
+      <SWFURL>Assets/Desafiate/DireccionObjetos.swf</SWFURL>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcPlanta</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcArchivadores</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcSillasDireccion</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcMesaDireccion</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcLibreriaAlta</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcConjuntoSillones</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=0, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </AssetBundle>
+  </AssetLibrary>
+  <TotalBytesInSWFs>1698315</TotalBytesInSWFs>
+  <CellSizeInMeters>0.5</CellSizeInMeters>
+  <PixelsPerMeter>50</PixelsPerMeter>
+  <SceneObjs>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>DummyTxt</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::AStarMapSpace</ClassName>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Render2DComponent</ClassName>
+          <Attrib>
+            <Name>ScreenPos</Name>
+            <Value>(x=-417, y=265)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ZOrder</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HideOnStart</Name>
+            <Value>true</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents.Desafiate::InitFase</ClassName>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents.Desafiate::MainDireccion</ClassName>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents.Desafiate::GameStatus</ClassName>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Bso</ClassName>
+          <Attrib>
+            <Name>Song</Name>
+            <Value>Assets/Desafiate/Music/General.mp3</Value>
+          </Attrib>
+          <Attrib>
+            <Name>IgnoreGeneralPause</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>PlayOnStart</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>SurviveStop</Name>
+            <Value>true</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcElevatorDoor</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=-3.5, y=0, z=4.5)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>1</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>3</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Interaction</ClassName>
+          <Attrib>
+            <Name>FinalOrientation</Name>
+            <Value>Auto</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HighlightLevel</Name>
+            <Value>40</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionX</Name>
+            <Value>2</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionY</Name>
+            <Value>-1</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Enabled</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HasInteractiveArea</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Highlight</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>NavigateOnClick</Name>
+            <Value>true</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents.Desafiate::PuertaAscensor</ClassName>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcPlanta</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=2.5, y=0, z=-8)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>2</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>2</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcConjuntoSillones</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value>DireccionSillon</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=-2, y=0, z=0)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>7</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>12</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Interaction</ClassName>
+          <Attrib>
+            <Name>FinalOrientation</Name>
+            <Value>NW</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HighlightLevel</Name>
+            <Value>40</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionX</Name>
+            <Value>7</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionY</Name>
+            <Value>-1</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Enabled</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HasInteractiveArea</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Highlight</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>NavigateOnClick</Name>
+            <Value>true</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcLibreriaAlta</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=-6, y=0, z=4)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>2</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>3</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcArchivadores</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value/>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=3, y=0, z=-4.5)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>9</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>2</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcMesaDireccion</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value>DireccionMesa</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=-2.5, y=0, z=-7)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>7</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>7</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Interaction</ClassName>
+          <Attrib>
+            <Name>FinalOrientation</Name>
+            <Value>SW</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HighlightLevel</Name>
+            <Value>40</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionX</Name>
+            <Value>8</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionY</Name>
+            <Value>3</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Enabled</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HasInteractiveArea</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Highlight</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>NavigateOnClick</Name>
+            <Value>true</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents.Desafiate::JefazoDireccion</ClassName>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+    <SceneObj>
+      <AssetObject>
+        <GameComponent>
+          <ClassName>GameComponents::DefaultGameComponent</ClassName>
+          <Attrib>
+            <Name>MovieClipName</Name>
+            <Value>mcSillasDireccion</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Name</Name>
+            <Value>DireccionSillas</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::IsoComponent</ClassName>
+          <Attrib>
+            <Name>WorldPos</Name>
+            <Value>(x=-2.5, y=0, z=-3.5)</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HeightInCells</Name>
+            <Value>3</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Orientation</Name>
+            <Value>0</Value>
+          </Attrib>
+          <Attrib>
+            <Name>WidthInCells</Name>
+            <Value>7</Value>
+          </Attrib>
+          <Attrib>
+            <Name>ForceToBackground</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Transparent</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Walkable</Name>
+            <Value>false</Value>
+          </Attrib>
+        </GameComponent>
+        <GameComponent>
+          <ClassName>GameComponents::Interaction</ClassName>
+          <Attrib>
+            <Name>FinalOrientation</Name>
+            <Value>SE</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HighlightLevel</Name>
+            <Value>40</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionX</Name>
+            <Value>5</Value>
+          </Attrib>
+          <Attrib>
+            <Name>InteractionY</Name>
+            <Value>3</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Enabled</Name>
+            <Value>true</Value>
+          </Attrib>
+          <Attrib>
+            <Name>HasInteractiveArea</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>Highlight</Name>
+            <Value>false</Value>
+          </Attrib>
+          <Attrib>
+            <Name>NavigateOnClick</Name>
+            <Value>true</Value>
+          </Attrib>
+        </GameComponent>
+      </AssetObject>
+    </SceneObj>
+  </SceneObjs>
+  <IsoBackground>
+    <SWFName>Assets/Desafiate/DireccionBg.swf</SWFName>
+    <WalkableRenderingEnabled>false</WalkableRenderingEnabled>
+    <GridRenderingEnabled>true</GridRenderingEnabled>
+    <Cell x="-1.5" y="4"/>
+    <Cell x="-3.5" y="4.5"/>
+    <Cell x="-3" y="4.5"/>
+    <Cell x="-2.5" y="4.5"/>
+    <Cell x="-2" y="4.5"/>
+    <Cell x="-1.5" y="4.5"/>
+    <Cell x="-1.5" y="3.5"/>
+    <Cell x="-1.5" y="3"/>
+    <Cell x="3.5" y="3"/>
+    <Cell x="3" y="3"/>
+    <Cell x="2.5" y="3"/>
+    <Cell x="2" y="3"/>
+    <Cell x="1.5" y="3"/>
+    <Cell x="1" y="3"/>
+    <Cell x="0.5" y="3"/>
+    <Cell x="0" y="3"/>
+    <Cell x="-1" y="3"/>
+    <Cell x="-0.5" y="3"/>
+    <Cell x="3.5" y="2.5"/>
+    <Cell x="3.5" y="2"/>
+    <Cell x="3.5" y="1.5"/>
+    <Cell x="3.5" y="1"/>
+    <Cell x="3.5" y="0.5"/>
+    <Cell x="3.5" y="0"/>
+    <Cell x="3.5" y="-0.5"/>
+    <Cell x="3.5" y="-1"/>
+    <Cell x="3.5" y="-1.5"/>
+    <Cell x="3.5" y="-2"/>
+    <Cell x="3.5" y="-2.5"/>
+    <Cell x="3.5" y="-3"/>
+    <Cell x="3.5" y="-3.5"/>
+    <Cell x="3.5" y="-4"/>
+    <Cell x="3.5" y="-4.5"/>
+    <Cell x="3.5" y="-5"/>
+    <Cell x="3.5" y="-5.5"/>
+    <Cell x="3.5" y="-6"/>
+    <Cell x="3.5" y="-6.5"/>
+    <Cell x="3.5" y="-7"/>
+    <Cell x="3" y="-7.5"/>
+    <Cell x="3" y="-8"/>
+    <Cell x="-6.5" y="-8"/>
+    <Cell x="-6" y="-8"/>
+    <Cell x="-5.5" y="-8"/>
+    <Cell x="-4" y="-8"/>
+    <Cell x="-5" y="-8"/>
+    <Cell x="-4.5" y="-8"/>
+    <Cell x="2.5" y="-8"/>
+    <Cell x="2" y="-8"/>
+    <Cell x="1.5" y="-8"/>
+    <Cell x="1" y="-8"/>
+    <Cell x="0.5" y="-8"/>
+    <Cell x="0" y="-8"/>
+    <Cell x="-1" y="-8"/>
+    <Cell x="-1.5" y="-8"/>
+    <Cell x="-2" y="-8"/>
+    <Cell x="-2.5" y="-8"/>
+    <Cell x="-3" y="-8"/>
+    <Cell x="-3.5" y="-8"/>
+    <Cell x="-0.5" y="-8"/>
+    <Cell x="-4" y="4.5"/>
+    <Cell x="-4.5" y="4.5"/>
+    <Cell x="-5" y="4.5"/>
+    <Cell x="-5.5" y="4.5"/>
+    <Cell x="-6" y="4.5"/>
+    <Cell x="-6.5" y="4.5"/>
+    <Cell x="-6.5" y="4"/>
+    <Cell x="-6.5" y="3.5"/>
+    <Cell x="-6.5" y="3"/>
+    <Cell x="-6.5" y="2.5"/>
+    <Cell x="-6.5" y="2"/>
+    <Cell x="-6.5" y="1.5"/>
+    <Cell x="-6.5" y="1"/>
+    <Cell x="-6.5" y="0.5"/>
+    <Cell x="-6.5" y="0"/>
+    <Cell x="-6.5" y="-0.5"/>
+    <Cell x="-6.5" y="-1"/>
+    <Cell x="-6.5" y="-1.5"/>
+    <Cell x="-6.5" y="-2"/>
+    <Cell x="-6.5" y="-2.5"/>
+    <Cell x="-6.5" y="-3"/>
+    <Cell x="-6.5" y="-3.5"/>
+    <Cell x="-6.5" y="-4"/>
+    <Cell x="-6.5" y="-4.5"/>
+    <Cell x="-6.5" y="-5"/>
+    <Cell x="-6.5" y="-5.5"/>
+    <Cell x="-6.5" y="-6"/>
+    <Cell x="-6.5" y="-6.5"/>
+    <Cell x="-6.5" y="-7"/>
+    <Cell x="-6.5" y="-7.5"/>
+  </IsoBackground>
+</Map>

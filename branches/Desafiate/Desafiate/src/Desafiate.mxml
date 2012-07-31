@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute" backgroundColor="0xf0efe6" backgroundAlpha="0" backgroundGradientColors="[]"
+				frameRate="30"
+				width="915" height="508"
+				addedToStage="OnAddedToStage();" preloader="ProgressPreloader"
+				horizontalScrollPolicy="off" verticalScrollPolicy="off"
+				clipContent="true">
+
+	<mx:Script>
+		<![CDATA[
+		import flash.net.navigateToURL;
+		
+		import es.desafiate.SessionStartNewResultEvent;
+		import es.desafiate.GetCheckerResultEvent;		
+		import es.desafiate.KeepAliveResultEvent;
+		import es.desafiate.SessionStartResultEvent;
+		import es.desafiate.SavePuntuacionResultEvent;
+		import es.desafiate.AddLogroResultEvent;
+		import es.desafiate.MainService;
+		import es.desafiate.SaveUsuarioResultEvent;
+		import es.desafiate.GetUsuarioResultEvent;
+
+		import utils.MD5;
+
+		import utils.CentralLoader;
+		import mx.controls.Alert;
+		import utils.FPSCounter;
+		import utils.KeyboardHandler;
+
+		import flash.events.Event;
+
+ 
+		protected function OnAddedToStage() : void
+		{
+			KeyboardHandler.Init(stage);
+			//FPSCounter.Init(stage, new Point(0, 0));
+
+			IsoEngine.BaseUrl = CentralLoader.BaseURL();
+			mIsoEngine = new IsoEngine(myCanvas);
+
+			// Un único punto de control de error de carga. Si ocurre, adios!
+			mIsoEngine.TheCentralLoader.addEventListener("LoadError", OnLoadError);
+
+			// Setup de la barra de progreso
+			SetupProgressBar();
+
+			ReadFlashVars();
+			InitFromServer();
+		}
+
+		private function ReadFlashVars() : void
+		{
+			if (Application.application.parameters.user_uid != undefined &&
+				Application.application.parameters.user_uid != "uid")
+			{
+				mFacebookUserID = Application.application.parameters.user_uid;
+			}
+			else
+			{
+				trace("Asignando SAMPLE_USER");
+
+				mFacebookUserID = "SAMPLE_USER";
+				//mFacebookUserID = "1050910634";			// vmendi@gmail.com
+				//mFacebookUserID = "100000959596966";		// vmendi@unusualwonder.com
+				Application.application.parameters.user_uid = "SAMPLE_USER";
+				Application.application.parameters.first_name = "SAMPLE_USER";
+				Application.application.parameters.middle_name = "SAMPLE_USER";
+				Application.application.parameters.last_name = "SAMPLE_USER";
+				Application.application.parameters.sex = "hombre";
+			}
+		}
+
+		private function SetupProgressBar() : void
+		{
+			myProgressBar.x = 0;
+			myProgressBar.y = 0;
+			var daClip : MovieClip = (((myProgressBar.content as MovieClip).getChildAt(0) as Loader).content as MovieClip)["mcLoading"];
+			daClip.gotoAndStop(1);
+
+			mIsoEngine.TheCentralLoader.addEventListener("LoadStartSWF", OnLoadStart);
+			mIsoEngine.TheCentralLoader.addEventListener("LoadProgressSWF", OnProgress);
+			mIsoEngine.TheCentralLoader.addEventListener("LoadCompleteSWF", OnLoadComplete);
+		}
+
+		private function OnLoadComplete(event:Event) : void
+		{
+			myProgressBar.visible = false;
+
+			// Setup del cache. Aquí nos llamaran multiples veces, pero se encarga el cache de evitar duplicados
+			mIsoEngine.TheCentralLoader.AddToCache("Assets/Desafiate/SalaITObjetos.swf");
+			mIsoEngine.TheCentralLoader.AddToCache("Assets/Desafiate/BgIT.swf");
+			mIsoEngine.TheCentralLoader.AddToCache("Assets/Desafiate/SalaTrabajoBg.swf");
+			mIsoEngine.TheCentralLoader.AddToCache("Assets/Desafiate/SalaTrabajoObjetos.swf");
+		}
+
+		private function OnLoadStart(event:Event):void
+		{
+			myProgressBar.visible = true;
+			var daClip : MovieClip = (((myProgressBar.content as MovieClip).getChildAt(0) as Loader).content as MovieClip)["mcLoading"];
+			daClip.gotoAndStop(1);
+		}
+
+		private function OnProgress(event:ProgressEvent) : void
+		{
+			var percent : int = Math.floor((event.bytesLoaded/event.bytesTotal*100));
+			var daClip : MovieClip = (((myProgressBar.content as MovieClip).getChildAt(0) as Loader).content as MovieClip)["mcLoading"];
+			daClip.gotoAndStop(percent);
+
+			//trace(event.bytesLoaded + " of " + event.bytesTotal + "; " + percent + "%");
+		}
+
+		private function OnLoadError(event:ErrorEvent):void
+		{
+			Alert.show(event.text, "Error de carga...", Alert.OK);
+		}
+
+		private function InitFromServer() : void
+		{
+			mWebService = new MainService();
+
+			// Todos los listeners del WebService van aqui
+			mWebService.addgetUsuarioEventListener(OnGetUserCompleted);
+			mWebService.addsaveUsuarioEventListener(OnSaveStatusCompleted);
+			mWebService.addaddLogroEventListener(OnAddLogroCompleted);
+			mWebService.addsavePuntuacionEventListener(OnSavePuntuacionCompleted);
+			mWebService.addsessionStartEventListener(OnSessionStart);
+			mWebService.addsessionStartNewEventListener(OnSessionStartNew);
+			mWebService.addkeepAliveEventListener(OnKeepAlive);
+			mWebService.addgetCheckerEventListener(OnGetCheckerCompleted);
+			mWebService.addMainServiceFaultEventListener(OnWebServiceFault);
+
+			mWebService.getChecker();
+		}
+
+		private function OnGetCheckerCompleted(e:GetCheckerResultEvent):void
+		{
+			mUserCheck = parseInt(e.result);
+
+			mUserCheckView = new Timer(100*1000, 975969);
+			mUserCheckView.addEventListener(TimerEvent.TIMER, OnUserCheck);
+			mUserCheckView.start();
+
+			if (mFacebookUserID == "SAMPLE_USER")
+				mWebService.sessionStart(mFacebookUserID);
+			else
+				mWebService.sessionStartNew(mFacebookUserID, Application.application.parameters.session_key);
+		}
+
+		private function OnUserCheck(e:Event):void
+		{
+			mUserCheck += 1;
+		}
+
+		private function OnSessionStart(e:SessionStartResultEvent):void
+		{
+			InnerSessionStart(e.result);
+		}
+
+		private function OnSessionStartNew(e:SessionStartNewResultEvent):void
+		{
+			InnerSessionStart(e.result);
+		}
+
+		private function InnerSessionStart(session:String):void
+		{
+			mSessionID = session;
+
+			mWebService.getUsuario(mFacebookUserID, mSessionID, GenerateUserUUID());
+
+			mKeepAliveTimer = new Timer(1000*19, 0);
+			mKeepAliveTimer.addEventListener(TimerEvent.TIMER, KeepAlive);
+			mKeepAliveTimer.start();
+		}
+
+		private function KeepAlive(e:Event):void
+		{
+			/*
+			mKeepAliveTimer.delay=1000;
+			for (var c:int = 0; c < 333; c++)
+			{
+				mWebService.savePuntuacion(mFacebookUserID, mSessionID, "Test", 1000, "Prueba");
+				mWebService.savePuntuacion(mFacebookUserID, mSessionID, "Test", 1000, "Prueba");
+				mWebService.saveUsuario(mFacebookUserID, mSessionID, mLastStatusFromServer, "Prueba");
+				mWebService.getHOF();
+			} */
+
+			mWebService.keepAlive(mFacebookUserID, mSessionID);
+		}
+
+		private function OnKeepAlive(e:KeepAliveResultEvent):void
+		{
+			CheckSessionAndDisplayMessage(e.result);
+		}
+
+		private function CheckSessionAndDisplayMessage(result : String) : Boolean
+		{
+			var bRet : Boolean = true;
+			if (result == "NOSESSION" || result == "EXPIRED")
+			{
+				Alert.show("La sesión ha caducado: probablemente ha abierto el juego en otra ventana", "Sesión caducada", Alert.OK, null, OnSessionExpiredMessageClosed);
+
+				if (mIsoEngine != null)
+				{
+					mIsoEngine.TheGameModel.PauseGame(true);
+					mIsoEngine.TheGameModel.StopGame();
+				}
+
+				if (mKeepAliveTimer != null)
+					mKeepAliveTimer.stop();
+
+				bRet = false;
+			}
+
+			return bRet;
+		}
+
+		private function OnSessionExpiredMessageClosed(e:Object):void
+		{
+			navigateToURL(new URLRequest("/"), "_self");
+		}
+
+		private function GenerateUserUUID() : String
+		{
+			//trace("GenerateUserUUID " + mUserCheck.toString());
+			return MD5.hex_md5(mFacebookUserID + "SJR0ICBVF7XK2T2EGOR2" + mUserCheck.toString());
+		}
+
+		private function CreateAndSaveBlankPlayer():void
+		{
+			mLastStatusFromServer = <UserStatus>
+										<MapPath>Maps/Desafiate/Recepcion.xml</MapPath>
+										<Checkpoint>INTRO</Checkpoint>
+										<Bag></Bag>
+									</UserStatus>
+
+			// Grabamos al servidor por primera vez
+			mWebService.saveUsuario(mFacebookUserID, mSessionID, mLastStatusFromServer, GenerateUserUUID());
+		}
+
+		private function OnGetUserCompleted(e:GetUsuarioResultEvent):void
+		{
+			trace("GetUserCompleted");
+
+			if (!CheckSessionAndDisplayMessage(e.result))
+				return;
+
+			if (e != null)
+			{
+				mLastStatusFromServer = e.result;
+
+				// Es la primera vez que jugamos?
+				if (e.result == "NOTEXIST")
+				{
+					CreateAndSaveBlankPlayer();
+				}
+			}
+
+			/*** TEMP: Restaurar GameStatus adonde sea menester ***/
+ 			 /*   mLastStatusFromServer = <UserStatus>
+										<MapPath>Maps/Desafiate/SalaTrabajo.xml</MapPath>
+										<Checkpoint>TM01_START</Checkpoint>
+										<Bag></Bag>
+									</UserStatus>; */
+
+		  	/*  mLastStatusFromServer = <UserStatus>
+										<MapPath>Maps/Desafiate/Recepcion.xml</MapPath>
+										<Checkpoint>INTER01</Checkpoint>
+										<Bag></Bag>
+									</UserStatus>;  */
+
+			 /* mLastStatusFromServer = <UserStatus>
+										<MapPath>Maps/Desafiate/SalaIt.xml</MapPath>
+										<Checkpoint>INTRO</Checkpoint>
+										<Bag></Bag>
+									</UserStatus>; */
+			/*
+			 mLastStatusFromServer = <UserStatus>
+										<MapPath>Maps/Desafiate/SalaTrabajo.xml</MapPath>
+										<Checkpoint>INTER01</Checkpoint>
+										<Bag>
+											<MiniGameManager>
+												<NextTimeManagementCount>60</NextTimeManagementCount>
+												<MessageSequenceCount>30</MessageSequenceCount>
+											</MiniGameManager>
+										</Bag>
+									</UserStatus>;
+			*/
+
+			mIsoEngine.Load(GetCurrentMap());
+		}
+
+		private function GetCurrentMap() : String
+		{
+			return (new XML(mLastStatusFromServer)).MapPath;
+		}
+
+		public function GetLastStatusFromServer() : String
+		{
+			return mLastStatusFromServer;
+		}
+
+		public function SaveStatus(status : String):void
+		{
+			mWebService.saveUsuario(mFacebookUserID, mSessionID, status, GenerateUserUUID());
+		}
+
+		public function AddLogro(whichOne : String) : void
+		{
+			mWebService.addLogro(mFacebookUserID, mSessionID, "LOGRO", whichOne, GenerateUserUUID());
+		}
+
+		public function SavePuntuacion(event:String, punt : int):void
+		{
+			mWebService.savePuntuacion(mFacebookUserID, mSessionID, event, punt, GenerateUserUUID());
+		}
+
+		public function RestartGame(currentScore:int):void
+		{
+			SavePuntuacion("Restart", currentScore);
+			CreateAndSaveBlankPlayer();
+			mIsoEngine.TheGameModel.GlobalGameState = null;
+			mIsoEngine.Load(GetCurrentMap());
+		}
+
+		//
+		// Receptores del Web Service
+		//
+		private function OnWebServiceFault(e:Event):void
+		{
+			Alert.show("Network error", "Could not connect to server");
+
+			if (mKeepAliveTimer != null)
+				mKeepAliveTimer.stop();
+		}
+		private function OnSaveStatusCompleted(e:SaveUsuarioResultEvent):void
+		{
+			trace("saveUsuario Completed");
+
+			CheckSessionAndDisplayMessage(e.result);
+		}
+		private function OnAddLogroCompleted(e:AddLogroResultEvent):void
+		{
+			trace("AddLogro Completed");
+
+			CheckSessionAndDisplayMessage(e.result)
+		}
+		private function OnSavePuntuacionCompleted(e:SavePuntuacionResultEvent):void
+		{
+			trace("SavePuntuacion Completed");
+
+			CheckSessionAndDisplayMessage(e.result);
+		}
+
+		private var mLastStatusFromServer : String;
+		private var mIsoEngine : IsoEngine;
+		private var mWebService : MainService;
+		private var mFacebookUserID : String;
+		private var mSessionID : String;
+		private var mUserCheck : int = 0;
+		private var mUserCheckView : Timer;
+		private var mKeepAliveTimer : Timer;
+		]]>
+	</mx:Script>
+
+	<mx:Canvas id="myCanvas" width="918" height="512" clipContent="true"
+		horizontalCenter="0" verticalCenter="0" verticalScrollPolicy="off" horizontalScrollPolicy="off" >
+		<mx:UIComponent x="-1" y="-1" />
+	</mx:Canvas>
+	<mx:SWFLoader id="myProgressBar" trustContent="true" scaleContent="false" source="@Embed(source='Embedded/Loading.swf')"/>
+
+</mx:Application>

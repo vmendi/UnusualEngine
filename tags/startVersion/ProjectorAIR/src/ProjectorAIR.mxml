@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	creationComplete="OnCreationComplete()" addedToStage="OnAddedToStage()"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off" showStatusBar="false"
+	width="1024" height="768" applicationDeactivate="OnAppDeactivate()" frameRate="25" backgroundColor="0x000000"
+	>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.effects.effectClasses.HideShowEffectTargetFilter;
+			import utils.MovieClipMouseDisabler;
+			import mx.effects.Sequence;
+			import gs.TweenMax;
+			import utils.CentralLoader;
+
+			private function OnCreationComplete():void
+			{
+				mNetConnection = new NetConnection();
+				mNetConnection.addEventListener(NetStatusEvent.NET_STATUS, OnNetConnectionStatusHandler);
+				mNetConnection.connect(null);		// Conecta al sistema local de ficheros
+
+				nativeWindow.x = (Capabilities.screenResolutionX - nativeWindow.width) / 2;
+            	nativeWindow.y = (Capabilities.screenResolutionY - nativeWindow.height) / 2;
+   			}
+
+			private function OnAppDeactivate():void
+			{
+				if (stage.displayState != StageDisplayState.NORMAL)
+					nativeApplication.activate();
+			}
+
+			private function OnAddedToStage():void
+			{
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, OnKeyDown);
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, OnFullScreen);
+
+				// En AIR, para que te sigan mandando el teclado, tiene que ser FULL_SCREEN_INTERACTIVE
+				stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			}
+
+			private function OnFullScreen(event:FullScreenEvent):void
+			{
+				// Cuando nos llaman aquí, nuestra resolución ya es full-screen, es decir, 1920x1200.
+				// Esto nos obliga a usar myContentWrapper, que no ve alterada su 1024x768.
+				if (event.fullScreen)
+				{
+					var diffX : Number = stage.fullScreenWidth - myContentWrapper.width;
+					var diffY : Number = stage.fullScreenHeight - myContentWrapper.height;
+
+					this.x = diffX * 0.5;
+					this.y = diffY * 0.5;
+
+					MouseHide();
+				}
+				else
+				{
+					Mouse.show();
+
+					this.x = 0;
+					this.y = 0;
+				}
+			}
+
+			private function MouseHide():void
+			{
+				stage.nativeWindow.activate();
+				stage.nativeWindow.orderToBack();
+				stage.nativeWindow.orderToFront();
+				Mouse.hide();
+			}
+
+			private function OnKeyDown(event:KeyboardEvent):void
+			{
+				if (String.fromCharCode(event.charCode) == 'f')
+				{
+					if (stage.displayState == StageDisplayState.NORMAL)
+						stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+					else
+						stage.displayState = StageDisplayState.NORMAL;
+				}
+				else
+				if (event.keyCode == Keyboard.SPACE)
+				{
+					if (mSelectedButton != null)
+						InternalButtonClick(mSelectedButton, false);
+				}
+				else
+				if (String.fromCharCode(event.charCode) == "c")
+				{
+					if (mSelectedButton != null)
+						InternalButtonClick(mSelectedButton, true);
+				}
+				else
+				if (event.keyCode == Keyboard.LEFT)
+				{
+					SelectButton(mButtons.indexOf(mSelectedButton) - 1);
+				}
+				else
+				if (event.keyCode == Keyboard.RIGHT)
+				{
+					SelectButton(mButtons.indexOf(mSelectedButton) + 1);
+				}
+			}
+
+			private function OnNetConnectionStatusHandler(event:NetStatusEvent):void
+			{
+            	switch (event.info.code)
+            	{
+                	case "NetConnection.Connect.Success":
+             			LoadXML();
+                    break;
+                    default:
+                    	throw "Unexpected status code";
+             	}
+   			}
+
+   			private function LoadXML() : void
+   			{
+   				mCentralLoader = new CentralLoader(CentralLoader.BaseURL());
+				mCentralLoader.Load("Assets/ProjectorA400M/Default.xml", false, OnXMLLoaded);
+   			}
+
+			private function OnXMLLoaded(loader:URLLoader):void
+			{
+				var xml : XML = XML(loader.data);
+
+				for each(var seqXML : XML in xml.child("sequence"))
+					mSequences.push(new SequencePlayer(seqXML, mCentralLoader, mNetConnection));
+
+				mCentralLoader.AddToQueue("Assets/ProjectorA400M/inicio.swf", true);
+
+				mCentralLoader.addEventListener("LoadComplete-Default", OnLoadComplete);
+				mCentralLoader.LoadQueue();
+			}
+
+			private function OnLoadComplete(event:Event):void
+			{
+				mCentralLoader.removeEventListener("LoadComplete-Default", OnLoadComplete);
+
+				var swfInicio : MovieClip = (mCentralLoader.GetContentOfQueue("Assets/ProjectorA400M/inicio.swf") as Loader).content as MovieClip;
+				myContentWrapper.addChild(swfInicio);
+
+				mButtons = [ swfInicio.mcInicio.mcBotonEscena1, swfInicio.mcInicio.mcBotonEscena2,
+						 	 swfInicio.mcInicio.mcBotonEscena3, swfInicio.mcInicio.mcBotonEscena4 ]
+
+				for (var c:int=0; c < mButtons.length; c++)
+				{
+					mButtons[c].addEventListener(MouseEvent.CLICK, OnButtonClick);
+					mButtons[c].addEventListener(MouseEvent.ROLL_OVER, OnButtonOver);
+					mButtons[c].addEventListener(MouseEvent.ROLL_OUT, OnButtonOut);
+				}
+
+				// Primer boton por defecto
+				SelectButton(0);
+			}
+
+			private function SelectButton(idx : int):void
+			{
+				if (idx == mButtons.indexOf(mSelectedButton))
+					return;
+
+				if (idx < 0)
+					idx = mButtons.length - 1;
+				else
+				if (idx >= mButtons.length)
+					idx = 0;
+
+				if (mSelectedButton != null && mSelectedButton != mButtons[idx])
+					(mSelectedButton as MovieClip).gotoAndPlay("Off");
+
+				mSelectedButton = mButtons[idx];
+				(mSelectedButton as MovieClip).gotoAndPlay("On");
+			}
+
+			private function OnButtonOver(event:MouseEvent):void
+			{
+				if (stage.displayState == StageDisplayState.NORMAL)
+					SelectButton(mButtons.indexOf(event.target as DisplayObject));
+			}
+
+			private function OnButtonOut(event:MouseEvent):void
+			{
+			}
+
+			private function OnButtonClick(event:MouseEvent):void
+			{
+				if (stage.displayState == StageDisplayState.NORMAL)
+					InternalButtonClick((event.target as DisplayObject).parent, false);
+			}
+
+			private function InternalButtonClick(button:DisplayObject, alt : Boolean):void
+			{
+				var idxSequence : int = GetSequenceIndexForButton(button);
+
+				mSequences[idxSequence].addEventListener("SequenceEnd", OnSequenceEnd)
+				mSequences[idxSequence].Start(myContentWrapper, alt, true);
+
+				stage.removeEventListener(KeyboardEvent.KEY_DOWN, OnKeyDown);
+			}
+
+			private function GetSequenceIndexForButton(button : DisplayObject):int
+			{
+				return mButtons.indexOf(button);
+			}
+
+			private function OnSequenceEnd(event:Event):void
+			{
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, OnKeyDown);
+				(event.target as SequencePlayer).removeEventListener("SequenceEnd", OnSequenceEnd);
+			}
+
+			private var mSequences : Array = new Array();
+
+			private var mCentralLoader : CentralLoader;
+			private var mNetConnection : NetConnection;
+
+			private var mPreFullScreenWidth : Number;
+			private var mPreFullScreenHeight : Number;
+
+			private var mButtons : Array = null;
+			private var mSelectedButton : DisplayObject = null;
+		]]>
+
+	</mx:Script>
+
+	<mx:UIComponent id="myContentWrapper" width="1024" height="768"/>
+</mx:WindowedApplication>
+

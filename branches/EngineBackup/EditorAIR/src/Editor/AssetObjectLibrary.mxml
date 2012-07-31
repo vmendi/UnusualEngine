@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TabNavigator 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:containers="flexlib.containers.*" 
+	styleName="myStyle" 
+	focusEnabled="false">
+	<!-- Necesitamos que no pueda coger foco por un cruje de flex... 
+		 se reproduce dandole el foco (click en una tab) y haciendo File->New -->
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace containers "flexlib.containers.*";
+		
+		/* Odio los doble borders... */
+		.myStyle {
+			borderSkin:ClassReference("mx.skins.halo.HaloBorder");
+			/* Era mx.skins.spark.ContainerBorderSkin, que no soporta las siguientes propiedades */
+			borderStyle:"solid";
+			borderSides:"left top right";			
+			borderThickness:1;
+			dropShadowEnabled:false;
+		}
+		
+	</fx:Style>
+
+	<fx:Script>
+		<![CDATA[
+			import Model.AssetBundle;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.collections.ArrayCollection;
+			import mx.core.INavigatorContent;
+			import mx.events.CollectionEvent;
+			import mx.events.CollectionEventKind;
+			import mx.events.IndexChangedEvent;
+
+			public function Init(controller : EditorController) : void
+			{
+				mController = controller;
+				mBundleCollection = mController.TheAssetBundleController.FilteredAssetBundles;
+
+				mBundleCollection.addEventListener(CollectionEvent.COLLECTION_CHANGE, OnCollectionChange);
+
+				this.addEventListener(Event.CHANGE, OnTabSelectedChange);
+				BindingUtils.bindSetter(OnSelectedAssetBundleChanged, mController.TheAssetBundleController, "SelectedAssetBundle");
+				
+				CreateAll();
+			}
+			
+			private function OnTabSelectedChange(e:IndexChangedEvent):void
+			{
+				RefreshAssetBundleSelectedInController();
+				RefreshAssetObjectSelectedInController();
+			}
+			
+			private function OnCollectionChange(event:CollectionEvent):void
+			{
+				if (event.kind == CollectionEventKind.ADD)
+				{
+					// Podríamos mirar event.items, pero así sincronizamos la posición
+					SynchronizeAdded();
+				}
+				else
+				if (event.kind == CollectionEventKind.REMOVE)
+				{
+					SynchronizeRemoved();
+				}
+				else
+				if (event.kind == CollectionEventKind.REFRESH)
+				{
+					var select : INavigatorContent = this.selectedChild;
+					
+					SynchronizeRemoved();
+					SynchronizeAdded();
+					
+
+					if (this.getChildren().indexOf(select) != -1)
+						this.selectedChild = select;
+					else if (this.numChildren != 0)
+						this.selectedIndex = 0;
+				}
+			}
+			
+			private function RefreshAssetObjectSelectedInController() : void
+			{
+				(this.selectedChild as AssetObjectsHList).SelectAssetObjectInControllerIfGridItemNotNull();			
+			}
+			
+			private function RefreshAssetBundleSelectedInController() : void
+			{
+				if (this.selectedChild != null)
+					mController.TheAssetBundleController.SelectedAssetBundle = (this.selectedChild as AssetObjectsHList).TheAssetBundle;
+				else
+					mController.TheAssetBundleController.SelectedAssetBundle = null;
+			}
+			
+			private function OnSelectedAssetBundleChanged(newSelected:AssetBundle):void
+			{
+				this.selectedIndex = mController.TheAssetBundleController.FilteredAssetBundles.getItemIndex(newSelected);
+			}
+
+			private function SynchronizeAdded():void
+			{
+				for (var c:int = 0; c < mBundleCollection.length; c++)
+					if (!IsAmongMyChildren(mBundleCollection[c]))
+						CreateHList(mBundleCollection[c], c);
+			}
+
+			private function SynchronizeRemoved():void
+			{
+				for each(var child : AssetObjectsHList in getChildren())
+					if (!mBundleCollection.contains(child.TheAssetBundle))
+						removeChild(child);					
+			}
+
+			private function IsAmongMyChildren(bundle:AssetBundle):Boolean
+			{
+				for each(var child : AssetObjectsHList in getChildren())
+					if (child.TheAssetBundle == bundle)
+						return true;
+				return false;
+			}
+
+			private function CreateAll() : void
+			{
+				for each(var b : AssetBundle in mBundleCollection)
+					CreateHList(b);
+			}
+
+			private function RemoveHList(bundle : AssetBundle):void
+			{
+				for each(var hList : AssetObjectsHList in getChildren())
+				{
+					if (hList.TheAssetBundle == bundle)
+					{
+						removeChild(hList);
+						break;
+					}
+				}
+			}
+
+			private function CreateHList(bundle : AssetBundle, position:int = -1):void
+			{
+				var hList : AssetObjectsHList;
+				
+				for each(var cached : AssetObjectsHList in mHListCache)
+				{
+					if (cached.TheAssetBundle == bundle)
+					{
+						hList = cached;
+						break;
+					}
+				}
+				if (hList == null)
+				{
+					hList = new AssetObjectsHList();
+					mHListCache.push(hList);
+					
+					hList.percentWidth = 100;
+					hList.percentHeight = 100;
+					
+					insert();
+						
+					hList.Init(mController, bundle);					
+				}
+				else
+					insert();
+				
+				function insert() : void
+				{
+					if (position == -1)
+						addChild(hList);
+					else
+						addChildAt(hList, position);
+				}
+			}
+			
+			// Para evitar parpadeos en los tabs al crear/destruir
+			private var mHListCache : Vector.<AssetObjectsHList> = new Vector.<AssetObjectsHList>(); 
+			
+			private var mController : EditorController;
+			private var mBundleCollection : ArrayCollection;
+		]]>
+	</fx:Script>
+
+</mx:TabNavigator>
+
+
+
+
+
+
+<!--
+
+/*
+private function AvoidDoubleBorder():void
+{	
+var newHList : AssetObjectsHList = getChildAt(this.selectedIndex) as AssetObjectsHList;
+
+if (newHList.horizontalScrollBar != null && newHList.horizontalScrollBar.visible)
+this.setStyle("borderSides", "left top right");
+else
+this.setStyle("borderSides", "left top right bottom");
+}
+*/
+
+/********* Quitamos este hack por haber abandonado la SuperTabNavigator ********/
+// A veces al hacer cambios, sale sin seleccionar (bug de flex o de SuperTabNavigator...)
+// También, cuando el control está vacio, salta una excepcion pq selectedIndex 0
+/*
+try
+{
+if (this.selectedIndex != -1)
+this.getTabAt(this.selectedIndex).selected = true;					
+}
+catch (e : Error) {	}
+*/
+-->

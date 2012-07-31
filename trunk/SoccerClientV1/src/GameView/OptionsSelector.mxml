@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Style source="styles.css"/>
+	
+	<fx:Script><![CDATA[
+		import mx.collections.ArrayCollection;
+		
+		private var mDataOptions : ArrayCollection;
+		private var mSelectedIndex : int = -1;
+		
+		[Bindable]
+		public function get SelectedIndex():int	{ return mSelectedIndex; }
+		public function set SelectedIndex(value:int):void {
+			mSelectedIndex = value;
+			dispatchEvent(new Event("SelectedItemChanged"));
+		}
+		
+		[Bindable(event="SelectedItemChanged")]
+		public function get SelectedItem() : Object	{ return mDataOptions[mSelectedIndex];	}
+		public function set SelectedItem(selectedItem : Object) : void
+		{
+			var idx : int = mDataOptions.getItemIndex(selectedItem);
+			
+			if (idx == -1)
+				throw "Object not in collection";
+			
+			SelectedIndex = idx;
+		}							
+
+		[Bindable]
+		public function get DataOptions():ArrayCollection { return mDataOptions; }
+		public function set DataOptions(value:ArrayCollection):void
+		{ 
+			mDataOptions = value;
+			
+			if (mDataOptions != null && mDataOptions.length > 0)
+				SelectedIndex = 0;
+		}		
+
+		protected function MyPrevButton_clickHandler(event:MouseEvent):void
+		{
+			if (mSelectedIndex > 0)
+				SelectedIndex--;
+			else
+				SelectedIndex = mDataOptions.length-1;
+		}
+
+		protected function MyNextButton_clickHandler(event:MouseEvent):void
+		{
+			if (mSelectedIndex < mDataOptions.length-1)
+				SelectedIndex++;
+			else
+				SelectedIndex=0;
+		}
+
+	]]></fx:Script>
+
+	<s:Group top="4">
+		<s:Button id="MyPrevButton" skinClass="GameView.Skins.ButtonDarkGreySkin" 
+				  click="MyPrevButton_clickHandler(event)"/>
+		<s:Path data="M 90.86 78.67 L 0.04 78.67 45.45 0.02 Z " height="5" rotation="-90" width="8" x="7" y="15">
+			<s:fill><s:SolidColor color="#FFFFFF"/></s:fill>
+			<s:filters>
+				<s:DropShadowFilter angle="270" distance="1" blurX="0" blurY="0" color="0x000000" alpha="0.50" />
+			</s:filters>
+		</s:Path>
+	</s:Group>
+	
+	<s:Group left="30" right="30" height="28">
+		<s:Rect left="0" right="0" top="0" bottom="0" radiusX="4" radiusY="4">
+			<s:fill>
+				<s:SolidColor color="#FFFFFF"/>
+			</s:fill>
+			<s:filters>
+				<s:DropShadowFilter alpha="0.5" angle="45.0" blurX="5" blurY="5" color="0x000000" distance="0" hideObject="false" inner="true" knockout="false" quality="2" strength="2"/>
+			</s:filters>
+		</s:Rect>
+		<s:Label id="MyLabel" left="10" right="10" top="0" bottom="0" textAlign="center" verticalAlign="middle" 
+				 text="{SelectedItem}" styleName="blackBoldVeryBig" />
+	</s:Group>
+	
+	<s:Group top="4" right="0">
+		<s:Button id="MyNextButton" skinClass="GameView.Skins.ButtonDarkGreySkin" 
+				  click="MyNextButton_clickHandler(event)"/>
+		<s:Path data="M 90.86 78.67 L 0.04 78.67 45.45 0.02 Z " height="5" rotation="90" width="8" x="14" y="7">
+			<s:fill><s:SolidColor color="#FFFFFF"/></s:fill>
+			<s:filters>
+				<s:DropShadowFilter angle="270" distance="1" blurX="0" blurY="0" color="0x000000" alpha="0.50" />
+			</s:filters>
+		</s:Path>
+	</s:Group>
+	
+</s:Group>

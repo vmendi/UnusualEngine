@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespaces>
+  <runtime path="F:/UnusualSVN/UnusualEngine/trunk/SoccerServerV1/SoccerServerV1/" weborbRootURL="http://localhost/" />
+  <namespace name="Weborb" fullname="Weborb">
+    <namespace name="Management" fullname="Weborb.Management">
+      <namespace name="Monitoring" fullname="Weborb.Management.Monitoring">
+        <namespace name="Performance" fullname="Weborb.Management.Monitoring.Performance">
+          <service name="Counter" fullname="Weborb.Management.Monitoring.Performance.Counter" namespace="Weborb.Management.Monitoring.Performance" url="http://localhost/console/weborb.aspx">
+            <method name="Equals" type="Boolean" nativetype="bool" containsvalues="0">
+              <arg name="obj" type="Object" nativetype="Object" />
+            </method>
+            <method name="GetHashCode" type="int" nativetype="int" containsvalues="0" />
+          </service>
+        </namespace>
+      </namespace>
+    </namespace>
+  </namespace>
+</namespaces>

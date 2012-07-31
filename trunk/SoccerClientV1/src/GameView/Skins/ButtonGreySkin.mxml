@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+             xmlns:fb="http://ns.adobe.com/flashbuilder/2009" minWidth="21" minHeight="21" alpha.disabled="0.5">
+    
+    <fx:Metadata><![CDATA[ 
+        [HostComponent("spark.components.Button")]
+    ]]></fx:Metadata>
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		
+		.buttonLabel {
+			font-family:MyFontHelveticaNeueLTBold;
+			font-size:15pt;
+			font-weight:bold;
+			color:#000000;
+		}
+		.buttonLabelDown {
+			font-family:MyFontHelveticaNeueLTBold;
+			font-size:15pt;
+			font-weight:bold;
+			color:#FFFFFF;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<s:DropShadowFilter id="ButtonBaseDropShadowFilter" angle="90" distance="1" blurX="0" blurY="0" color="0xFFFFFF" alpha="0.25"/>
+		<s:DropShadowFilter id="ButtonBaseInnerShadowFilter" angle="90" distance="1" blurX="0" blurY="0" color="0x000000" alpha="0.50" inner="true"/>
+		<s:DropShadowFilter id="ButtonFillDropShadowFilter" angle="90" distance="2" blurX="1" blurY="1" color="0x000000" alpha="0.25"/>
+		<s:DropShadowFilter id="ButtonFillInnerShadowFilter" angle="90" distance="1" blurX="0" blurY="0" color="0xFFFFFF" alpha="0.75" inner="true"/>		
+	</fx:Declarations>	
+    
+    <!-- states -->
+    <s:states>
+        <s:State name="up" />
+        <s:State name="over" />
+        <s:State name="down" />
+        <s:State name="disabled" />
+    </s:states>
+    
+    <!-- layer 1: shadow -->
+<!--    <s:Rect id="shadow" left="-1" right="-1" top="-1" bottom="-1" radiusX="4" radiusY="4">
+        <s:fill>
+            <s:LinearGradient rotation="90">
+                <s:GradientEntry color="0x000000" 
+                                 color.down="0xFFFFFF"
+                                 alpha="0.01"
+                                 alpha.down="0" />
+                <s:GradientEntry color="0x000000" 
+                                 color.down="0xFFFFFF" 
+                                 alpha="0.07"
+                                 alpha.down="0.5" />
+            </s:LinearGradient>
+        </s:fill>
+    </s:Rect>-->
+	
+	<s:Rect id="base" left="0" right="0" top="0" bottom="0" radiusX="7" radiusY="7" filters="{[ButtonBaseDropShadowFilter,ButtonBaseInnerShadowFilter]}">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0x282a2f" 
+								 ratio="0.00" />
+				<s:GradientEntry color="0x3f434b" 
+								 ratio="1.00" />
+			</s:LinearGradient>
+		</s:fill> 
+	</s:Rect>	
+	
+	<!-- layer 2: fill -->	
+	<s:Rect id="fill" left="1" right="1" top="1" bottom="1" radiusX="5" radiusY="5" filters="{[ButtonFillDropShadowFilter,ButtonFillInnerShadowFilter]}">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0xeeeeef" 
+								 color.down="0xbdbfc2"
+								 ratio="0.00" />
+				<s:GradientEntry color="0xcecfd0" 
+								 color.down="0xb8b8ba"
+								 ratio="0.49" />
+				<s:GradientEntry color="0xb8b8ba" 
+								 color.down="0xcecfd0" 
+								 ratio="0.51"  />				
+				<s:GradientEntry color="0xbdbfc2" 
+								 color.down="0xeeeeef"
+								 ratio="1.00" />
+			</s:LinearGradient>
+		</s:fill> 
+    </s:Rect>
+    
+    <!-- layer 8: text -->
+	<s:Group left="0" right="0" top="0" bottom="0">
+	    <s:Label id="labelDisplay"
+	             textAlign="center"
+	             verticalAlign="middle"
+	             maxDisplayedLines="1"
+				 top="0" bottom="0"
+	             horizontalCenter="0" verticalCenter="0"
+	             left="7" right="7"
+				 styleName="buttonLabel" />
+		<s:filters>
+			<s:DropShadowFilter angle="90" distance="1" blurX="1" blurY="1" color="0xFFFFFF" />
+			<!--<s:DropShadowFilter angle="270" distance="1" blurX="1" blurY="1" color="0x000000" alpha="0.3" includeIn="down"/>-->
+		</s:filters>
+	</s:Group>
+
+</s:SparkSkin>

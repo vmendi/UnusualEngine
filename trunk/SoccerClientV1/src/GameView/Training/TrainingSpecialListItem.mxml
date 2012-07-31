@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false"				
+				creationComplete="CompleteHandler(event)"
+				height="68" xmlns:GameView="GameView.*"
+				>
+	
+	<fx:Style source="../styles.css" />
+	
+	<fx:Script><![CDATA[
+		import GameModel.SpecialTrainingModel;
+		import GameModel.TeamModel;
+		
+		import GameView.Skins.ButtonGreySkin;
+		
+		import SoccerServerV1.TransferModel.vo.SpecialTraining;
+		
+		import mx.binding.utils.BindingUtils;
+		
+		override protected function set hovered(value:Boolean):void
+		{
+		}
+		
+		override public function set data(value:Object):void
+		{
+			super.data = value;
+			
+			(MySkillMC.content as MovieClip).gotoAndStop("SpecialSkill" + (itemIndex + 1).toString());
+		}
+		
+		private function OnIsCompletedChanged(newVal : Boolean) : void
+		{
+			if (newVal && currentState != "Complete")
+				currentState = "Complete";
+		}
+		
+		private function OnTeamXPChanged(newVal : int) : void
+		{
+			if (currentState != "Complete")
+			{		
+				if (mTeamModel.TheTeam.XP < (data as SpecialTraining).SpecialTrainingDefinition.RequiredXP ||
+					mTeamModel.TheTeam.SkillPoints < (data as SpecialTraining).SpecialTrainingDefinition.EnergyStep)
+					currentState = "NotAvailable";
+				else
+					currentState = "Incomplete";
+			}
+		}
+		
+		private function OnTeamSkillPointsChanged(newVal : int) : void
+		{
+			if (currentState != "Complete")
+			{			
+				if (mTeamModel.TheTeam.XP < (data as SpecialTraining).SpecialTrainingDefinition.RequiredXP ||
+					mTeamModel.TheTeam.SkillPoints < (data as SpecialTraining).SpecialTrainingDefinition.EnergyStep)
+					currentState = "NotAvailable";
+				else
+					currentState = "Incomplete";
+			}
+		}
+
+		protected function CompleteHandler(event:Event):void
+		{
+			mTeamModel = SoccerClientV1.GetMainGameModel().TheTeamModel;
+			mSpecialTrainingModel = SoccerClientV1.GetMainGameModel().TheSpecialTrainingModel;
+			
+			BindingUtils.bindSetter(OnTeamXPChanged, mTeamModel, ["TheTeam", "XP"]);
+			BindingUtils.bindSetter(OnTeamSkillPointsChanged, mTeamModel, ["TheTeam", "SkillPoints"]);
+			BindingUtils.bindSetter(OnIsCompletedChanged, this, ["data", "IsCompleted"]);
+			
+			(MySkillMC.content as MovieClip).stop();
+			
+			if (currentState == "Incomplete")
+			{
+				if ((data as SpecialTraining).SpecialTrainingDefinition.Name != "SUPERPOTENCIA")
+					MyDoTrainButton.visible = true;
+				else
+					MyLikeText.visible = true;
+			}
+		}
+
+		protected function MyDoTrainButton_clickHandler(event:MouseEvent):void
+		{
+			var training : SpecialTraining = data as SpecialTraining;
+			
+			GameMetrics.ReportEvent(GameMetrics.GET_SKILL + "_" + training.SpecialTrainingDefinition.Name) ;
+			
+			mSpecialTrainingModel.TrainSpecial(training);
+		}
+		
+		[Bindable] private var mTeamModel : TeamModel;
+		[Bindable] private var mSpecialTrainingModel : SpecialTrainingModel;
+
+	]]></fx:Script>
+	
+	<s:states>
+		<s:State name="NotAvailable"/>
+		<s:State name="Incomplete"/>
+		<s:State name="Complete"/>
+	</s:states>	
+
+<!-- FONDO -->	
+	
+	<s:Graphic includeIn="Incomplete">
+		<s:Rect x="0" y="0" width="740" height="68">
+			<s:fill>
+				<s:SolidColor color="#000000" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	
+	<s:Graphic includeIn="Complete">
+		<s:Rect x="0" y="0" width="740" height="68">
+			<s:fill>
+				<s:SolidColor color="#666666" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	
+	<s:Graphic>
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='SpecialSkillsBg')" fillMode="clip" />
+	</s:Graphic>
+	
+<!-- CONTENIDO -->	
+
+	<mx:SWFLoader scaleX="1.09" scaleY="1.09" x="10" y="10" id="MySkillMC" scaleContent="false"
+				  source="@Embed(source='/Assets/General.swf', symbol='SpecialSkills')"/>
+
+	<s:Group x="68" y="12" alpha.Complete="0.7" alpha.NotAvailable="0.5">
+		<s:layout><s:VerticalLayout gap="0" /></s:layout>
+		<s:Label text="{data.SpecialTrainingDefinition.Name}" styleName="whiteBoldBig" />
+		<s:Label text="{data.SpecialTrainingDefinition.Description}" styleName="whiteBoldMedium" width="335" />
+	</s:Group>
+	
+	<s:Group x="426" y="12" alpha.Complete="0.7" alpha.NotAvailable="0.5">
+		<s:layout><s:VerticalLayout gap="0" /></s:layout>
+		<s:Label text="REQUIERE" styleName="greyBoldMedium" />
+		<s:Label text="XP:  {data.SpecialTrainingDefinition.RequiredXP}" styleName="whiteBoldBig" />
+		<s:Label text="Puntos" styleName="whiteBoldMedium" />
+	</s:Group>
+
+	<s:Label x="511" y="44" text="{data.SpecialTrainingDefinition.EnergyTotal}" styleName="whiteBoldMedium" />
+
+<!--	<GameView:ProgressBar width="160" x="554" y="12" 
+						  Percent="{100*data.EnergyCurrent/data.SpecialTrainingDefinition.EnergyTotal}" 
+						  includeIn="Incomplete" />-->
+		
+	<s:Button id="MyDoTrainButton" label="ADQUIRIR HABILIDAD" click="MyDoTrainButton_clickHandler(event)" 
+			  visible="false"
+			  includeIn="Incomplete" x="554" y="21" width="160" height="24" skinClass="GameView.Skins.ButtonGreySkin"/>
+	
+	<s:Label id="MyLikeText" x="554" y="20" width="160" visible="false"
+			 includeIn="Incomplete" text="Consigue esta habilidad pulsando el botón de 'Me Gusta'" styleName="whiteBoldMedium" textAlign="center" />
+	
+	<s:Graphic includeIn="Complete">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='SpecialSkillsWon')" fillMode="clip"
+					   x="553" y="8"/>
+	</s:Graphic>
+	
+	<s:Graphic includeIn="NotAvailable">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='SpecialSkillsNotAvailable')" fillMode="clip"
+					   x="553" y="8"/>
+	</s:Graphic>
+	
+	<s:Graphic includeIn="Complete">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='SpecialSkillsWonTip')" fillMode="clip"
+					   x="5" y="5"/>
+	</s:Graphic>	
+
+	<s:Graphic includeIn="NotAvailable">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='SpecialSkillsNotAvailableTip')" fillMode="clip"
+					   x="478" y="8"/>
+	</s:Graphic>
+</s:ItemRenderer>

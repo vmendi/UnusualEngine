@@ -1,0 +1,33 @@
+<smallGallery>
+	<library>Assets/SmallGallery/destacadoLogos.swf</library>
+	<button>
+		<libraryName>botonAirbus</libraryName>
+		<content>Assets/SmallGallery/A400M_es.swf</content>
+		<link>/Work/A400MTheGame/tabid/161/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonOpel</libraryName>
+		<content>Assets/SmallGallery/opel_es.swf</content>
+		<link>/Work/OpelInsignia/tabid/181/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonVodafone</libraryName>
+		<content>Assets/SmallGallery/vodafone_es.swf</content>
+		<link>/Work/SalesFighter/tabid/169/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonCajamadrid</libraryName>
+		<content>Assets/SmallGallery/cajamadrid_es.swf</content>
+		<link></link>
+	</button>
+	<button>
+		<libraryName>botonTelerecicla2</libraryName>
+		<content>Assets/SmallGallery/telerrecicla2_es.swf</content>
+		<link>/Work/TelereciclaFacebook/tabid/183/Default.aspx</link>
+	</button>
+	<button>
+		<libraryName>botonToyota_Aventura</libraryName>
+		<content>Assets/SmallGallery/aventura_es.swf</content>
+		<link>/Work/AventuraRav4/tabid/162/Default.aspx</link>
+	</button>		
+</smallGallery>

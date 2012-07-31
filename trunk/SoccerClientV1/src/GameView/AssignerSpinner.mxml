@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:GameView="GameView.*">
+	
+	<fx:Style source="styles.css"/>
+	
+	<fx:Script><![CDATA[
+		import mx.binding.utils.BindingUtils;
+
+		public function get ShowSpinner(): Boolean { return MySpinner.visible;	}
+		public function set ShowSpinner(v:Boolean) : void{ MySpinner.visible = v; }
+		
+		public function get AnimationEnabled() : Boolean { return MySlidingBar.AnimationEnabled; }
+		public function set AnimationEnabled(v:Boolean) : void { MySlidingBar.AnimationEnabled = v; }
+		
+		[Bindable]
+		public function get DisplayName() : String { return mDisplayName; }
+		public function set DisplayName(s:String) : void { mDisplayName = s; }
+
+		[Bindable]
+		public function get Max():Number { return mMax;	}
+		public function set Max(value:Number):void { mMax = value;	}
+
+		[Bindable]
+		public function get Min():Number { return mMin; }
+		public function set Min(value:Number):void { mMin = value; }
+
+		[Bindable]
+		public function get Val():Number { return mVal;	}
+		public function set Val(value:Number):void { mVal = value; }
+		
+		private var mDisplayName : String;
+		
+		private var mMax : Number = 100;
+		private var mMin : Number = 0;
+		private var mVal : Number = 0;
+	]]></fx:Script>
+
+	<s:Group left="0" right="0" top="0" bottom="0">
+		<s:Label text="{DisplayName}" styleName="whiteBoldMedium"/>
+		<GameView:ProgressBar id="MySlidingBar" left="17" right="37" top="19" Percent="{MySpinner.value}" />
+		<s:Label top="16" right="0" 
+				 styleName="whiteBoldMedium" verticalAlign="middle" textAlign="center"
+				 text="{MySpinner.value}"/>	
+	</s:Group>
+	
+	<s:Spinner id="MySpinner" skinClass="GameView.Skins.AssignerSpinnerSkin" 
+			   minimum="{Min}" maximum="{Max}" stepSize="1" value="@{Val}"
+			   width="150"
+			   verticalCenter="7.5" horizontalCenter="-8"/>
+</s:Group>

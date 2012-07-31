@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:Match="GameView.Match.*"
+				autoDrawBackground="false" width="100%" height="51" xmlns:GameView="GameView.*" >
+	
+	<fx:Style source="styles.css" />
+		
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="selected"/>
+		<s:State name="hovered"/>
+	</s:states>
+		
+	<s:Graphic includeIn="hovered">
+		<s:Rect x="0" y="0" width="423" height="50">
+			<s:fill>
+				<s:SolidColor color="#666666" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	
+	<s:Graphic includeIn="selected">
+		<s:Rect x="0" y="0" width="423" height="50">
+			<s:fill>
+				<s:SolidColor color="#999999" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+
+	<s:Group width="100%" height="43">
+		<s:layout><s:HorizontalLayout/></s:layout>
+		
+		<GameView:FacebookPicture FacebookID="{data.FacebookID}" />
+
+		<s:Group>
+			<s:layout><s:VerticalLayout paddingTop="4" /></s:layout>
+			<GameView:BadgeTeam TeamName="{data.PredefinedTeamName}" />
+		</s:Group>
+		
+		<s:Group width="70%" height="50">
+		 	<s:layout><s:VerticalLayout paddingTop="7" gap="3"/></s:layout>
+			<s:Label width="100%" text="{data.Name}" styleName="whiteBoldBig" maxDisplayedLines="1" toolTip="{data.Name}"/>
+			<s:Label text="{data.PredefinedTeamName}" styleName="greyBoldMedium"/>
+		</s:Group>
+		
+		<GameView:BadgeCategory width="64" TrueSkill="{data.TrueSkill}" />
+				
+		<s:Label width="50" height="50" styleName="whiteBoldBig" verticalAlign="middle" textAlign="center"
+				 text="{data.TrueSkill}"/>
+	</s:Group>
+	
+	<s:Graphic>
+		<s:Line xFrom="0" xTo="423" yFrom="50" yTo="50">
+			<s:stroke>
+				<s:SolidColorStroke color="0x000000" weight="1"/>
+			</s:stroke>
+		</s:Line>
+	</s:Graphic>
+	
+</s:ItemRenderer>

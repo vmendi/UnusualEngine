@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="ftp://82.223.211.112/wwwroot/services" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FTP" replaceMatchingFiles="True" userName="ftpuser" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAWm8NhMDvi02gVYBGvkXS4QAAAAACAAAAAAAQZgAAAAEAACAAAADInR18LdmdiML4CP30FBUXnk4Pi2YNeMiMI5CXKHdNyAAAAAAOgAAAAAIAACAAAAA2dfM6Pfg2mo4PSVa15abEpig5MJpCEY0habcT7hXbGTAAAABUefq/IF/4vx4gkYdewqNR0aekf6J/ND65SttYktB2IVdeQrIMo36m65wYnECDfd5AAAAAL6Aslv1sQVrafybcQWSR6WiuL7HgOD+FieHbcAwz/I3eYwgKXS8vnCDzHqEv+/u1eNZYZV3NzGTpG0UcYQVCMw==" SelectedForPublish="True">
+    <file relUrl="bin/facebook.dll" publishTime="06/21/2010 17:51:15" />
+    <file relUrl="IndividualReport.aspx" publishTime="06/25/2010 14:28:44" />
+    <file relUrl="MainService.asmx" publishTime="06/25/2010 14:28:46" />
+    <file relUrl="Web.config" publishTime="06/25/2010 14:28:42" />
+    <file relUrl="bin/Desafiate.pdb" publishTime="07/13/2010 15:56:52" />
+    <file relUrl="bin/Desafiate.dll" publishTime="07/13/2010 15:56:52" />
+    <file relUrl="Cheats.aspx" publishTime="07/13/2010 15:55:46" />
+    <file relUrl="App_Data/facebook.dll" publishTime="06/21/2010 17:51:15" />
+    <file relUrl="bin/facebook.web.dll" publishTime="06/21/2010 17:51:15" />
+    <file relUrl="App_Data/facebook.web.dll" publishTime="06/21/2010 17:51:15" />
+  </publishProfile>
+</publishData>

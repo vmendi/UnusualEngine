@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="CreationCompleteHandler(event)">
+	
+	<fx:Style source="../styles.css" />
+	
+	<fx:Script><![CDATA[
+		import GameModel.TeamModel;
+		
+		import SoccerServerV1.TransferModel.vo.SoccerPlayer;
+		
+		import mx.events.FlexEvent;
+		
+		[Bindable]
+		public function get TheSoccerPlayer() : SoccerPlayer { return mSoccerPlayer; }
+		public function set TheSoccerPlayer(v:SoccerPlayer) : void 
+		{ 
+			mSoccerPlayer = v;
+			RefreshSoccerPlayer();
+		}
+		
+		private function RefreshSoccerPlayer():void
+		{
+			if (mSoccerPlayer != null)
+			{
+				// De momento solo podriamos mostrar soccerplayers de nuestro equipo, no hay forma de obtener el
+				// PredefinedTeam de un SoccerPlayer arbitrario
+				(MyCapMC.content as MovieClip).gotoAndStop(mTeamModel.PredefinedTeamName);
+				
+				var qual : int = TeamModel.GetQualityFor(mSoccerPlayer);
+				var mc : MovieClip = MyCapStars.content["mcStars"] as MovieClip; 
+				mc.gotoAndStop(qual+1);
+			}
+			
+		}
+		
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mTeamModel = SoccerClientV1.GetMainGameModel().TheTeamModel;
+			
+			// Parece que al tener mx:images por dentro (da igual con swfLoaders), el creationComplete tarda
+			// más en llegar y llega despues de que se haya hecho el binding. Tenemos entonces que
+			// volver a refrescar aqui
+			var prevSoccerPlayer : SoccerPlayer = TheSoccerPlayer;
+			mSoccerPlayer = null;
+			TheSoccerPlayer = prevSoccerPlayer;					
+		}
+	
+		[Bindable] private var mTeamModel : TeamModel;
+		private var mSoccerPlayer : SoccerPlayer;
+		
+	]]></fx:Script>
+	
+	<fx:Declarations>
+		<s:GlowFilter id="NumberStrokeFilter" blurX="2" blurY="2" strength="10" quality="3" color="0x000000" />
+	</fx:Declarations>	
+
+	<s:Graphic>
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='PlayerDetailBg')" fillMode="clip" />
+	</s:Graphic>	
+	
+	<s:Group left="10" top="10" width="59" height="59">
+		<mx:Image top="29" left="29" id="MyCapMC" scaleContent="false"
+						  source="@Embed(source='/Assets/General.swf', symbol='CapDetail')" />
+		<s:Label text="{TheSoccerPlayer.Number.toString()}" horizontalCenter="0" top="18" styleName="whiteBoldBig" textAlign="center" filters="{NumberStrokeFilter}"/>
+	</s:Group>
+	
+	<!-- <s:Label text="{TheSoccerPlayer.Name}" left="75" top="23" styleName="whiteBoldMedium" /> //-->
+	
+	<mx:Image left="74" top="26" id="MyCapStars" scaleContent="false"
+			  source="@Embed(source='/Assets/General.swf', symbol='CapDetailsStars')"/>
+	
+	<s:Label text="{mTeamModel.SelectedSoccerPlayerQuality}" left="164" top="26" styleName="whiteBoldMedium" />
+	
+</s:Group>

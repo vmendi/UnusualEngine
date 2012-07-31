@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="CreationCompleteHandler(event)">
+	
+	<fx:Style source="../styles.css"/>
+
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.FlexEvent;
+		
+		protected function CreationCompleteHandler(event:FlexEvent) : void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+			
+			BindingUtils.bindSetter(OnIsAnyFormationAvailableChanged, mMainGameModel, ["TheFormationModel", "IsAnyFormationAvailable"]);
+		}
+		
+		private function OnIsAnyFormationAvailableChanged(newVal : Boolean) : void
+		{
+			if (newVal)
+				MyAnyFormationLabel.setStyle("color", "0x730f00");
+			else
+				MyAnyFormationLabel.setStyle("color", "0xFF0000");
+		}
+		
+		[Bindable] private var mMainGameModel : MainGameModel;
+	]]></fx:Script>
+	
+	<s:layout><s:HorizontalLayout verticalAlign="middle" /></s:layout>
+	
+	<s:Group>
+		<s:Button id="MyPrevFormationButton" skinClass="GameView.Skins.ButtonDarkGreySkin" 
+				  click="mMainGameModel.TheFormationModel.PrevAnyFormation()"/>
+		<s:Path data="M 90.86 78.67 L 0.04 78.67 45.45 0.02 Z " height="5" rotation="-90" width="8" x="7" y="15">
+			<s:fill>
+				<s:SolidColor color="#FFFFFF"/>
+			</s:fill>
+			<s:filters>
+				<s:DropShadowFilter angle="270" distance="1" blurX="0" blurY="0" color="0x000000" alpha="0.50" />
+			</s:filters>
+		</s:Path>
+	</s:Group>
+	
+	<s:Group minWidth="100" height="28">
+		<s:Rect left="0" right="0" top="0" bottom="0" radiusX="4" radiusY="4">
+			<s:fill>
+				<s:SolidColor color="#FFFFFF"/>
+			</s:fill>
+			<s:filters>
+				<s:DropShadowFilter alpha="0.5" angle="45.0" blurX="5" blurY="5" color="0x000000" distance="0" hideObject="false" inner="true" knockout="false" quality="2" strength="2"/>
+			</s:filters>
+		</s:Rect>
+		<s:Label left="0" right="0" top="0" bottom="0" textAlign="center" verticalAlign="middle" id="MyAnyFormationLabel" 
+				 text="{mMainGameModel.TheFormationModel.AnyFormation}" styleName="blackBoldVeryBig" />
+	</s:Group>
+	
+	<s:Group>
+		<s:Button id="MyNextFormationButton" skinClass="GameView.Skins.ButtonDarkGreySkin" 
+				  click="mMainGameModel.TheFormationModel.NextAnyFormation()"/>
+		<s:Path data="M 90.86 78.67 L 0.04 78.67 45.45 0.02 Z " height="5" rotation="90" width="8" x="14" y="7">
+			<s:fill>
+				<s:SolidColor color="#FFFFFF"/>
+			</s:fill>
+			<s:filters>
+				<s:DropShadowFilter angle="270" distance="1" blurX="0" blurY="0" color="0x000000" alpha="0.50" />
+			</s:filters>
+		</s:Path>
+	</s:Group>
+	
+</s:Group>

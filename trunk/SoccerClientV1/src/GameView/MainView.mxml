@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 xmlns:local="*" xmlns:GameView="GameView.*" xmlns:Team="GameView.Team.*" xmlns:Training="GameView.Training.*"
+		 xmlns:Match="GameView.Match.*"
+		 creationComplete="CreationCompleteHandler(event)" currentState="Waiting" >
+	
+	<!-- Todas las fuentes se embeben aquí -->
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+				
+		@font-face {
+			src:url("/Assets/Fonts/HelveticaNeueLT/lte50874.ttf");
+			fontFamily: MyFontHelveticaNeueLTBold;
+			font-weight:bold;
+			embedAsCFF: true;
+		}
+	</fx:Style>
+	<fx:Style source="styles.css" />
+	
+	<s:states>
+		<s:State name="Waiting"/>
+		<s:State name="Login" />
+		<s:State name="Ranking" stateGroups="InGame"/>
+		<s:State name="Team" stateGroups="InGame"/>
+		<s:State name="Match" stateGroups="InGame"/>
+		<s:State name="Training" stateGroups="InGame"/>
+		<s:State name="TrainingSpecial" stateGroups="InGame"/>
+		<s:State name="OnRealtimeMatch" />
+	</s:states>
+
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		
+		import GameView.Match.MatchEndDialog;
+		import GameView.Training.SpecialTrainingCompleteDialog;
+		
+		import SoccerServerV1.TransferModel.vo.SpecialTrainingDefinition;
+		
+		import mx.events.FlexEvent;
+		
+		import spark.events.IndexChangeEvent;
+			
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+			
+			// Si tenemos equipo, estara ya refrescado en el callback
+			mMainGameModel.TheTeamModel.HasTeam(OnHasTeamResponse);
+			
+			// Cuando nos llega un partido aceptado, lo aceptamos nosotros o el partido se acaba,
+			// cambiamos de estado en el UI directamente desde aquí
+			mMainGameModel.TheRealtimeModel.MatchStarted.add(OnMatchStarted);
+			mMainGameModel.TheRealtimeModel.MatchEnded.add(OnMatchEnded);
+			
+			// El mensaje de entrenamiento especial completado se captura globalmente porque el Like puede ocurrir en cualquier momento
+			mMainGameModel.TheSpecialTrainingModel.SpecialTrainingCompleted.add(OnSpecialTrainingComplete);
+		}
+		
+		private function OnSpecialTrainingComplete(specialTrainingDefinition : SpecialTrainingDefinition) : void
+		{
+			SpecialTrainingCompleteDialog.Show(specialTrainingDefinition);
+		}
+		
+		private function OnHasTeamResponse(hasTeam : Boolean):void
+		{
+			if (hasTeam)
+				currentState = "Ranking";
+			else
+				currentState = "Login";
+		}
+		
+		private function OnMatchStarted() : void
+		{
+			currentState = "OnRealtimeMatch";
+		}
+			
+		private function OnMatchEnded(matchResult:Object) : void
+		{
+			MatchEndDialog.Show(matchResult, mMainGameModel.TheTeamModel.AmITheWinner(matchResult),
+											 mMainGameModel.TheTeamModel.GetOpponentName(matchResult));
+				
+			currentState = "Match";
+			MainMenuButtonBar.selectedIndex = 1;
+		}
+
+		protected function ButtonbarChangeHandler(event:IndexChangeEvent):void
+		{
+			if (MainMenuButtonBar.selectedItem.menuId == "Ranking")
+				currentState = "Ranking";
+			else
+			if (MainMenuButtonBar.selectedItem.menuId == "Team")
+				currentState = "Team";
+			else
+			if (MainMenuButtonBar.selectedItem.menuId == "Match")
+				currentState = "Match";
+			else
+			if (MainMenuButtonBar.selectedItem.menuId == "Training")
+				currentState = "Training";
+			else
+			if (MainMenuButtonBar.selectedItem.menuId == "TrainingSpecial")
+				currentState = "TrainingSpecial";
+		}
+		
+		public function ChangeStateToSpecialTrainings() : void
+		{
+			MainMenuButtonBar.selectedIndex = 4;
+			currentState = "TrainingSpecial";
+		}
+		
+		private var mMainGameModel : MainGameModel;
+
+	]]></fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+		
+	<GameView:Login id="MyLogin" includeIn="Login" />
+
+	<GameView:StatusPanel height="65" includeIn="InGame, OnRealtimeMatch"/>
+	
+	<Match:RealtimeMatch width="760" includeIn="OnRealtimeMatch" />
+	
+	<s:Group width="760" height="35" includeIn="InGame">
+		<s:Graphic width="100%" height="100%" >
+			<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='MenuVertBar')" fillMode="repeat" />
+		</s:Graphic>
+		
+		<s:ButtonBar id="MainMenuButtonBar" skinClass="GameView.Skins.MainMenuBarSkin" change="ButtonbarChangeHandler(event)" requireSelection="true"
+					 horizontalCenter="0" verticalCenter="0" includeIn="InGame" creationComplete="MainMenuButtonBar.selectedIndex=0" labelField="label" >
+			<s:dataProvider>
+				<s:ArrayList>
+					<fx:Object menuId="Ranking" label="RANKING"/>
+					<fx:Object menuId="Match" label="PARTIDO"/>
+					<fx:Object menuId="Team" label="EQUIPO"/>
+					<fx:Object menuId="Training" label="ENTRENAMIENTO"/>
+					<fx:Object menuId="TrainingSpecial" label="HABILIDADES"/>
+				</s:ArrayList>
+			</s:dataProvider>
+		</s:ButtonBar>
+	</s:Group>
+	<s:Group includeIn="InGame">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='BackGeneral')" fillMode="clip"/>
+		
+		<GameView:NewsMarquee x="15" y="8" left="0" right="0" />
+		
+		<GameView:Ranking id="RankingView" includeIn="Ranking" top="30" itemCreationPolicy="immediate"/>
+		<Team:Team id="TeamView" includeIn="Team" top="30" itemCreationPolicy="immediate"/>
+		<Match:Match id="MatchView" includeIn="Match" top="30" itemCreationPolicy="immediate"/>
+		<Training:Training id="TrainingView" includeIn="Training" top="30" itemCreationPolicy="immediate"/>
+		<Training:TrainingSpecial id="TrainingSpecialView" includeIn="TrainingSpecial" top="30" itemCreationPolicy="immediate"/>
+	</s:Group>
+	
+</s:Group>

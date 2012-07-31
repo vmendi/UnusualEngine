@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.75" name="DataClasses1">
+  <DataContextMoniker Name="/DesafiateDataContext" />
+  <nestedChildShapes>
+    <classShape Id="504eb55b-2420-4320-b22a-587d33773dfd" absoluteBounds="6.75, 0.75, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/DesafiateDataContext/Eventos" />
+      <nestedChildShapes>
+        <elementListCompartment Id="59bf9657-8f15-45fa-a36c-17236464bab3" absoluteBounds="6.765, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8ed3f69c-c608-4870-a7d6-078aed93642e" absoluteBounds="0.75, 2.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DesafiateDataContext/Usuarios" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1c8fb0c0-080e-48ec-ba06-381bfab21497" absoluteBounds="0.765, 2.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d93f751f-ebaa-4036-bd96-5677a52eb0a9" absoluteBounds="3.5, 3.625, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/DesafiateDataContext/Puntuaciones" />
+      <nestedChildShapes>
+        <elementListCompartment Id="191a279a-0f9a-4f05-9c1d-03128465fb72" absoluteBounds="3.515, 4.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="45f46ded-0079-47f0-8312-80069f0d7a8a" absoluteBounds="0.75, 6.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DesafiateDataContext/Sesiones" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9ded2b0b-bc1c-4ccc-bfdf-966459b9da6b" absoluteBounds="0.765, 7.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 3.85179768880208); (3.5 : 3.85179768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DesafiateDataContext/Usuarios/Usuarios_Puntuaciones" />
+      <nodes>
+        <classShapeMoniker Id="8ed3f69c-c608-4870-a7d6-078aed93642e" />
+        <classShapeMoniker Id="d93f751f-ebaa-4036-bd96-5677a52eb0a9" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="b5b71492-6b25-4157-908f-a531400ad0bd" absoluteBounds="4, 1, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DesafiateDataContext/Logros" />
+      <nestedChildShapes>
+        <elementListCompartment Id="79ac9539-5f3d-4891-b488-8053231850d2" absoluteBounds="4.015, 1.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 2.73159912109375); (4 : 2.73159912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DesafiateDataContext/Usuarios/Usuarios_Logros" />
+      <nodes>
+        <classShapeMoniker Id="8ed3f69c-c608-4870-a7d6-078aed93642e" />
+        <classShapeMoniker Id="b5b71492-6b25-4157-908f-a531400ad0bd" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

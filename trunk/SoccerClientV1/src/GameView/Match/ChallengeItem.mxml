@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" width="410" height="51" xmlns:Match="GameView.Match.*" 
+				toolTip="{data.Message}" xmlns:GameView="GameView.*">
+	
+	<fx:Style source="../styles.css" />
+	
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="selected"/>
+		<s:State name="hovered"/>
+	</s:states>
+	
+<!--	<s:Rect id="base" left="0" right="0" top="0" bottom="0">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#2c2c2c" alpha="1.0" ratio="0"/>
+				<s:GradientEntry color="#010202" alpha="1.0" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>	-->
+	
+	<s:Graphic includeIn="hovered">
+		<s:Rect x="0" y="0" width="423" height="50">
+			<s:fill>
+				<s:SolidColor color="#666666" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	
+	<s:Graphic includeIn="selected">
+		<s:Rect x="0" y="0" width="423" height="50">
+			<s:fill>
+				<s:SolidColor color="#999999" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>	
+	
+	<s:Group width="423" height="43">	
+		<s:layout><s:HorizontalLayout gap="0"/></s:layout>
+
+		<GameView:FacebookPicture FacebookID="{data.SourcePlayer.FacebookID}" />
+		
+		<s:Group>
+			<s:layout><s:VerticalLayout paddingTop="4" /></s:layout>
+			<GameView:BadgeTeam TeamName="{data.SourcePlayer.PredefinedTeamName}" />
+		</s:Group>
+		
+		<s:Group width="90" height="50">
+			<s:layout><s:VerticalLayout paddingTop="7" gap="3"/></s:layout>
+			<s:Label text="{data.SourcePlayer.Name}" styleName="whiteBoldBig" width="85" maxDisplayedLines="1"/>
+			<s:Label text="{data.SourcePlayer.PredefinedTeamName}" styleName="whiteBoldMedium"/>
+		</s:Group>
+
+		<s:Label width="119" height="50" verticalAlign="middle"
+				 text="{data.Message}" styleName="whiteBoldArial" maxDisplayedLines="2" />
+		
+		<GameView:BadgeCategory width="64" TrueSkill="{data.SourcePlayer.TrueSkill}" />
+		
+		<s:Label width="50" height="50" styleName="whiteBoldBig" verticalAlign="middle" textAlign="center"
+				 text="{data.SourcePlayer.TrueSkill}"/>		
+		
+	</s:Group>
+	
+	<s:Graphic>
+		<s:Line xFrom="0" xTo="423" yFrom="50" yTo="50">
+			<s:stroke>
+				<s:SolidColorStroke color="0x000000" weight="1"/>
+			</s:stroke>
+		</s:Line>
+	</s:Graphic>
+	
+</s:ItemRenderer>

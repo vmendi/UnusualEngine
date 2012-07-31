@@ -1,0 +1,2488 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="FlexTransformManager,com.greensock.transform.FlexTransformManager,VERSION,allowDelete,allowMultiSelect,arrowKeysMove,autoDeselect,bounds,constrainScale,enabled,forceSelectionToFront,handleFillColor,handleSize,hideCenterHandle,ignoredObjects,items,lineColor,lockPosition,lockRotation,lockScale,manager,paddingForRotation,scaleFromCenter,selectedItems,selectedTargetObjects,selectionRotation,selectionScaleX,selectionScaleY,selectionX,selectionY,targetObjects,transformManager,height,width,addChild,addChildAt,addEventListener,addIgnoredObject,addItem,addItems,applyFullXML,applyItemXML,applySettingsXML,deleteSelection,deselectAll,deselectItem,destroy,exportFullXML,exportItemXML,exportSettingsXML,getItem,getSelectionBounds,getSelectionBoundsWithHandles,getSelectionCenter,getUnrotatedSelectionHeight,getUnrotatedSelectionWidth,isSelected,moveSelection,moveSelectionDepthDown,moveSelectionDepthUp,removeAllChildren,removeChild,removeChildAt,removeEventListener,removeIgnoredObject,removeItem,rotateSelection,scaleSelection,selectItem,selectItems,updateSelection" name="keywords">
+<title>com.greensock.transform.FlexTransformManager</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'FlexTransformManager - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/transform/FlexTransformManager.html&amp;com/greensock/transform/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;FlexTransformManager</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#constantSummary">Constants</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class FlexTransformManager"); titleBar_setSubNav(true,true,false,false,true,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.transform</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class FlexTransformManager</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">FlexTransformManager <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> mx.containers.Canvas</td>
+</tr>
+</table>
+<p></p>
+ FlexTransformManager works with TransformManager and makes it easy to add interactive scaling/rotating/moving of 
+ DisplayObjects to your Flex application. It uses an intuitive interface that's similar to most modern drawing applications. 
+ When the user clicks on a managed DisplayObject, a selection box will be drawn around it along with 8 handles for 
+ scaling/rotating. When the mouse is placed just outside of any of the scaling handles, the cursor will change 
+ to indicate that they're in rotation mode. Just like most other applications, the user can hold down the SHIFT 
+ key to select multiple items, to constrain scaling proportions, or to limit the rotation to 45 degree increments. 
+ All the work is done by the TransformManager instance which is compatible with Flash, but FlexTransformManager is 
+ basically a wrapper that makes it compatible with Flex.<br /><br />
+  
+ <b>FEATURES INCLUDE:</b><br />
+ <ul>
+  <li> Select multiple items and scale/rotate/move them all simultaneously.</li>
+  <li> Perform virtually any action (transformations, selections, etc.) through code.</li>
+  <li> Depth management which allows you to programmatically push the selected items forward or backward in the stacking order</li>
+  <li> Set minScaleX, maxScaleX, minScaleY, and maxScaleY properties on each item </li>
+  <li> Arrow keys move the selection </li>
+  <li> You can set the scaleMode of any TransformItem to SCALE_WIDTH_AND_HEIGHT so that the width/height properties are altered instead of scaleX/scaleY. This can be helpful for text-related components because altering the width/height changes only the container's dimensions while retaining the text's size.</li>
+  <li> There is a 10-pixel wide draggable edge around around the border that users can drag. This is particularly helpful with TextFields/TextAreas.</li>
+  <li> Define bounds within which the DisplayObjects must stay, and FlexTransformManager will not let the user scale/rotate/move them beyond those bounds</li>
+  <li> Automatically bring the selected item(s) to the front in the stacking order </li>
+  <li> The DELETE and BACKSPACE keys can be used to delete the selected DisplayObjects </li>
+  <li> Lock certain kinds of transformations like rotation, scale, and/or movement </li>
+  <li> Lock the proportions of the DisplayObjects so that users cannot distort them when scaling</li>
+  <li> Scale from the DisplayObject's center or from its corners</li>
+  <li> Listen for Events like SCALE, MOVE, ROTATE, SELECTION_CHANGE, DEPTH_CHANGE, CLICK_OFF, START_INTERACTIVE_MOVE, START_INTERACTIVE_SCALE, START_INTERACTIVE_ROTATE, FINISH_INTERACTIVE_MOVE, FINISH_INTERACTIVE_SCALE, FINISH_INTERACTIVE_ROTATE, DOUBLE_CLICK, SEIZE_CURSOR, RELEASE_CURSOR, and DESTROY </li>
+  <li> Set the selection box line color and handle thickness</li>
+  <li> Cursor will automatically change to indicate scale or rotation mode</li>
+   <li> Optionally hide the center handle</li>
+  <li> Export transformational data for each item's scale, rotation, and position as well as the TranformManager's settings in XML format so that you can easily save it to a database (or wherever). Then apply it anytime to revert objects to a particular state.</li>
+  <li> VERY easy to use. In fact, all it takes is one line of code to get it up and running with the default settings. </li>
+ </ul>
+ 
+ <b>NOTES / LIMITATIONS</b>:<br />
+ <ul>
+   <li> All DisplayObjects that are managed by a particular FlexTransformManager instance must have the same parent (you can create multiple FlexTransformManager instances if you want)</li>
+   <li> TextFields cannot be flipped (have negative scales).</li>
+   <li> TextFields cannot be skewed. Therefore, when a TextField is part of a multi-selection, scaling will be disabled because it could skew the TextField (imagine if a TextField is at a 45 degree angle, and then you selected another item and scaled vertically - your TextField would end up getting skewed).</li>
+   <li> Due to a limitation in the way Flash reports bounds, items that are extremely close or exactly on top of a boundary (if you define bounds) will be moved about 0.1 pixel away from the boundary when you select them. If an item fills the width and/or height of the bounds, it will be scaled down very slightly (about 0.2 pixels total) to move it away from the bounds and allow accurate collision detection.</li>
+ </ul><br />
+ 
+ <b>EXAMPLES:</b><br /><br />
+ To make two Images (myImage1 and myImage2) transformable using the default settings:<br /><br /><code>
+ 
+  &lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;br /&gt;<br />
+  &lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:transform="com.greensock.transform.&gt;<br />
+   &lt;transform:FlexTransformManager id="myManager" width="500" height="500"&gt; <br />
+    &lt;mx:Image source="../libs/image1.png" id="myImage1" autoLoad="true" x="100" y="100" /&gt; <br />
+    &lt;mx:Image source="../libs/image2.png" id="myImage2" autoLoad="true" x="0" y="300" /&gt; <br />
+   &lt;/transform:FlexTransformManager&gt;<br />
+  &lt;/mx:Application&gt;<br /><br /></code>
+ 
+ 
+ To make the two Images transformable, constrain their scaling to be proportional (even if the user is not holding
+ down the shift key), call the onScale function everytime one of the objects is scaled, lock the rotation value of each 
+ Image (preventing rotation), and allow the delete key to appear to delete the selected Image from the stage:<br /><br /><code>
+ 
+  &lt;?xml version="1.0" encoding="utf-8"?&gt;<br />
+  &lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:transform="com.greensock.transform. creationComplete="init()"&gt;<br />
+   &lt;mx:Script&gt;<br />
+    &lt;![CDATA[<br />
+     import com.greensock.events.TransformEvent;<br />
+     private function init():void {<br />
+      myManager.addEventListener(TransformEvent.SCALE, onScale, false, 0, true);<br />
+     }<br />
+     private function onScale($e:TransformEvent):void {<br />
+      trace("Scaled " + $e.items.length + " items");<br />
+     }<br />
+    ]]&gt;<br />
+   &lt;/mx:Script&gt;<br />
+   &lt;transform:FlexTransformManager id="myManager" width="500" height="500" allowDelete="true" constrainScale="true" lockRotation="true"&gt;<br />
+    &lt;mx:Image source="../libs/image1.png" id="image1" autoLoad="true" x="50" y="50" /&gt;<br />
+    &lt;mx:Image source="../libs/image1.png" id="image2" autoLoad="true" x="100" y="200" /&gt;<br />
+   &lt;/transform:FlexTransformManager&gt;<br />
+  &lt;/mx:Application&gt;<br /><br /></code>
+ 
+ <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/eula.html">http://www.greensock.com/eula.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#allowDelete">allowDelete</a> : Boolean<div class="summaryTableDescription"> If true, when the user presses the DELETE (or BACKSPACE) key, the selected item(s) will be deleted (except items with <code>hasSelectableText</code> set to true) [default: <code>false</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#allowMultiSelect">allowMultiSelect</a> : Boolean<div class="summaryTableDescription"> If true, multiple items can be selected (by holding down the SHIFT or CONTROL keys and clicking) [default: <code>true</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#arrowKeysMove">arrowKeysMove</a> : Boolean<div class="summaryTableDescription"> If true, the arrow keys on the keyboard will move the selected items when pressed [default: <code>false</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoDeselect">autoDeselect</a> : Boolean<div class="summaryTableDescription"> When the user clicks anywhere OTHER than on one of the TransformItems, all are deselected [default: <code>true</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bounds">bounds</a> : Rectangle<div class="summaryTableDescription"> A Rectangle defining the boundaries for movement/scaling/rotation.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#constrainScale">constrainScale</a> : Boolean<div class="summaryTableDescription"> To constrain items to only scaling proportionally, set this to true [default: <code>false</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#enabled">enabled</a> : Boolean<div class="summaryTableDescription"> Enable or disable the entire FlexTransformManager.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#forceSelectionToFront">forceSelectionToFront</a> : Boolean<div class="summaryTableDescription"> When true, new selections are forced to the front of the display list of the container DisplayObjectContainer [default: <code>true</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#handleFillColor">handleFillColor</a> : uint<div class="summaryTableDescription"> Controls the fill color of the handle [default: <code>0xFFFFFF</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#handleSize">handleSize</a> : Number<div class="summaryTableDescription"> Controls the handle size (in pixels) [default: <code>8</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#height">height</a> : Number<div class="summaryTableDescription">[write-only] height </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#hideCenterHandle">hideCenterHandle</a> : Boolean<div class="summaryTableDescription"> To hide the center scale handle, set this to true [default: <code>false</code> </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#ignoredObjects">ignoredObjects</a> : Array<div class="summaryTableDescription"> Sometimes you want FlexTransformManager to ignore clicks on certain DisplayObjects, like buttons, color pickers, etc.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#items">items</a> : Array<div class="summaryTableDescription">[read-only] All of the TransformItem instances that are managed by this FlexTransformManager (regardless of whether or not they're selected) </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#lineColor">lineColor</a> : uint<div class="summaryTableDescription"> Controls the line color of the selection box and handles [default: <code>0x3399FF</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#lockPosition">lockPosition</a> : Boolean<div class="summaryTableDescription"> Prevents moving [default: <code>false</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#lockRotation">lockRotation</a> : Boolean<div class="summaryTableDescription"> Prevents rotating [default: <code>false</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#lockScale">lockScale</a> : Boolean<div class="summaryTableDescription"> Prevents scaling [default: <code>false</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#manager">manager</a> : <a href="../transform/TransformManager.html">TransformManager</a>
+<div class="summaryTableDescription">[read-only] The TransformManager instance associated with the FlexTransformManager </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#paddingForRotation">paddingForRotation</a> : Number<div class="summaryTableDescription"> Determines the amount of space outside each of the four corner scale handles that will trigger rotation mode [default: <code>12</code>] </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scaleFromCenter">scaleFromCenter</a> : Boolean<div class="summaryTableDescription"> If true, scaling occurs from the center of the selection instead of the corners.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#selectedItems">selectedItems</a> : Array<div class="summaryTableDescription"> The currently selected TransformItems (for the associated DisplayObjects, use <code>selectedTargetObjects</code>) </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#selectedTargetObjects">selectedTargetObjects</a> : Array<div class="summaryTableDescription"> The currently selected targetObjects (DisplayObjects).</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#selectionRotation">selectionRotation</a> : Number<div class="summaryTableDescription"> The rotation of the overall selection box </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#selectionScaleX">selectionScaleX</a> : Number<div class="summaryTableDescription"> The scaleX of the overall selection box </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#selectionScaleY">selectionScaleY</a> : Number<div class="summaryTableDescription"> The scaleY of the overall selection box </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#selectionX">selectionX</a> : Number<div class="summaryTableDescription"> The x-coordinte of the overall selection box (same as the origin) </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#selectionY">selectionY</a> : Number<div class="summaryTableDescription"> The y-coordinte of the overall selection box (same as the origin) </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#targetObjects">targetObjects</a> : Array<div class="summaryTableDescription">[read-only] All of the targetObjects (DisplayObjects) that are managed by this FlexTransformManager (regardless of whether or not they're selected) </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#transformManager">transformManager</a> : <a href="../transform/TransformManager.html">TransformManager</a>
+<div class="summaryTableDescription">[read-only] The TransformManager instances associated with this FlexTransformManager </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#width">width</a> : Number<div class="summaryTableDescription">[write-only] width </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#FlexTransformManager()">FlexTransformManager</a>($vars:Object = null)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addChild()">addChild</a>($child:DisplayObject):DisplayObject</div>
+<div class="summaryTableDescription">
+   Adds a child and performs an addItem() so that the new child is managed.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addChildAt()">addChildAt</a>($child:DisplayObject, $index:int):DisplayObject</div>
+<div class="summaryTableDescription">
+   Adds a child at a particular index and then performs an addItem() to ensure the item is managed
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addEventListener()">addEventListener</a>($type:String, $listener:Function, $useCapture:Boolean = false, $priority:int = 0, $useWeakReference:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Allows listening for the following events:
+   <ul>
+     <li> TransformEvent.MOVE</li>
+     <li> TransformEvent.SCALE</li>
+     <li> TransformEvent.ROTATE</li>
+     <li> TransformEvent.DELETE</li>
+     <li> TransformEvent.SELECTION_CHANGE</li>
+     <li> TransformEvent.CLICK_OFF</li>
+     <li> TransformEvent.SEIZE_CURSOR</li>
+     <li> TransformEvent.RELEASE_CURSOR</li>
+     <li> TransformEvent.DEPTH_CHANGE</li>
+     <li> TransformEvent.DESTROY</li>
+     <li> TransformEvent.START_INTERACTIVE_MOVE</li>
+     <li> TransformEvent.START_INTERACTIVE_SCALE</li>
+     <li> TransformEvent.START_INTERACTIVE_ROTATE</li>
+     <li> TransformEvent.FINISH_INTERACTIVE_MOVE</li>
+     <li> TransformEvent.FINISH_INTERACTIVE_SCALE</li>
+     <li> TransformEvent.FINISH_INTERACTIVE_ROTATE</li>
+     <li> TransformEvent.DOUBLE_CLICK</li>
+   </ul>
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addIgnoredObject()">addIgnoredObject</a>($object:DisplayObject):void</div>
+<div class="summaryTableDescription">
+   Allows you to have FlexTransformManager ignore clicks on a particular DisplayObject (handy for buttons, color pickers, etc.).</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addItem()">addItem</a>($targetObject:DisplayObject, $scaleMode:String = "scaleNormal", $hasSelectableText:Boolean = false):<a href="../transform/TransformItem.html">TransformItem</a>
+</div>
+<div class="summaryTableDescription">
+   In order for a DisplayObject to be managed by FlexTransformManger, it must first be added via <code>addItem()</code>.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addItems()">addItems</a>($targetObjects:Array, $scaleMode:String = "scaleNormal", $hasSelectableText:Boolean = false):Array</div>
+<div class="summaryTableDescription">
+   Same as addItem() but accepts an Array containing multiple DisplayObjects.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#applyFullXML()">applyFullXML</a>(xml:XML, defaultParent:DisplayObjectContainer, placeholderColor:uint = 0xCCCCCC):Array</div>
+<div class="summaryTableDescription">
+   Applies XML generated by <code>exportFullXML()</code> to the TransformManager instance including all settings
+   and each item's scale/rotation/position.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#applyItemXML()">applyItemXML</a>(xml:XML, defaultParent:DisplayObjectContainer = null, placeholderColor:uint = 0xCCCCCC):DisplayObject</div>
+<div class="summaryTableDescription">
+   Applies XML generated by <code>exportItemXML()</code> to the TransformManager instance including all transform
+   data like scale/rotation/position.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#applySettingsXML()">applySettingsXML</a>(xml:XML):void</div>
+<div class="summaryTableDescription">
+   Applies settings XML generated by <code>exportSettingsXML()</code> to the TransformManager instance.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#deleteSelection()">deleteSelection</a>($e:Event = null):void</div>
+<div class="summaryTableDescription">
+   Deletes all selected items.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#deselectAll()">deselectAll</a>():void</div>
+<div class="summaryTableDescription"> Deselects all items </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#deselectItem()">deselectItem</a>($item:*):void</div>
+<div class="summaryTableDescription">
+   Deselects a TransformItem or DisplayObject.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#destroy()">destroy</a>():void</div>
+<div class="summaryTableDescription"> Destroys the FlexTransformManager instance, removing all items and preparing it for garbage collection </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#exportFullXML()">exportFullXML</a>():XML</div>
+<div class="summaryTableDescription">
+   A common request is to capture the current state of each item's scale/rotation/position and the TransformManager's
+   settings in an easy-to-store format so that the data can be reloaded and applied later; <code>exportFullXML()</code> 
+   returns an XML object containing exactly that.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#exportItemXML()">exportItemXML</a>(targetObject:DisplayObject):XML</div>
+<div class="summaryTableDescription">
+   Exports transform data (scale/rotation/position) of a particular DisplayObject in XML format so that
+   it can be saved to a database or elsewhere easily and then reapplied later.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#exportSettingsXML()">exportSettingsXML</a>():XML</div>
+<div class="summaryTableDescription">
+   Exports the TransformManager's settings in XML format so that it can be saved to a database or elsewhere easily 
+   and then reapplied later.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getItem()">getItem</a>($targetObject:DisplayObject):<a href="../transform/TransformItem.html">TransformItem</a>
+</div>
+<div class="summaryTableDescription">
+   Gets the TransformItem associated with a particular DisplayObject (if any).</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getSelectionBounds()">getSelectionBounds</a>(targetCoordinateSpace:DisplayObject = null):Rectangle</div>
+<div class="summaryTableDescription">
+   Gets the bounding Rectangle of the current selection (not including handles)
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getSelectionBoundsWithHandles()">getSelectionBoundsWithHandles</a>(targetCoordinateSpace:DisplayObject = null):Rectangle</div>
+<div class="summaryTableDescription">
+   Gets the bounding Rectangle of the current selection (including handles)
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getSelectionCenter()">getSelectionCenter</a>():Point</div>
+<div class="summaryTableDescription">
+   Gets the center point of the current selection
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getUnrotatedSelectionHeight()">getUnrotatedSelectionHeight</a>():Number</div>
+<div class="summaryTableDescription">
+   Gets the height of the selection as if it were not rotated.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getUnrotatedSelectionWidth()">getUnrotatedSelectionWidth</a>():Number</div>
+<div class="summaryTableDescription">
+   Gets the width of the selection as if it were not rotated.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isSelected()">isSelected</a>($item:*):Boolean</div>
+<div class="summaryTableDescription">
+   Determines whether or not a particular DisplayObject or TranformItem is currently selected.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#moveSelection()">moveSelection</a>($x:Number, $y:Number, $dispatchEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Moves the selected items by a certain number of pixels on the x axis and y axis
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#moveSelectionDepthDown()">moveSelectionDepthDown</a>():void</div>
+<div class="summaryTableDescription"> Moves the selection down one level.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#moveSelectionDepthUp()">moveSelectionDepthUp</a>():void</div>
+<div class="summaryTableDescription"> Moves the selection up one level.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeAllChildren()">removeAllChildren</a>():void</div>
+<div class="summaryTableDescription"> Removes all children </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeChild()">removeChild</a>($child:DisplayObject):DisplayObject</div>
+<div class="summaryTableDescription">
+   Removes a child DisplayObject
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeChildAt()">removeChildAt</a>($index:int):DisplayObject</div>
+<div class="summaryTableDescription">
+   Removes a child from a particular index number in the display list
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeEventListener()">removeEventListener</a>($type:String, $listener:Function, $useCapture:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Removes an Event listener 
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeIgnoredObject()">removeIgnoredObject</a>($object:DisplayObject):void</div>
+<div class="summaryTableDescription">
+   Removes an ignored DisplayObject so that its clicks are no longer ignored.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeItem()">removeItem</a>($item:*):void</div>
+<div class="summaryTableDescription">
+   Removes an item.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#rotateSelection()">rotateSelection</a>($angle:Number, $dispatchEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Rotates the selected items by a particular angle (in Radians).</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#scaleSelection()">scaleSelection</a>($sx:Number, $sy:Number, $dispatchEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Scales the selected items along the x- and y-axis using multipliers.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#selectItem()">selectItem</a>($item:*, $addToSelection:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Selects a particular TransformItem or DisplayObject (you must have already added the DisplayObject
+   to FlexTransformManager in order for it to be selectable - use <code>addItem()</code> for that)
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#selectItems()">selectItems</a>($items:Array, $addToSelection:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Selects an Array of TransformItems and/or DisplayObjects.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#updateSelection()">updateSelection</a>($centerOrigin:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Refreshes the selection box/handles.</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+</table>
+</div>
+<a name="eventSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Events</div>
+<table id="summaryTableEvent" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmClickOff">tmClickOff</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmDelete">tmDelete</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmDepthChange">tmDepthChange</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmDestroy">tmDestroy</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmDoubleClick">tmDoubleClick</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmFinishInteractiveMove">tmFinishInteractiveMove</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmFinishInteractiveRotate">tmFinishInteractiveRotate</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmFinishInteractiveScale">tmFinishInteractiveScale</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmMouseDown">tmMouseDown</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmMove">tmMove</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmReleaseCursor">tmReleaseCursor</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmRotate">tmRotate</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmScale">tmScale</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmSeizeCursor">tmSeizeCursor</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmSelectionChange">tmSelectionChange</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmStartInteractiveMove">tmStartInteractiveMove</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmStartInteractiveRotate">tmStartInteractiveRotate</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:tmStartInteractiveScale">tmStartInteractiveScale</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">&nbsp;</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+</table>
+</div>
+<a name="constantSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Constants</div>
+<table id="summaryTableConstant" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#VERSION">VERSION</a> : Number = 1.911<div class="summaryTableDescription">[static]</div>
+</td><td class="summaryTableOwnerCol">FlexTransformManager</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="allowDelete"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">allowDelete</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>allowDelete:Boolean</code>&nbsp;&nbsp;[read-write]<p> If true, when the user presses the DELETE (or BACKSPACE) key, the selected item(s) will be deleted (except items with <code>hasSelectableText</code> set to true) [default: <code>false</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get allowDelete():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set allowDelete(value:Boolean):void</code>
+<br>
+</div>
+<a name="allowMultiSelect"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">allowMultiSelect</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>allowMultiSelect:Boolean</code>&nbsp;&nbsp;[read-write]<p> If true, multiple items can be selected (by holding down the SHIFT or CONTROL keys and clicking) [default: <code>true</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get allowMultiSelect():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set allowMultiSelect(value:Boolean):void</code>
+<br>
+</div>
+<a name="arrowKeysMove"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">arrowKeysMove</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>arrowKeysMove:Boolean</code>&nbsp;&nbsp;[read-write]<p> If true, the arrow keys on the keyboard will move the selected items when pressed [default: <code>false</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get arrowKeysMove():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set arrowKeysMove(value:Boolean):void</code>
+<br>
+</div>
+<a name="autoDeselect"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoDeselect</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>autoDeselect:Boolean</code>&nbsp;&nbsp;[read-write]<p> When the user clicks anywhere OTHER than on one of the TransformItems, all are deselected [default: <code>true</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get autoDeselect():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set autoDeselect(value:Boolean):void</code>
+<br>
+</div>
+<a name="bounds"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bounds</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bounds:Rectangle</code>&nbsp;&nbsp;[read-write]<p> A Rectangle defining the boundaries for movement/scaling/rotation. [default:null] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bounds():Rectangle</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set bounds(value:Rectangle):void</code>
+<br>
+</div>
+<a name="constrainScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">constrainScale</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>constrainScale:Boolean</code>&nbsp;&nbsp;[read-write]<p> To constrain items to only scaling proportionally, set this to true [default: <code>false</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get constrainScale():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set constrainScale(value:Boolean):void</code>
+<br>
+</div>
+<a name="enabled"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">enabled</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>enabled:Boolean</code>&nbsp;&nbsp;[read-write]<p> Enable or disable the entire FlexTransformManager. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get enabled():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set enabled(value:Boolean):void</code>
+<br>
+</div>
+<a name="forceSelectionToFront"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">forceSelectionToFront</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>forceSelectionToFront:Boolean</code>&nbsp;&nbsp;[read-write]<p> When true, new selections are forced to the front of the display list of the container DisplayObjectContainer [default: <code>true</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get forceSelectionToFront():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set forceSelectionToFront(value:Boolean):void</code>
+<br>
+</div>
+<a name="handleFillColor"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">handleFillColor</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>handleFillColor:uint</code>&nbsp;&nbsp;[read-write]<p> Controls the fill color of the handle [default: <code>0xFFFFFF</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get handleFillColor():uint</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set handleFillColor(value:uint):void</code>
+<br>
+</div>
+<a name="handleSize"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">handleSize</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>handleSize:Number</code>&nbsp;&nbsp;[read-write]<p> Controls the handle size (in pixels) [default: <code>8</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get handleSize():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set handleSize(value:Number):void</code>
+<br>
+</div>
+<a name="height"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">height</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>height:Number</code>&nbsp;&nbsp;[write-only]<p> height </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set height(value:Number):void</code>
+<br>
+</div>
+<a name="hideCenterHandle"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">hideCenterHandle</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>hideCenterHandle:Boolean</code>&nbsp;&nbsp;[read-write]<p> To hide the center scale handle, set this to true [default: <code>false</code> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get hideCenterHandle():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set hideCenterHandle(value:Boolean):void</code>
+<br>
+</div>
+<a name="ignoredObjects"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">ignoredObjects</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>ignoredObjects:Array</code>&nbsp;&nbsp;[read-write]<p> Sometimes you want FlexTransformManager to ignore clicks on certain DisplayObjects, like buttons, color pickers, etc. Those items should populate the ignoreObjects Array. The DisplayObject CANNOT be a child of a targetObject. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get ignoredObjects():Array</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set ignoredObjects(value:Array):void</code>
+<br>
+</div>
+<a name="items"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">items</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>items:Array</code>&nbsp;&nbsp;[read-only]<p> All of the TransformItem instances that are managed by this FlexTransformManager (regardless of whether or not they're selected) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get items():Array</code>
+<br>
+</div>
+<a name="lineColor"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">lineColor</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>lineColor:uint</code>&nbsp;&nbsp;[read-write]<p> Controls the line color of the selection box and handles [default: <code>0x3399FF</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get lineColor():uint</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set lineColor(value:uint):void</code>
+<br>
+</div>
+<a name="lockPosition"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">lockPosition</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>lockPosition:Boolean</code>&nbsp;&nbsp;[read-write]<p> Prevents moving [default: <code>false</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get lockPosition():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set lockPosition(value:Boolean):void</code>
+<br>
+</div>
+<a name="lockRotation"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">lockRotation</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>lockRotation:Boolean</code>&nbsp;&nbsp;[read-write]<p> Prevents rotating [default: <code>false</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get lockRotation():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set lockRotation(value:Boolean):void</code>
+<br>
+</div>
+<a name="lockScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">lockScale</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>lockScale:Boolean</code>&nbsp;&nbsp;[read-write]<p> Prevents scaling [default: <code>false</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get lockScale():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set lockScale(value:Boolean):void</code>
+<br>
+</div>
+<a name="manager"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">manager</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>manager:<a href="../transform/TransformManager.html">TransformManager</a></code>&nbsp;&nbsp;[read-only]<p> The TransformManager instance associated with the FlexTransformManager </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get manager():<a href="../transform/TransformManager.html">TransformManager</a></code>
+<br>
+</div>
+<a name="paddingForRotation"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">paddingForRotation</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>paddingForRotation:Number</code>&nbsp;&nbsp;[read-write]<p> Determines the amount of space outside each of the four corner scale handles that will trigger rotation mode [default: <code>12</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get paddingForRotation():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set paddingForRotation(value:Number):void</code>
+<br>
+</div>
+<a name="scaleFromCenter"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleFromCenter</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scaleFromCenter:Boolean</code>&nbsp;&nbsp;[read-write]<p> If true, scaling occurs from the center of the selection instead of the corners. [default: <code>false</code>] </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleFromCenter():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleFromCenter(value:Boolean):void</code>
+<br>
+</div>
+<a name="selectedItems"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectedItems</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>selectedItems:Array</code>&nbsp;&nbsp;[read-write]<p> The currently selected TransformItems (for the associated DisplayObjects, use <code>selectedTargetObjects</code>) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get selectedItems():Array</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set selectedItems(value:Array):void</code>
+<br>
+</div>
+<a name="selectedTargetObjects"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectedTargetObjects</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>selectedTargetObjects:Array</code>&nbsp;&nbsp;[read-write]<p> The currently selected targetObjects (DisplayObjects). For the associated TransformItems, use <code>selectedItems</code>. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get selectedTargetObjects():Array</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set selectedTargetObjects(value:Array):void</code>
+<br>
+</div>
+<a name="selectionRotation"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectionRotation</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>selectionRotation:Number</code>&nbsp;&nbsp;[read-write]<p> The rotation of the overall selection box </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get selectionRotation():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set selectionRotation(value:Number):void</code>
+<br>
+</div>
+<a name="selectionScaleX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectionScaleX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>selectionScaleX:Number</code>&nbsp;&nbsp;[read-write]<p> The scaleX of the overall selection box </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get selectionScaleX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set selectionScaleX(value:Number):void</code>
+<br>
+</div>
+<a name="selectionScaleY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectionScaleY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>selectionScaleY:Number</code>&nbsp;&nbsp;[read-write]<p> The scaleY of the overall selection box </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get selectionScaleY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set selectionScaleY(value:Number):void</code>
+<br>
+</div>
+<a name="selectionX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectionX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>selectionX:Number</code>&nbsp;&nbsp;[read-write]<p> The x-coordinte of the overall selection box (same as the origin) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get selectionX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set selectionX(value:Number):void</code>
+<br>
+</div>
+<a name="selectionY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectionY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>selectionY:Number</code>&nbsp;&nbsp;[read-write]<p> The y-coordinte of the overall selection box (same as the origin) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get selectionY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set selectionY(value:Number):void</code>
+<br>
+</div>
+<a name="targetObjects"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">targetObjects</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>targetObjects:Array</code>&nbsp;&nbsp;[read-only]<p> All of the targetObjects (DisplayObjects) that are managed by this FlexTransformManager (regardless of whether or not they're selected) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get targetObjects():Array</code>
+<br>
+</div>
+<a name="transformManager"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">transformManager</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>transformManager:<a href="../transform/TransformManager.html">TransformManager</a></code>&nbsp;&nbsp;[read-only]<p> The TransformManager instances associated with this FlexTransformManager </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get transformManager():<a href="../transform/TransformManager.html">TransformManager</a></code>
+<br>
+</div>
+<a name="width"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">width</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>width:Number</code>&nbsp;&nbsp;[write-only]<p> width </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set width(value:Number):void</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="FlexTransformManager()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">FlexTransformManager</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function FlexTransformManager($vars:Object = null)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; An object specifying any properties that should be set upon instantiation, like <code>{scaleFromCenter:true, lockRotation:true, bounds:new Rectangle(0, 0, 500, 300)}</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="addChild()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addChild</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function addChild($child:DisplayObject):DisplayObject</code><p>
+   Adds a child and performs an addItem() so that the new child is managed.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$child</span>:DisplayObject</code> &mdash; The child DisplayObject
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>DisplayObject</code> &mdash; DisplayObject
+   </td>
+</tr>
+</table>
+</div>
+<a name="addChildAt()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addChildAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function addChildAt($child:DisplayObject, $index:int):DisplayObject</code><p>
+   Adds a child at a particular index and then performs an addItem() to ensure the item is managed
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$child</span>:DisplayObject</code> &mdash; The child DisplayObject to add
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$index</span>:int</code> &mdash; The index number in the display list at which to add the child
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>DisplayObject</code> &mdash; DisplayObject
+   </td>
+</tr>
+</table>
+</div>
+<a name="addEventListener()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addEventListener</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function addEventListener($type:String, $listener:Function, $useCapture:Boolean = false, $priority:int = 0, $useWeakReference:Boolean = false):void</code><p>
+   Allows listening for the following events:
+   <ul>
+     <li> TransformEvent.MOVE</li>
+     <li> TransformEvent.SCALE</li>
+     <li> TransformEvent.ROTATE</li>
+     <li> TransformEvent.DELETE</li>
+     <li> TransformEvent.SELECTION_CHANGE</li>
+     <li> TransformEvent.CLICK_OFF</li>
+     <li> TransformEvent.SEIZE_CURSOR</li>
+     <li> TransformEvent.RELEASE_CURSOR</li>
+     <li> TransformEvent.DEPTH_CHANGE</li>
+     <li> TransformEvent.DESTROY</li>
+     <li> TransformEvent.START_INTERACTIVE_MOVE</li>
+     <li> TransformEvent.START_INTERACTIVE_SCALE</li>
+     <li> TransformEvent.START_INTERACTIVE_ROTATE</li>
+     <li> TransformEvent.FINISH_INTERACTIVE_MOVE</li>
+     <li> TransformEvent.FINISH_INTERACTIVE_SCALE</li>
+     <li> TransformEvent.FINISH_INTERACTIVE_ROTATE</li>
+     <li> TransformEvent.DOUBLE_CLICK</li>
+   </ul>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$type</span>:String</code> &mdash; Event type
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$listener</span>:Function</code> &mdash; Listener function
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$useCapture</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Use capture phase
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$priority</span>:int</code> (default = <code>0</code>)<code></code> &mdash; Priority
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$useWeakReference</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Use weak reference
+   </td>
+</tr>
+</table>
+</div>
+<a name="addIgnoredObject()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addIgnoredObject</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addIgnoredObject($object:DisplayObject):void</code><p>
+   Allows you to have FlexTransformManager ignore clicks on a particular DisplayObject (handy for buttons, color pickers, etc.). The DisplayObject CANNOT be a child of a targetObject
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$object</span>:DisplayObject</code> &mdash; DisplayObject that should be ignored
+   </td>
+</tr>
+</table>
+</div>
+<a name="addItem()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addItem</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addItem($targetObject:DisplayObject, $scaleMode:String = "scaleNormal", $hasSelectableText:Boolean = false):<a href="../transform/TransformItem.html">TransformItem</a></code><p>
+   In order for a DisplayObject to be managed by FlexTransformManger, it must first be added via <code>addItem()</code>. When the
+   DisplayObject is added, a TransformItem instance is automatically created and associated with the DisplayObject. 
+   If you need to set item-specific settings like minScaleX, maxScaleX, etc., you would set those via the TransformItem 
+   instance. <code>addItem()</code> returns a TransformItem instance, but you can retrieve it anytime with the <code>getItem()</code>
+   method (just pass it your DisplayObject, like <code>var myItem:TransformItem = myManager.getItem(myDisplayObject)</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$targetObject</span>:DisplayObject</code> &mdash; The DisplayObject to be managed
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$scaleMode</span>:String</code> (default = "<code>scaleNormal</code>")<code></code> &mdash; Either <code>TransformManager.SCALE_NORMAL</code> for normal scaleX/scaleY scaling or <code>TransformManager.SCALE_WIDTH_AND_HEIGHT</code> if you prefer that FlexTransformManager alters the <code>width</code>/<code>height</code> properties instead.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$hasSelectableText</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, this prevents dragging of the object unless clicking on the edges/border or center handle, and allows the DELETE key to be pressed without deleting the object itself. It will also force the scaleMode to <code>TransformManager.SCALE_WIDTH_AND_HEIGHT</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../transform/TransformItem.html">TransformItem</a></code> &mdash; 
+                        TransformItem instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="addItems()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addItems</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addItems($targetObjects:Array, $scaleMode:String = "scaleNormal", $hasSelectableText:Boolean = false):Array</code><p>
+   Same as addItem() but accepts an Array containing multiple DisplayObjects.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$targetObjects</span>:Array</code> &mdash; An Array of DisplayObject to be managed
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$scaleMode</span>:String</code> (default = "<code>scaleNormal</code>")<code></code> &mdash; Either <code>TransformManager.SCALE_NORMAL</code> for normal scaleX/scaleY scaling or <code>TransformManager.SCALE_WIDTH_AND_HEIGHT</code> if you prefer that FlexTransformManager alters the <code>width</code>/<code>height</code> properties instead.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$hasSelectableText</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, this prevents dragging of the objects unless clicking on the edges/border or center handle, and allows the DELETE key to be pressed without deleting the object itself. It will also force the scaleMode to <code>TransformManager.SCALE_WIDTH_AND_HEIGHT</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; An Array of corresponding TransformItems that are created
+   </td>
+</tr>
+</table>
+</div>
+<a name="applyFullXML()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">applyFullXML</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function applyFullXML(xml:XML, defaultParent:DisplayObjectContainer, placeholderColor:uint = 0xCCCCCC):Array</code><p>
+   Applies XML generated by <code>exportFullXML()</code> to the TransformManager instance including all settings
+   and each item's scale/rotation/position. This does not load any external images/assets - you must do that separately. 
+   Typically it's best to fully load the assets first and add them to the display list before calling <code>applyFullXML()</code>.
+   When <code>applyFullXML()</code> is called, it attempts to find the targetObjects in the display list based on their names,
+   but for each one that cannot be found, a new Sprite will be created and added as a placeholder, filled with the 
+   <code>placeholderColor</code> and named identically. An array of those placeholders (if any) is returned by 
+   <code>applyFullXML()</code> which makes it easy to loop through and load your images/assets directly into those 
+   placeholder Sprites. Feel free to add visual preloaders, alter the look of the Sprites, etc. <br /><br />
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">xml</span>:XML</code> &mdash; An XML object containing data about the settings and each item's position/scale/rotation. This XML is typically created using <code>exportFullXML()</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">defaultParent</span>:DisplayObjectContainer</code> &mdash; If no items have been added to the TransformManager yet, it won't know which DisplayObjectContainer to look in for targetObjects, so it is important to explicitly tell TransformManager what default parent to use.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">placeholderColor</span>:uint</code> (default = <code>0xCCCCCC</code>)<code></code> &mdash; If an item's targetObject cannot be found in the display list (based on its name), it will create a new Sprite and fill it with this color, using it as a placeholder.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; An array of placeholders that were created for missing targetObjects (if any). You can loop through these and load your assets accordingly. Keep in mind that the placeholders will have the same name as was defined in the XML (from the original targetObject).
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../transform/FlexTransformManager.html#exportItemXML()" target="">exportItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyItemXML()" target="">applyItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportFullXML()" target="">exportFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportSettingsXML()" target="">exportSettingsXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applySettingsXML()" target="">applySettingsXML()</a>
+</div>
+</div>
+<a name="applyItemXML()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">applyItemXML</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function applyItemXML(xml:XML, defaultParent:DisplayObjectContainer = null, placeholderColor:uint = 0xCCCCCC):DisplayObject</code><p>
+   Applies XML generated by <code>exportItemXML()</code> to the TransformManager instance including all transform
+   data like scale/rotation/position. This does not load any external images/assets - you must do that separately. 
+   Typically it's best to fully load the asset first and add them to the display list before calling <code>applyItemXML()</code>.
+   When <code>applyItemXML()</code> is called, it attempts to find the targetObject in the display list based on 
+   its name, but if it cannot be found, a new Sprite will be created and added as a placeholder, filled with the 
+   <code>placeholderColor</code> and named identically. To load all of the settings and every item's transform 
+   data, use <code>applyFullXML()</code> instead.<br /><br />
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">xml</span>:XML</code> &mdash; An XML object containing data about the item's position/scale/rotation. This XML is typically created using <code>exportItemXML()</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">defaultParent</span>:DisplayObjectContainer</code> (default = <code>null</code>)<code></code> &mdash; If no items have been added to the TransformManager yet, it won't know which DisplayObjectContainer to look in for targetObject, so it is important to explicitly tell TransformManager what default parent to use.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">placeholderColor</span>:uint</code> (default = <code>0xCCCCCC</code>)<code></code> &mdash; If the targetObject cannot be found in the display list (based on its name), it will create a new Sprite and fill it with this color, using it as a placeholder.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>DisplayObject</code> &mdash; The DisplayObject associated with the item (a placeholder Sprite if the targeObject wasn't found in the display list).
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../transform/FlexTransformManager.html#exportItemXML()" target="">exportItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportFullXML()" target="">exportFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyFullXML()" target="">applyFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportSettingsXML()" target="">exportSettingsXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applySettingsXML()" target="">applySettingsXML()</a>
+</div>
+</div>
+<a name="applySettingsXML()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">applySettingsXML</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function applySettingsXML(xml:XML):void</code><p>
+   Applies settings XML generated by <code>exportSettingsXML()</code> to the TransformManager instance.
+   This determines things like <code>allowDelete, autoDeselect, lockScale, lockPosition,</code> etc.<br /><br />
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">xml</span>:XML</code> &mdash; An XML object containing settings data about the TransformManager (typically exported by <code>exportSettingsXML()</code>).
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../transform/FlexTransformManager.html#exportItemXML()" target="">exportItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyItemXML()" target="">applyItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportFullXML()" target="">exportFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyFullXML()" target="">applyFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportSettingsXML()" target="">exportSettingsXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applySettingsXML()" target="">applySettingsXML()</a>
+</div>
+</div>
+<a name="deleteSelection()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">deleteSelection</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function deleteSelection($e:Event = null):void</code><p>
+   Deletes all selected items.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$e</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; Accepts an optional Event in case you want to use this as an event handler
+   </td>
+</tr>
+</table>
+</div>
+<a name="deselectAll()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">deselectAll</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function deselectAll():void</code><p> Deselects all items </p></div>
+<a name="deselectItem()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">deselectItem</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function deselectItem($item:*):void</code><p>
+   Deselects a TransformItem or DisplayObject.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$item</span>:*</code> &mdash; The TransformItem or DisplayObject that should be deselected
+   </td>
+</tr>
+</table>
+</div>
+<a name="destroy()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">destroy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function destroy():void</code><p> Destroys the FlexTransformManager instance, removing all items and preparing it for garbage collection </p></div>
+<a name="exportFullXML()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">exportFullXML</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function exportFullXML():XML</code><p>
+   A common request is to capture the current state of each item's scale/rotation/position and the TransformManager's
+   settings in an easy-to-store format so that the data can be reloaded and applied later; <code>exportFullXML()</code> 
+   returns an XML object containing exactly that. The TransformManager's settings and each item's transform data is
+   stored in the following format:<br />
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>XML</code> &mdash; An XML representation of the current state of the TransformManager instance and all of the items it is managing.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../transform/FlexTransformManager.html#exportItemXML()" target="">exportItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyItemXML()" target="">applyItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyFullXML()" target="">applyFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportSettingsXML()" target="">exportSettingsXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applySettingsXML()" target="">applySettingsXML()</a>
+</div>
+<br>
+<span class="label">Example</span>
+<br><div class='listing'><pre>
+   &lt;transformManager>
+     &lt;settings allowDelete="1" allowMultiSelect="1" autoDeselect="1" constrainScale="0" lockScale="1" scaleFromCenter="0" lockRotation="0" lockPosition="0" arrowKeysMove="0" forceSelectionToFront="1" lineColor="3381759" handleColor="16777215" handleSize="8" paddingForRotation="12" hideCenterHandle="0"/&gt;
+     &lt;items&gt;
+       &lt;item name="mc1" level="1" a="0.9999847412109375" b="0" c="0" d="0.9999847412109375" tx="79.2" ty="150.5" xOffset="-23.4" yOffset="-34.35" rawWidth="128.6" rawHeight="110.69999999999999" scaleMode="scaleNormal" hasSelectableText="0" minScaleX="-Infinity" maxScaleX="Infinity" minScaleY="-Infinity" maxScaleY="Infinity"/&gt;
+       &lt;item name="mc2" level="18" a="0.7987213134765625" b="0.2907257080078125" c="-0.2907257080078125" d="0.7987213134765625" tx="222.5" ty="92.25" xOffset="0" yOffset="0" rawWidth="287.85" rawHeight="215.8" scaleMode="scaleNormal" hasSelectableText="0" minScaleX="-Infinity" maxScaleX="Infinity" minScaleY="-Infinity" maxScaleY="Infinity"/&gt;
+       &lt;item name="text_ti" level="4" a="1" b="0" c="0" d="1" tx="32" ty="303.95" xOffset="-2" yOffset="-2" rawWidth="188" rawHeight="37.2" scaleMode="scaleWidthAndHeight" hasSelectableText="1" minScaleX="-Infinity" maxScaleX="Infinity" minScaleY="-Infinity" maxScaleY="Infinity"/&gt;
+     &lt;/items&gt;
+   &lt;/transformManager&gt;
+   </pre></div>
+   
+   You can use applyFullXML() to reapply the exported XML.
+   
+   <p></p>
+</div>
+<a name="exportItemXML()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">exportItemXML</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function exportItemXML(targetObject:DisplayObject):XML</code><p>
+   Exports transform data (scale/rotation/position) of a particular DisplayObject in XML format so that
+   it can be saved to a database or elsewhere easily and then reapplied later. If you'd like to export all
+   settings and every item's data, use the <code>exportFullXML()</code> instead. <code>exportItemXML()</code>
+   returns an XML object in the following format:<br />
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">targetObject</span>:DisplayObject</code> &mdash; The DisplayObject whose transform data you'd like to export.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>XML</code> &mdash; An XML object describing the targetObject's transform data (scale/rotation/position) and a few other TransformManager-related settings.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../transform/FlexTransformManager.html#applyItemXML()" target="">applyItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportFullXML()" target="">exportFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyFullXML()" target="">applyFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportSettingsXML()" target="">exportSettingsXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applySettingsXML()" target="">applySettingsXML()</a>
+</div>
+<br>
+<span class="label">Example</span>
+<br><div class='listing'><pre>
+   &lt;item name="mc1" level="1" a="0.98" b="0" c="0" d="0.9" tx="79.2" ty="150.5" xOffset="-23.4" yOffset="-34.35" rawWidth="128.6" rawHeight="110.7" scaleMode="scaleNormal" hasSelectableText="0" minScaleX="-Infinity" maxScaleX="Infinity" minScaleY="-Infinity" maxScaleY="Infinity"/&gt;
+   </pre></div>
+   
+   <p></p>
+</div>
+<a name="exportSettingsXML()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">exportSettingsXML</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function exportSettingsXML():XML</code><p>
+   Exports the TransformManager's settings in XML format so that it can be saved to a database or elsewhere easily 
+   and then reapplied later. <code>exportSettingsXML()</code>
+   returns an XML object in the following format:<br />
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>XML</code> &mdash; An XML object containing settings data about the TransformManager.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../transform/FlexTransformManager.html#exportItemXML()" target="">exportItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyItemXML()" target="">applyItemXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#exportFullXML()" target="">exportFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applyFullXML()" target="">applyFullXML()</a>
+<br>
+<a href="../transform/FlexTransformManager.html#applySettingsXML()" target="">applySettingsXML()</a>
+</div>
+<br>
+<span class="label">Example</span>
+<br><div class='listing'><pre>
+   &lt;settings allowDelete="1" allowMultiSelect="1" autoDeselect="1" constrainScale="0" lockScale="1" scaleFromCenter="0" lockRotation="0" lockPosition="0" arrowKeysMove="0" forceSelectionToFront="1" lineColor="3381759" handleColor="16777215" handleSize="8" paddingForRotation="12" hideCenterHandle="0"/&gt;
+   </pre></div>
+   
+   <p></p>
+</div>
+<a name="getItem()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getItem</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getItem($targetObject:DisplayObject):<a href="../transform/TransformItem.html">TransformItem</a></code><p>
+   Gets the TransformItem associated with a particular DisplayObject (if any). This can be useful if you 
+   need to set item-specific properties like minScaleX/maxScaleX, etc.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$targetObject</span>:DisplayObject</code> &mdash; The DisplayObject with which the TransformItem is associated
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../transform/TransformItem.html">TransformItem</a></code> &mdash; 
+                        The associated TransformItem
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="getSelectionBounds()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getSelectionBounds</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getSelectionBounds(targetCoordinateSpace:DisplayObject = null):Rectangle</code><p>
+   Gets the bounding Rectangle of the current selection (not including handles)
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">targetCoordinateSpace</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The display object that defines the coordinate system to use. 
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Rectangle</code> &mdash; Bounding Rectangle of the current selection (not including handles)
+   </td>
+</tr>
+</table>
+</div>
+<a name="getSelectionBoundsWithHandles()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getSelectionBoundsWithHandles</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getSelectionBoundsWithHandles(targetCoordinateSpace:DisplayObject = null):Rectangle</code><p>
+   Gets the bounding Rectangle of the current selection (including handles)
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">targetCoordinateSpace</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The display object that defines the coordinate system to use. 
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Rectangle</code> &mdash; Bounding Rectangle of the current selection (including handles)
+   </td>
+</tr>
+</table>
+</div>
+<a name="getSelectionCenter()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getSelectionCenter</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getSelectionCenter():Point</code><p>
+   Gets the center point of the current selection
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Point</code> &mdash; Center Point of the current selection
+   </td>
+</tr>
+</table>
+</div>
+<a name="getUnrotatedSelectionHeight()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getUnrotatedSelectionHeight</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getUnrotatedSelectionHeight():Number</code><p>
+   Gets the height of the selection as if it were not rotated.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; The unrotated selection height
+   </td>
+</tr>
+</table>
+</div>
+<a name="getUnrotatedSelectionWidth()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getUnrotatedSelectionWidth</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getUnrotatedSelectionWidth():Number</code><p>
+   Gets the width of the selection as if it were not rotated.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; The unrotated selection width
+   </td>
+</tr>
+</table>
+</div>
+<a name="isSelected()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isSelected</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function isSelected($item:*):Boolean</code><p>
+   Determines whether or not a particular DisplayObject or TranformItem is currently selected.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$item</span>:*</code> &mdash; The TransformItem or DisplayObject whose selection status needs to be checked
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; If true, the item/DisplayObject is currently selected
+   </td>
+</tr>
+</table>
+</div>
+<a name="moveSelection()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">moveSelection</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function moveSelection($x:Number, $y:Number, $dispatchEvents:Boolean = true):void</code><p>
+   Moves the selected items by a certain number of pixels on the x axis and y axis
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$x</span>:Number</code> &mdash; Number of pixels to move the selected items along the x-axis (can be negative or positive)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$y</span>:Number</code> &mdash; Number of pixels to move the selected items along the y-axis (can be negative or positive)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$dispatchEvents</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If false, no MOVE Events will be dispatched
+   </td>
+</tr>
+</table>
+</div>
+<a name="moveSelectionDepthDown()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">moveSelectionDepthDown</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function moveSelectionDepthDown():void</code><p> Moves the selection down one level. </p></div>
+<a name="moveSelectionDepthUp()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">moveSelectionDepthUp</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function moveSelectionDepthUp():void</code><p> Moves the selection up one level. </p></div>
+<a name="removeAllChildren()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeAllChildren</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function removeAllChildren():void</code><p> Removes all children </p></div>
+<a name="removeChild()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeChild</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function removeChild($child:DisplayObject):DisplayObject</code><p>
+   Removes a child DisplayObject
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$child</span>:DisplayObject</code> &mdash; Child to remove
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>DisplayObject</code> &mdash; DisplayObject
+   </td>
+</tr>
+</table>
+</div>
+<a name="removeChildAt()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeChildAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function removeChildAt($index:int):DisplayObject</code><p>
+   Removes a child from a particular index number in the display list
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$index</span>:int</code> &mdash; Index number from which to remove the child
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>DisplayObject</code> &mdash; DisplayObject
+   </td>
+</tr>
+</table>
+</div>
+<a name="removeEventListener()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeEventListener</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function removeEventListener($type:String, $listener:Function, $useCapture:Boolean = false):void</code><p>
+   Removes an Event listener 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$type</span>:String</code> &mdash; Type of Event
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$listener</span>:Function</code> &mdash; Listener 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$useCapture</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Use capture phase
+   </td>
+</tr>
+</table>
+</div>
+<a name="removeIgnoredObject()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeIgnoredObject</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removeIgnoredObject($object:DisplayObject):void</code><p>
+   Removes an ignored DisplayObject so that its clicks are no longer ignored.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$object</span>:DisplayObject</code> &mdash; DisplayObject that should not be ignored anymore
+   </td>
+</tr>
+</table>
+</div>
+<a name="removeItem()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeItem</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removeItem($item:*):void</code><p>
+   Removes an item. Calling this on an item will NOT delete the DisplayObject - it just prevents it from being affected by this FlexTransformManager anymore.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$item</span>:*</code> &mdash; Either the DisplayObject or the associated TransformItem that should be removed
+   </td>
+</tr>
+</table>
+</div>
+<a name="rotateSelection()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rotateSelection</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function rotateSelection($angle:Number, $dispatchEvents:Boolean = true):void</code><p>
+   Rotates the selected items by a particular angle (in Radians). This is NOT an absolute value, so if one
+   of the selected items' rotation property is Math.PI and you <code>rotateSelection(Math.PI)</code>, the new
+   angle would be Math.PI 2.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$angle</span>:Number</code> &mdash; Angle (in Radians) that should be added to the selected items' current rotation
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$dispatchEvents</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If false, no ROTATE events will be dispatched
+   </td>
+</tr>
+</table>
+</div>
+<a name="scaleSelection()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleSelection</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function scaleSelection($sx:Number, $sy:Number, $dispatchEvents:Boolean = true):void</code><p>
+   Scales the selected items along the x- and y-axis using multipliers. Keep in mind that these are
+   not absolute values, so if a selected item's scaleX is 2 and you scaleSelection(2, 1), its new
+   scaleX would be 4 because 2 2 = 4. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$sx</span>:Number</code> &mdash; Multiplier for scaling along the selection box's x-axis (which may or may not be the same as the selected item's y-axis, depending on whether or not multiple items are selected and if any are rotated)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$sy</span>:Number</code> &mdash; Multiplier for scaling along the selection box's y-axis (which may or may not be the same as the selected item's y-axis, depending on whether or not multiple items are selected and if any are rotated)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$dispatchEvents</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If false, no SCALE events will be dispatched
+   </td>
+</tr>
+</table>
+</div>
+<a name="selectItem()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectItem</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function selectItem($item:*, $addToSelection:Boolean = false):void</code><p>
+   Selects a particular TransformItem or DisplayObject (you must have already added the DisplayObject
+   to FlexTransformManager in order for it to be selectable - use <code>addItem()</code> for that)
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$item</span>:*</code> &mdash; The TransformItem or DisplayObject that should be selected
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$addToSelection</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, any currently selected items will remain selected and the new item/DisplayObject will be added to the selection.
+   </td>
+</tr>
+</table>
+</div>
+<a name="selectItems()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">selectItems</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function selectItems($items:Array, $addToSelection:Boolean = false):void</code><p>
+   Selects an Array of TransformItems and/or DisplayObjects. (you must have already added the DisplayObjects
+   to FlexTransformManager in order for it to be selectable - use <code>addItem()</code> or <code>addItems()</code> for that)
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$items</span>:Array</code> &mdash; An Array of TransformItems and/or DisplayObjects to be selected
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">$addToSelection</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, any currently selected items will remain selected and the new items/DisplayObjects will be added to the selection.
+   </td>
+</tr>
+</table>
+</div>
+<a name="updateSelection()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">updateSelection</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function updateSelection($centerOrigin:Boolean = true):void</code><p>
+   Refreshes the selection box/handles. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">$centerOrigin</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, the origin (axis of rotation/scaling) will be automatically centered.
+   </td>
+</tr>
+</table>
+</div>
+<div class="detailSectionHeader">Event detail</div>
+<a name="event:tmClickOff"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmClickOff</td><td class="detailHeaderType">event&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmDelete"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmDelete</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmDepthChange"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmDepthChange</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmDestroy"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmDestroy</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmDoubleClick"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmDoubleClick</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmFinishInteractiveMove"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmFinishInteractiveMove</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmFinishInteractiveRotate"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmFinishInteractiveRotate</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmFinishInteractiveScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmFinishInteractiveScale</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmMouseDown"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmMouseDown</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmMove"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmMove</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmReleaseCursor"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmReleaseCursor</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmRotate"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmRotate</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmScale</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmSeizeCursor"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmSeizeCursor</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmSelectionChange"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmSelectionChange</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmStartInteractiveMove"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmStartInteractiveMove</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmStartInteractiveRotate"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmStartInteractiveRotate</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="event:tmStartInteractiveScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">tmStartInteractiveScale</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/TransformEvent.html"><code>com.greensock.events.TransformEvent</code></a>
+<br>
+<p></p>
+</div>
+<a name="constantDetail"></a>
+<div class="detailSectionHeader">Constant detail</div>
+<a name="VERSION"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">VERSION</td><td class="detailHeaderType">constant</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const VERSION:Number = 1.911</code>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

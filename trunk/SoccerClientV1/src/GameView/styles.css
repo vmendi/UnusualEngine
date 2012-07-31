@@ -1,0 +1,107 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+.whiteBoldArial {
+	font-family:Arial;
+	font-size:10pt;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+.whiteBoldMediumArial {
+	font-family:Arial;
+	font-size:12pt;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+.whiteArial {
+	font-family:Arial;
+	font-size:11pt;
+	color:#FFFFFF;
+}
+
+.whiteBoldMedium {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:12pt;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+.whiteBoldBig {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:14pt;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+.whiteBoldHuge {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:26pt;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+.whiteBoldBigArial {
+	font-family:Arial;
+	font-size:14pt;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+.whiteBoldVeryBig {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:20pt;
+	font-weight:bold;	
+	color:#FFFFFF;
+}
+
+.yellowBoldMedium {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:12pt;
+	font-weight:bold;
+	color:#FFCB04;
+}
+
+.yellowBoldBig {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:14pt;
+	font-weight:bold;
+	color:#FFCB04;
+}
+
+.redBoldBig {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:13pt;
+	font-weight:bold;
+	color:#620200;
+}
+
+.greyBoldMedium {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:12pt;
+	font-weight:bold;
+	color:#A2A2A2;
+}
+
+.blackBoldMedium {
+	font-family:Arial;
+	font-size:12pt;
+	font-weight:bold;
+	color:#000000;
+}
+
+.blackBoldMediumHN {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:12pt;
+	font-weight:bold;
+	color:#000000;
+}
+
+.blackBoldVeryBig {
+	font-family:MyFontHelveticaNeueLTBold;
+	font-size:20pt;
+	font-weight:bold;
+	color:#000000;
+}

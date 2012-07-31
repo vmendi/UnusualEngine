@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:GameView="GameView.*"
+		 creationComplete="CreationCompleteHandler(event)"
+		 currentState="Empty" xmlns:Team="GameView.Team.*"
+		 skinClass="GameView.Skins.DefaultPanelSkin">
+	
+	<fx:Style source="../styles.css"/>
+	
+	<s:states>
+		<s:State name="Empty"/>
+		<s:State name="Selected"/>
+		<s:State name="Unassigned"/>
+		<s:State name="Assigning"/>
+	</s:states>
+	
+	<fx:Script><![CDATA[
+		import GameModel.TeamModel;
+		
+		import GameView.Skins.ButtonGreySkin;
+		import GameView.Skins.DefaultPanelSkin;
+		
+		import SoccerServerV1.TransferModel.vo.SoccerPlayer;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.FlexEvent;
+		
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mTeamModel = SoccerClientV1.GetMainGameModel().TheTeamModel;
+			
+			BindingUtils.bindSetter(OnSelectedSoccerPlayerChanged, mTeamModel, "SelectedSoccerPlayer");
+			BindingUtils.bindSetter(OnSkillPointsChanged, mTeamModel, ["TheTeam", "SkillPoints"]);
+		}
+		
+		private function OnSkillPointsChanged(skillPoints : int) : void
+		{
+			if (mTeamModel.SelectedSoccerPlayer != null)
+			{
+				if (skillPoints > 0)
+					currentState = "Unassigned";
+				else
+					currentState = "Selected";
+			}
+			else
+				currentState = "Empty";
+		}
+				
+		private function OnSelectedSoccerPlayerChanged(newOne : SoccerPlayer) : void
+		{
+			if (newOne != null)
+			{
+				if (mTeamModel.TheTeam.SkillPoints > 0)
+					currentState = "Unassigned";
+				else
+					currentState = "Selected";
+			}
+			else
+			{
+				currentState = "Empty";
+			}
+		}
+						
+		protected function MyAssignButton_clickHandler(event:MouseEvent):void
+		{
+			currentState="Assigning";
+		}
+
+		[Bindable] private var mTeamModel : TeamModel;
+
+	]]></fx:Script>
+	
+	<Team:CapDetail TheSoccerPlayer="{mTeamModel.SelectedSoccerPlayer}" 
+					excludeFrom="Empty"/>		
+	
+	<s:Group x="12" y="91">
+	
+		<s:layout><s:VerticalLayout horizontalAlign="left" gap="0"/></s:layout>
+					
+		<GameView:AssignerSpinner width="164" excludeFrom="Assigning, Empty" DisplayName="POTENCIA:" 
+								  Val="{mTeamModel.SelectedSoccerPlayer.Power}" Max="100" Min="0" ShowSpinner="false"/>
+		<GameView:AssignerSpinner width="164" excludeFrom="Assigning, Empty" DisplayName="CONTROL:" 
+								  Val="{mTeamModel.SelectedSoccerPlayer.Sliding}" Max="100" Min="0" ShowSpinner="false"/>
+		<GameView:AssignerSpinner width="164" excludeFrom="Assigning, Empty" DisplayName="DEFENSA:" 
+								  Val="{mTeamModel.SelectedSoccerPlayer.Weight}" Max="100" Min="0" ShowSpinner="false"/>
+	</s:Group>	
+		
+	<s:Group id="MyUnassignedGroup" y="210" x="0" width="188" includeIn="Unassigned">
+		<s:layout><s:VerticalLayout horizontalAlign="center"/></s:layout>
+		<s:Group>
+			<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='TeamMahouPoints')" fillMode="clip" />
+			<s:Label top="6" left="22" width="26" id="MyUnassignedSkillPointsLabel" text="{mTeamModel.TheTeam.SkillPoints}"
+					 textAlign="center" styleName="whiteBoldMedium"/>
+		</s:Group>
+		<s:Button id="MyAssignButton" label="ASIGNAR" width="150"
+				  skinClass="GameView.Skins.ButtonGreySkin" click="MyAssignButton_clickHandler(event)"/>
+	</s:Group>
+	
+	<Team:SkillPointAssigner width="80%" includeIn="Assigning" itemDestructionPolicy="auto"/>
+
+</s:Panel>

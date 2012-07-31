@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="355" height="115"
+		 creationComplete="CreationCompleteHandler(event)">
+	
+	<s:states>
+		<s:State name="Normal" />
+		<s:State name="NotAvailable" />
+		<s:State name="Training" />		
+	</s:states>
+	
+	<fx:Script><![CDATA[
+		import GameModel.TrainingModel;
+		import SoccerServerV1.TransferModel.vo.TrainingDefinition;		
+		import mx.events.FlexEvent;		
+		import utils.TimeUtils;
+						
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mTrainingModel = SoccerClientV1.GetMainGameModel().TheTrainingModel;
+			(MyTraining.content as MovieClip).stop();
+		}
+		
+		[Bindable]
+		public function get TheTrainingDefinition(): TrainingDefinition	{return mTrainingDef;}
+		public function set TheTrainingDefinition(value:TrainingDefinition):void 
+		{ 
+			mTrainingDef = value;
+			
+			(MyTraining.content as MovieClip).gotoAndStop(mTrainingDef.Name)
+		}
+		
+		private var mTrainingDef : TrainingDefinition;
+		
+		[Bindable]
+		private var mTrainingModel : TrainingModel;
+		
+	]]></fx:Script>
+	
+	<s:Graphic alpha.NotAvailable="0.3">
+		<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='TrainingRegularBg')" fillMode="clip" />
+	</s:Graphic>
+	
+	<mx:SWFLoader x="3" y="3" id="MyTraining" scaleContent="false" alpha.NotAvailable="0.3"
+				  source="@Embed(source='/Assets/General.swf', symbol='TrainingItems')"/>	
+	
+	<s:Group left="0" right="0" top="0" bottom="0" alpha.NotAvailable="0.3">
+		<s:Graphic includeIn="NotAvailable">
+			<s:Rect width="100%" height="100%">
+				<s:fill><s:SolidColor color="#000000" alpha="0.5" /></s:fill>
+			</s:Rect>
+		</s:Graphic>
+		<s:Label id="MyTrainingName" width="152"  x="188" y="8"  styleName="whiteBoldBig" textAlign="center"
+				 text="{TheTrainingDefinition.Name}"/>
+		
+		<s:Label id="MyTrainingFitness"  x="188" y="34" styleName="whiteBoldBig" 
+				 text="Entrenamiento: +{TheTrainingDefinition.FitnessDelta}"
+				 includeIn="Normal"/>
+		
+		<s:Label id="MyTrainingTime" x="188" y="52" 
+				 text="Tiempo: {TimeUtils.ConvertSecondsToStringWithHours(TheTrainingDefinition.Time)}" styleName="whiteBoldBig"
+				 includeIn="Normal" />
+		
+		<s:Label id="MyTrainingStatus"  x="188" y="46"  styleName="whiteBoldBig" width="154" textAlign="center"
+				 text="¡ENTRENANDO!"
+				 includeIn="Training"/>		
+		
+		<s:Label id="MyTrainingReaminingTime" x="205" y="70"
+				 text="Tiempo restante: {TimeUtils.ConvertSecondsToStringWithHours(mTrainingModel.RemainingSeconds)}" styleName="whiteBoldBig" 
+				 includeIn="Training" />
+		
+		<s:Button id="MyDoTrainButton" label="ENTRENAR" x="188" y="78" width="154" height="24" skinClass="GameView.Skins.ButtonGreySkin" includeIn="Normal"/>	
+	</s:Group>
+	
+	
+</s:Group>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="993" height="318"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	addedToStage="OnCreationComplete()" frameRate="30" backgroundColor="#000000"
+	>
+
+	<mx:Script>
+		<![CDATA[
+		import flash.net.navigateToURL;
+		import gs.TweenMax;
+		import mx.controls.Alert;
+		import gs.TweenLite;
+		import utils.MovieClipMouseDisabler;
+		import mx.core.UIComponent;
+		import utils.UIComponentWrapper;
+
+		import flash.utils.getDefinitionByName;
+		import utils.CentralLoader;
+
+		private function OnCreationComplete():void
+		{
+			var params : Object = Application.application.parameters;
+			var xmlToLoad : String = "Assets/SmallGallery/Default.xml";
+
+			if (params.hasOwnProperty(["xml"]))
+				xmlToLoad = params["xml"];
+
+			mCentralLoader = new CentralLoader(CentralLoader.BaseURL());
+
+			mCentralLoader.Load(xmlToLoad, false, OnXMLSuccess);
+		}
+
+		private function OnXMLSuccess(loader:URLLoader):void
+		{
+			mXML = XML(loader.data);
+
+			mCentralLoader.Load(mXML.library, true, OnLibraryLoaded);
+		}
+
+		private function OnLibraryLoaded(loader:Loader):void
+		{
+			var appDom : ApplicationDomain = loader.contentLoaderInfo.applicationDomain;
+
+			var back : UIComponent = new UIComponentWrapper(new (appDom.getDefinition("mcBackground") as Class));
+			this.addChild(back);
+
+			var fore : UIComponent = new UIComponentWrapper(new (appDom.getDefinition("mcForeground") as Class));
+			MovieClipMouseDisabler.DisableMouse(fore);
+			this.addChild(fore);
+
+			for each(var buttXML : XML in mXML.child("button"))
+			{
+				var newMC : MovieClip = new (appDom.getDefinition(buttXML.libraryName) as Class);
+				myVBox.addChild(new UIComponentWrapper(newMC));
+
+				newMC.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseButtonDown);
+				newMC.buttonMode = true;
+
+				mButtons.push(newMC);
+				mContents.push(null);
+			}
+
+			mLibrary = loader;
+
+			// Queremos que el primero se cargue en exclusiva
+			mCentralLoader.Load(mXML.child("button")[0].content.toString(), true, OnFirstContentLoaded);
+
+			// Mientras se carga el primero -> Loading...
+			ShowLoading();
+
+			this.setChildIndex(back, 0);
+		}
+
+		private function OnFirstContentLoaded(loader:Loader):void
+		{
+			mCurrentButtonIdx = 0;
+			mContents[0] = loader.content;
+			RefreshCurrentContent();
+
+			for each(var buttXML : XML in mXML.child("button"))
+			{
+				if (buttXML == mXML.child("button")[0])
+					continue;
+
+				mCentralLoader.AddToQueue(buttXML.content.toString(), true);
+			}
+
+			mCentralLoader.addEventListener("LoadComplete-Default", OnQueueLoaded);
+			mCentralLoader.LoadQueue();
+		}
+
+		private function RefreshCurrentContent():void
+		{
+			if (mContents[mCurrentButtonIdx] == null)
+			{
+				// Todavía no está cargado... tenemos que mostrar el loading
+				ShowLoading();
+			}
+			else
+			{
+				HideLoading();
+
+				var newContent : UIComponentWrapper = new UIComponentWrapper(mContents[mCurrentButtonIdx])
+				myContent.addChild(newContent);
+				newContent.alpha = 0.0;
+
+				TweenMax.killAllTweens();
+				TweenMax.to(newContent, 0.250, {alpha:1.0, onComplete:OnAlphaTweenComplete, onCompleteParams:[newContent] });
+			}
+		}
+
+		private function OnContentMouseDown(event:MouseEvent):void
+		{
+			if (mCurrentButtonIdx < 0)
+				return;
+
+			var link : String = mXML.child("button")[mCurrentButtonIdx].link.toString();
+
+			if (link != "")
+				navigateToURL(new URLRequest(link), "_self");
+		}
+
+		private function OnAlphaTweenComplete(completed:UIComponentWrapper):void
+		{
+			for (var c:int = 0; c < myContent.numChildren; c++)
+			{
+				if (myContent.getChildAt(c) != completed)
+				{
+					myContent.removeChildAt(c);
+					c--;
+				}
+			}
+		}
+
+		private function HideLoading():void
+		{
+			if (mLoading != null)
+			{
+				this.removeChild(mLoading);
+				mLoading = null;
+			}
+		}
+
+		private function ShowLoading():void
+		{
+			HideLoading();
+
+			var loading : MovieClip = new (mLibrary.contentLoaderInfo.applicationDomain.getDefinition("mcLoading") as Class);
+			mLoading = new UIComponentWrapper(loading);
+			this.addChild(mLoading);
+		}
+
+		private function OnQueueLoaded(event:Event):void
+		{
+			for (var c:int=0; c < mXML.child("button").length(); c++)
+			{
+				if (c == 0)
+					continue;
+
+				var loader : Loader = mCentralLoader.GetContentOfQueue(mXML.child("button")[c].content.toString()) as Loader;
+				mContents[c] = loader.content;
+			}
+
+			if (mCurrentButtonIdx != 0)
+				RefreshCurrentContent();
+		}
+
+		private function OnMouseButtonDown(event:MouseEvent):void
+		{
+			var mc : MovieClip = event.currentTarget as MovieClip;
+
+			var prevIdx : int = mCurrentButtonIdx;
+
+			for (var c:int=0; c < mButtons.length; c++)
+			{
+				if (mButtons[c] != mc)
+					mButtons[c].gotoAndStop("Off");
+				else
+					mCurrentButtonIdx = c;
+			}
+
+			if (prevIdx != mCurrentButtonIdx)
+				RefreshCurrentContent();
+		}
+
+		private function OnMouseMove(event:MouseEvent):void
+		{
+			if (event.currentTarget != myMenuCanvas)
+				return;
+
+			const MENU_ITEM_HEIGHT : Number = 50;
+
+			var localPos : Point = myMenuCanvas.globalToLocal(new Point(event.stageX, event.stageY));
+			var newY : Number = MENU_ITEM_HEIGHT - ((localPos.y-MENU_ITEM_HEIGHT)/myMenuCanvas.height) * (myVBox.height);
+
+			if (newY < -(myVBox.height-myMenuCanvas.height))
+				newY = -(myVBox.height-myMenuCanvas.height);
+			if (newY > 0)
+				newY = 0;
+
+			TweenLite.to(myVBox, 0.5, {y:newY});
+		}
+
+		private var mLibrary : Loader;
+		private var mButtons : Array = new Array;
+		private var mContents : Array = new Array;
+
+		private var mXML : XML;
+		private var mCentralLoader : CentralLoader;
+
+		private var mCurrentButtonIdx : int = -1;
+
+		private var mLoading : UIComponentWrapper;
+
+		]]>
+
+	</mx:Script>
+
+	<mx:Canvas id="myContent" width="694" height="298" backgroundColor="#000000" top="10" left="1"
+		horizontalScrollPolicy="off" verticalScrollPolicy="off" mouseDown="OnContentMouseDown(event)" buttonMode="true">
+	</mx:Canvas>
+
+	<mx:Canvas y="9" width="320" height="300" id="myMenuCanvas" right="0"
+			horizontalScrollPolicy="off" verticalScrollPolicy="off" mouseMove="OnMouseMove(event)">
+		<mx:VBox id="myVBox" width="325" right="-12" paddingLeft="15" height="100%"
+			horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalGap="-1">
+		</mx:VBox>
+	</mx:Canvas>
+
+</mx:Application>

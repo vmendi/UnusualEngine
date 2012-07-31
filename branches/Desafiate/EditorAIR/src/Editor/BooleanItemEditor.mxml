@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml" dataChange="OnDataChange(event);" creationComplete="OnComplete(event);">
+	<mx:dataProvider>
+	    <mx:String>true</mx:String>
+	    <mx:String>false</mx:String>
+	</mx:dataProvider>
+
+	<mx:Script>
+	    <![CDATA[
+	    import mx.events.DropdownEvent;
+	    import mx.events.FlexEvent;
+
+	    public function OnDataChange(event:Event):void
+	    {
+	    	// Convertimos del type que nos inyectan en el data, que tiene que ser booleano,
+	    	// a una de las cadenas aceptadas del dataProvider
+	    	selectedItem = (data as Boolean) ? "true" : "false";
+	    }
+
+	    private function OnComplete(event:Event):void
+	    {
+	    	this.open();
+
+	    	addEventListener(FlexEvent.VALUE_COMMIT, OnValueCommit);
+	    	this.addEventListener(DropdownEvent.CLOSE, OnClosed);
+	    }
+
+	    private function OnValueCommit(event:Event):void
+	    {
+	    	this.close();
+	    }
+
+	    private function OnClosed(event:Event):void
+	    {
+	    	if (parent != null)
+	    		(parent.parent as GameComponentInspector).editedItemPosition = null;
+	    }
+
+
+	    ]]>
+	</mx:Script>
+
+</mx:ComboBox>

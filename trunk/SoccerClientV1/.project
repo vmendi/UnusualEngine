@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>SoccerClientV1</name>
+	<comment></comment>
+	<projects>
+		<project>Match</project>
+		<project>Utils</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.flexnature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<locationURI>DOCUMENTS/SoccerServerV1/SoccerServerV1/SoccerClientV1</locationURI>
+		</link>
+		<link>
+			<name>bin-release</name>
+			<type>2</type>
+			<locationURI>$%7BDOCUMENTS%7D/SoccerServerV1/SoccerServerV1/SoccerClientV1</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

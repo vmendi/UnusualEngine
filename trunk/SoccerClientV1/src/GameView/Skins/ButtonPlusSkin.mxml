@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+             xmlns:fb="http://ns.adobe.com/flashbuilder/2009" minWidth="21" minHeight="21" alpha.disabled="0.5">
+    
+    <!-- host component -->
+    <fx:Metadata>
+        <![CDATA[ 
+        /** 
+         * @copy spark.skins.spark.ApplicationSkin#hostComponent
+         */
+        [HostComponent("spark.components.Button")]
+        ]]>
+    </fx:Metadata>
+    
+    <!-- states -->
+    <s:states>
+        <s:State name="up" />
+        <s:State name="over" />
+        <s:State name="down" />
+        <s:State name="disabled" />
+    </s:states>
+    
+    <!-- layer 1: base -->
+	<s:Group width="16" height="16">
+		<s:Ellipse left="0" right="0" top="0" bottom="0">
+			<s:stroke>
+				<s:SolidColorStroke caps="none" color="#FFFFFF" joints="miter" miterLimit="4" weight="2"/>
+			</s:stroke>
+			<s:fill>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry alpha="1.0" color="#61B860" ratio="0"/>
+					<s:GradientEntry alpha="1.0" color="#219C1E" ratio="0.49"/>
+					<s:GradientEntry alpha="1.0" color="#219C1E" ratio="0.50"/>
+					<s:GradientEntry alpha="1.0" color="#048F01" ratio="1"/>
+				</s:LinearGradient>
+			</s:fill>
+			<s:filters>
+				<s:DropShadowFilter alpha="0.6" angle="90" blurX="3" blurY="3" color="0x000000" distance="1" hideObject="false" inner="false" knockout="false" quality="2" strength="1"/>
+			</s:filters>
+		</s:Ellipse>
+		<s:Rect height="8" width="2" x="7" y="4">
+			<s:fill>
+				<s:SolidColor color="#FFFFFF"/>
+			</s:fill>
+		</s:Rect>
+		<s:Rect height="8" rotation="-90" width="2" x="4" y="9">
+			<s:fill>
+				<s:SolidColor color="#FFFFFF"/>
+			</s:fill>
+		</s:Rect>
+	</s:Group>
+    
+</s:SparkSkin>

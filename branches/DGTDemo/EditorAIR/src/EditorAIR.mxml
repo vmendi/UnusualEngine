@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:flexlib="http://code.google.com/p/flexlib/"
+	layout="absolute"
+	addedToStage="OnAddedToStage();"
+	backgroundImage="mx.skins.halo.ApplicationBackground"
+	backgroundColor="0xFFFFFF"
+	frameRate="30"
+	width="1200" height="900"
+	creationComplete="OnCreationComplete(event);"
+	closing="OnClosing();"
+	xmlns:QuizEditor="Editor.QuizEditor.*">
+
+	<mx:Script>
+		<![CDATA[
+		import mx.core.UIComponent;
+		import mx.core.FlexSprite;
+		import utils.UIComponentWrapper;
+		import utils.KeyboardHandler;
+		import utils.FPSCounter;
+
+		import mx.managers.SystemManager;
+		import mx.controls.SWFLoader;
+		import mx.collections.ArrayCollection;
+		import mx.events.FlexEvent;
+		import mx.controls.Alert;
+
+		import Model.GameModel;
+		import GameComponents.GameComponentEnumerator;
+
+		import Editor.EditorView;
+		import Editor.EditorController;
+		import Editor.LoadSaveController;
+
+
+		private function OnCreationComplete(event: Event): void
+        {
+            nativeWindow.x = (Capabilities.screenResolutionX - nativeWindow.width) / 2;
+            nativeWindow.y = (Capabilities.screenResolutionY - nativeWindow.height) / 2;
+        }
+
+		protected function OnAddedToStage() : void
+		{
+			stage.quality = StageQuality.BEST;
+
+			KeyboardHandler.Init(stage);
+			FPSCounter.Init(stage, new Point(0, 21));
+
+			mLoadSaveController = new LoadSaveController(new LoadSaveHelperAIR());
+
+			mLoadSaveController.addEventListener("GameModelNew", OnGameModelChanged);
+			mLoadSaveController.addEventListener("GameModelLoaded", OnGameModelChanged);
+			mLoadSaveController.addEventListener("LoadError", OnLoadError);
+
+			// Temp
+			//mLoadSaveController.LoadProjectUrl("Maps/Desafiate/SalaIT.xml");
+			mLoadSaveController.LoadProjectUrl("Maps/Desafiate/DGTDemo.xml");
+			//mLoadSaveController.LoadProjectUrl("Maps/Desafiate/SalaTrabajo.xml");
+			//mLoadSaveController.LoadProjectUrl("Maps/Desafiate/Cafeteria.xml");
+			//mLoadSaveController.LoadProjectUrl("Maps/Desafiate/Conferencias.xml");
+			//mLoadSaveController.LoadProjectUrl("Maps/Desafiate/Direccion.xml");
+			//InitializeViewAndController();
+			
+		}
+
+		private function OnClosing() : void
+		{
+			// Si cierran la ventana principal, salimos de todas
+			NativeApplication.nativeApplication.exit();
+		}
+
+		private function InitializeViewAndController() : void
+		{
+			mEditorController = new EditorController(new GameComponentEnumerator, mLoadSaveController);
+			mEditorView = new EditorView();
+			addChild(mEditorView);
+
+			mEditorView.Init(mEditorController, new WindowHelperAIR());
+		}
+
+		protected function OnLoadError(event:ErrorEvent):void
+		{
+			Alert.show(event.text, "Error de carga...", Alert.OK);
+		}
+
+		protected function OnGameModelChanged(event:Event):void
+		{
+			if (mEditorView != null)
+				removeChild(mEditorView);
+
+			InitializeViewAndController();
+		}
+
+		private var mLoadSaveController : LoadSaveController = null;
+		private var mEditorController : EditorController = null;
+		private var mEditorView : EditorView = null;
+		]]>
+	</mx:Script>
+
+</mx:WindowedApplication>

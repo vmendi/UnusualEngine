@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+    xmlns:fb="http://ns.adobe.com/flashbuilder/2009" blendMode="normal" mouseEnabled="false" 
+    minWidth="131" minHeight="127" alpha.disabled="0.5" alpha.disabledWithControlBar="0.5">
+    
+    <fx:Metadata>
+        <![CDATA[ 
+        [HostComponent("spark.components.Panel")]
+        ]]>
+    </fx:Metadata> 
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+				
+		.headerBox {
+			font-family:MyFontHelveticaNeueLTBold;
+			font-size:15pt;
+			font-weight:bold;
+			color:#FFFFFF;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<s:DropShadowFilter id="MyTextDropShadowFilter" angle="270" distance="1" blurX="1" blurY="1" color="0x444444" />
+	</fx:Declarations>
+    
+    <s:states>
+        <s:State name="normal" />
+        <s:State name="disabled" />
+        <s:State name="normalWithControlBar" stateGroups="withControls" />
+        <s:State name="disabledWithControlBar" stateGroups="withControls" />
+    </s:states>
+    
+
+	<s:Group left="0" right="0" top="0" bottom="0" id="contents">
+        <s:layout>
+            <s:VerticalLayout gap="0" horizontalAlign="justify" />
+        </s:layout>
+
+        <s:Group id="topGroup" minHeight="30">
+			<s:Rect id="tbFill" topLeftRadiusX="3" topLeftRadiusY="3" 
+								topRightRadiusX="3" topRightRadiusY="3" 
+								left="0" right="0" top="0" bottom="0">
+				<s:fill>
+					<s:LinearGradient rotation="90">
+						<s:GradientEntry color="#fe0001" ratio="0" alpha="1"/>
+						<s:GradientEntry color="#8c1304" ratio="1.0" alpha="1"/>
+					</s:LinearGradient>
+				</s:fill>
+			</s:Rect>
+
+            <s:Label id="titleDisplay" maxDisplayedLines="1"
+                     left="10" right="3" top="0" bottom="0"
+                     verticalAlign="middle" textAlign="start" styleName="headerBox" filters="{MyTextDropShadowFilter}">
+            </s:Label>
+			
+			<s:Group id="controlBarGroup" left="0" right="0" top="0" bottom="0" minWidth="0" minHeight="0" 
+					 includeIn="normalWithControlBar, disabledWithControlBar">
+				<s:layout>
+					<s:HorizontalLayout paddingLeft="10" paddingRight="10" gap="10" verticalAlign="middle"
+										horizontalAlign="right"/>
+				</s:layout>
+			</s:Group>
+        </s:Group>
+				
+		<s:Group width="100%" height="100%" minWidth="0" minHeight="0" mask="{bottomMask}">	
+			<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='BackModuleTile')" 
+						   fillMode="repeat" 
+						   width="100%" height="100%"/>
+        	
+			
+			<!-- TODO: Ajustar este gradiente -->
+			<s:Rect width="100%" height="30">
+				<s:fill>
+					<s:LinearGradient rotation="90">
+						<s:GradientEntry alpha="0.75" color="#000000" ratio="0"/>
+						<s:GradientEntry ratio="0.44" color="#000000" alpha="0.2"/>
+						<s:GradientEntry ratio="0.59" color="#000000" alpha="0.1"/>
+						<s:GradientEntry alpha="0.0" color="#000000" ratio="0.92"/>
+					</s:LinearGradient>
+				</s:fill>
+			</s:Rect>
+			
+			<s:Group id="contentGroup" width="100%" height="100%" minWidth="0" minHeight="0" />
+			
+		</s:Group>
+    </s:Group>
+	
+	<s:Group left="0" right="0" bottom="0" top="0" id="bottomMask">
+		<s:Rect id="bottomMaskRect" left="0" top="0" right="0" bottom="0" 
+				bottomLeftRadiusX="4" bottomLeftRadiusY="4" 
+				bottomRightRadiusX="4" bottomRightRadiusY="4">
+			<s:fill>
+				<s:SolidColor alpha="0"/>
+			</s:fill>
+		</s:Rect>
+	</s:Group>
+</s:SparkSkin>

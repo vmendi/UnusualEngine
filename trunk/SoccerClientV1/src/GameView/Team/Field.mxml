@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:List xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:GameView="GameView.*"
+		 creationComplete="CreationCompleteHandler(event)"
+		 skinClass="GameView.Team.FieldSkin" xmlns:Team="GameView.Team.*"
+		 useVirtualLayout="false">
+	
+	<s:layout>
+		<Team:FormationLayout FormationName="{mMainGameModel.TheFormationModel.Formation}"/> 
+	</s:layout>
+			
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		
+		import SoccerServerV1.TransferModel.vo.SoccerPlayer;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.DragEvent;
+		import mx.events.FlexEvent;
+		import mx.messaging.events.ChannelEvent;
+		
+		import spark.events.IndexChangeEvent;
+		
+		protected function CreationCompleteHandler(event:FlexEvent) : void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+			
+			BindingUtils.bindSetter(OnSelectionChanged, mMainGameModel.TheTeamModel, "SelectedSoccerPlayer");
+			addEventListener(IndexChangeEvent.CHANGE, OnMySelectionChanged);
+		}
+		
+		private function OnMySelectionChanged(e:Event): void
+		{
+			mMainGameModel.TheTeamModel.SelectedSoccerPlayer = selectedItem;
+		}
+		
+		private function OnSelectionChanged(selected : SoccerPlayer) : void
+		{
+			if (dataProvider != null)
+			{
+				if (dataProvider.toArray().indexOf(selected) != -1)
+					selectedItem = selected;
+				else
+					selectedItem = null;
+			}
+		}
+				
+		[Bindable] private var mMainGameModel : MainGameModel;
+	]]></fx:Script>
+	
+</s:List>

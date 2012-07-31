@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SoccerV1" EntityNamespace="SoccerServerV1.BDDModel" Class="SoccerDataModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=SoccerV1;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SoccerV1ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Matches" Member="Matches">
+    <Type Name="Match">
+      <Column Name="MatchID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DateStarted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateEnded" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WasTooManyTimes" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="WasJust" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="WasAbandoned" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="WasAbandonedSameIP" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Match_MatchParticipation" Member="MatchParticipations" ThisKey="MatchID" OtherKey="MatchID" Type="MatchParticipation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrainingDefinitions" Member="TrainingDefinitions">
+    <Type Name="TrainingDefinition">
+      <Column Name="TrainingDefinitionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FitnessDelta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TrainingDefinition_PendingTraining" Member="PendingTrainings" ThisKey="TrainingDefinitionID" OtherKey="TrainingDefinitionID" Type="PendingTraining" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MatchParticipations" Member="MatchParticipations">
+    <Type Name="MatchParticipation">
+      <Column Name="MatchParticipationID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MatchID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TeamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AsHome" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Goals" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TurnsPlayed" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Match_MatchParticipation" Member="Match" ThisKey="MatchID" OtherKey="MatchID" Type="Match" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Team_MatchParticipation" Member="Team" ThisKey="TeamID" OtherKey="TeamID" Type="Team" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PendingTrainings" Member="PendingTrainings">
+    <Type Name="PendingTraining">
+      <Column Name="TeamID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TrainingDefinitionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TimeStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TimeEnd" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="TrainingDefinition_PendingTraining" Member="TrainingDefinition" ThisKey="TrainingDefinitionID" OtherKey="TrainingDefinitionID" Type="TrainingDefinition" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Team_PendingTraining" Member="Team" ThisKey="TeamID" OtherKey="TeamID" Type="Team" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Players" Member="Players">
+    <Type Name="Player">
+      <Column Name="PlayerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FacebookID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Liked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Player_Session" Member="Sessions" ThisKey="PlayerID" OtherKey="PlayerID" Type="Session" />
+      <Association Name="Player_Team" Member="Team" ThisKey="PlayerID" OtherKey="TeamID" Type="Team" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PredefinedSoccerPlayers" Member="PredefinedSoccerPlayers">
+    <Type Name="PredefinedSoccerPlayer">
+      <Column Name="PredefinedSoccerPlayerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PredefinedTeamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsSubstitute" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PredefinedTeam_PredefinedSoccerPlayer" Member="PredefinedTeam" ThisKey="PredefinedTeamID" OtherKey="PredefinedTeamID" Type="PredefinedTeam" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PredefinedTeams" Member="PredefinedTeams">
+    <Type Name="PredefinedTeam">
+      <Column Name="PredefinedTeamID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="PredefinedTeam_PredefinedSoccerPlayer" Member="PredefinedSoccerPlayers" ThisKey="PredefinedTeamID" OtherKey="PredefinedTeamID" Type="PredefinedSoccerPlayer" />
+      <Association Name="PredefinedTeam_Team" Member="Teams" ThisKey="PredefinedTeamID" OtherKey="PredefinedTeamID" Type="Team" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sessions" Member="Sessions">
+    <Type Name="Session">
+      <Column Name="SessionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PlayerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FacebookSession" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="Player_Session" Member="Player" ThisKey="PlayerID" OtherKey="PlayerID" Type="Player" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SoccerPlayers" Member="SoccerPlayers">
+    <Type Name="SoccerPlayer">
+      <Column Name="SoccerPlayerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TeamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FieldPosition" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Weight" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sliding" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Power" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsInjured" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Team_SoccerPlayer" Member="Team" ThisKey="TeamID" OtherKey="TeamID" Type="Team" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SpecialTrainingDefinitions" Member="SpecialTrainingDefinitions">
+    <Type Name="SpecialTrainingDefinition">
+      <Column Name="SpecialTrainingDefinitionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RequiredXP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EnergyStep" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EnergyTotal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="SpecialTrainingDefinition_SpecialTraining" Member="SpecialTrainings" ThisKey="SpecialTrainingDefinitionID" OtherKey="SpecialTrainingDefinitionID" Type="SpecialTraining" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SpecialTrainings" Member="SpecialTrainings">
+    <Type Name="SpecialTraining">
+      <Column Name="SpecialTrainingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TeamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SpecialTrainingDefinitionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EnergyCurrent" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsCompleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="SpecialTrainingDefinition_SpecialTraining" Member="SpecialTrainingDefinition" ThisKey="SpecialTrainingDefinitionID" OtherKey="SpecialTrainingDefinitionID" Type="SpecialTrainingDefinition" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Team_SpecialTraining" Member="Team" ThisKey="TeamID" OtherKey="TeamID" Type="Team" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Teams" Member="Teams">
+    <Type Name="Team">
+      <Column Name="TeamID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PredefinedTeamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Formation" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="TrueSkill" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="XP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SkillPoints" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Energy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Fitness" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mean" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="StandardDeviation" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Team_MatchParticipation" Member="MatchParticipations" ThisKey="TeamID" OtherKey="TeamID" Type="MatchParticipation" />
+      <Association Name="Team_PendingTraining" Member="PendingTraining" ThisKey="TeamID" OtherKey="TeamID" Type="PendingTraining" Cardinality="One" />
+      <Association Name="Team_SoccerPlayer" Member="SoccerPlayers" ThisKey="TeamID" OtherKey="TeamID" Type="SoccerPlayer" />
+      <Association Name="Team_SpecialTraining" Member="SpecialTrainings" ThisKey="TeamID" OtherKey="TeamID" Type="SpecialTraining" />
+      <Association Name="Player_Team" Member="Player" ThisKey="TeamID" OtherKey="PlayerID" Type="Player" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="PredefinedTeam_Team" Member="PredefinedTeam" ThisKey="PredefinedTeamID" OtherKey="PredefinedTeamID" Type="PredefinedTeam" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

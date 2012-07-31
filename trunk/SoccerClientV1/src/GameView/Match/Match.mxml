@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 xmlns:Match="GameView.Match.*" xmlns:GameView="GameView.*"
+		 creationComplete="CreationCompleteHandler(event)"
+		 addedToStage="AddedToStageHandler(event)">
+	
+	<fx:Style source="../styles.css"/>
+	
+
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import GameModel.RealtimeModel;
+		import GameModel.RoomModel;
+		
+		import GameView.Skins.DefaultPanelSkin;
+		
+		import mx.binding.utils.BindingUtils;
+		import mx.events.FlexEvent;
+		
+		import spark.events.IndexChangeEvent;
+
+		protected function AddedToStageHandler(event:Event):void
+		{
+			// Sólo aquí se muestran estos Details, así que sólo aquí se refrescan desde la vista.
+			if (mMainGameModel != null)
+				mMainGameModel.TheTeamModel.RefreshTeamDetails();
+		}
+		
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{			
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+			
+			// La room puede ser null en distintas transciones
+			BindingUtils.bindSetter(OnRoomModelChanged, mMainGameModel, [ "TheRealtimeModel", "TheRoomModel" ]);
+
+			// Seleccionamos este como el mejor momento para hacer nuestra conexión inicial
+			mMainGameModel.TheRealtimeModel.InitialConnection(null);
+		}
+		
+		protected function OnRoomModelChanged(theRoomModel : RoomModel) : void
+		{
+			mRoomModel = theRoomModel;
+		}
+		
+		protected function MyPlayersInRoomList_changeHandler(event:IndexChangeEvent):void
+		{
+			mRoomModel.Selected = MyPlayersInRoomList.selectedItem;
+			MyChallengesList.selectedItem = null;
+		}
+		
+		protected function MyChallengesList_changeHandler(event:IndexChangeEvent):void
+		{
+			mRoomModel.SelectedChallenge = MyChallengesList.selectedItem;
+			MyPlayersInRoomList.selectedItem = null;
+		}
+		
+		[Bindable] private var mMainGameModel : MainGameModel;
+		[Bindable] private var mRoomModel : RoomModel;
+
+	]]></fx:Script>
+
+	<Match:LookingForMatchPanel x="10" y="10" width="423" height="90" title="PARTIDO RÁPIDO" />
+	
+	<s:Panel id="MyPlayersInRoomPanel" skinClass="GameView.Skins.DefaultPanelSkin" title="JUGADORES ONLINE"
+			 width="423" height="237" left="10" top="110" controlBarVisible="true">
+		<s:List id="MyPlayersInRoomList" width="100%" height="100%" skinClass="GameView.Skins.DefaultListSkin"
+				dataProvider="{mRoomModel.PlayersInRoom}" itemRenderer="GameView.Match.RealtimePlayerItem" 
+				change="MyPlayersInRoomList_changeHandler(event)"/>
+		<s:controlBarContent>
+			<s:Button label="{mRoomModel.RoomName}" minWidth="80" skinClass="GameView.Skins.ButtonDarkGreySkin" />
+		</s:controlBarContent>
+	</s:Panel>
+	
+	<s:Panel id="MyChallengesPanel" skinClass="GameView.Skins.DefaultPanelSkin" title="RETOS RECIBIDOS"
+			 width="423" height="132" left="10" bottom="10" controlBarVisible="false">
+		<s:List id="MyChallengesList" width="100%" height="100%" skinClass="GameView.Skins.DefaultListSkin"
+				dataProvider="{mRoomModel.ReceivedChallenges}" itemRenderer="GameView.Match.ChallengeItem" change="MyChallengesList_changeHandler(event)"/>
+	</s:Panel>
+	
+	<Match:MatchDefinitionPanel id="MyMatchDefitionPanel" right="10" top="10" width="306" bottom="10" 
+								title="CONFIGURACIÓN DEL PARTIDO"/>
+</s:Group>

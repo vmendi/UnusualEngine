@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:Match="GameView.Match.*"
+				creationComplete="CompleteHandler(event)"
+				autoDrawBackground="false" width="100%" height="44" xmlns:GameView="GameView.*" >
+	
+	<!--*************************************************-->
+	<!-- Aqui entra o un RealtimePlayer o un RankingTeam -->
+	<!--*************************************************-->
+	
+	<fx:Style source="styles.css" />
+	
+	<fx:Script><![CDATA[	
+		
+		protected function CompleteHandler(event:Event):void
+		{
+			
+		}
+		
+	]]></fx:Script>	
+	
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="selected"/>
+		<s:State name="hovered"/>
+	</s:states>
+	
+	<s:Graphic includeIn="hovered">
+		<s:Rect x="0" y="0" width="410" height="43">
+			<s:fill>
+				<s:SolidColor color="#999999" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	
+	<s:Graphic includeIn="selected">
+		<s:Rect x="0" y="0" width="410" height="43">
+			<s:fill>
+				<s:SolidColor color="#ffffff" alpha="0.3" />
+			</s:fill>
+		</s:Rect>
+	</s:Graphic>
+	
+	<GameView:BadgeTeam TeamName="{data}" />
+	<s:Label text="{data}" styleName="whiteBoldVeryBig" x="50" y="9"/>	
+	
+	<s:Graphic>
+		<s:Line xFrom="0" xTo="410" yFrom="43" yTo="43">
+			<s:stroke>
+				<s:SolidColorStroke color="0x000000" weight="1"/>
+			</s:stroke>
+		</s:Line>
+	</s:Graphic>
+	
+</s:ItemRenderer>

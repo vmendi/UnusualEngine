@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="50" height="50">
+	
+	<fx:Script><![CDATA[
+		import mx.core.UIComponent;
+		
+		import utils.UIComponentWrapper;
+		
+		[Bindable]
+		public function set FacebookID(id : String) : void
+		{
+			mFacebookID = id;
+			
+			LoadPicture(mFacebookID);
+		}		
+		public function get FacebookID() : String
+		{
+			return mFacebookID;
+		}
+		
+		private function LoadPicture(userID : String) : void
+		{
+			removeAllElements();
+			
+			var theRequest : URLRequest = new URLRequest("http://graph.facebook.com/"+userID+"/picture");							
+			
+			mLoader.contentLoaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, error);
+			mLoader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, progress);
+			mLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, error);
+			mLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, success);
+			
+			mLoader.load(theRequest);
+			
+			function progress(e:Event) : void
+			{
+			}
+			
+			function error(e:Event) : void
+			{
+			}
+			
+			function success(e:Event) : void
+			{
+				addElement(new UIComponentWrapper(mLoader));
+			}
+		}
+
+		private var mLoader : Loader = new Loader();
+		private var mFacebookID : String;
+	]]></fx:Script>
+			
+</s:Group>

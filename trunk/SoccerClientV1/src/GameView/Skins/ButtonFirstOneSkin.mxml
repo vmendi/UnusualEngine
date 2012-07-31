@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:fb="http://ns.adobe.com/flashbuilder/2009" minWidth="21" minHeight="21" alpha.disabled="0.5">
+	
+	<!-- host component -->
+	<fx:Metadata>
+		<![CDATA[ 
+		[HostComponent("spark.components.Button")]
+		]]>
+	</fx:Metadata>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="up" />
+		<s:State name="over" />
+		<s:State name="down" />
+		<s:State name="disabled" />
+	</s:states>
+	
+	<!-- layer 1: base -->
+	<s:Rect id="base" left="0" right="0" top="0" bottom="0" radiusX="4" radiusY="4" minHeight="22" minWidth="28" excludeFrom="down">
+		<s:stroke>
+			<s:SolidColorStroke joints="round" caps="none" color="#242424" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#7D7D7D" alpha="1.0" ratio="0"/>
+				<s:GradientEntry ratio="0.49" color="#444444" alpha="1.0"/>
+				<s:GradientEntry ratio="0.50" color="#313131" alpha="1.0"/>
+				<s:GradientEntry color="#323232" alpha="1.0" ratio="1"/>
+			</s:LinearGradient>
+		</s:fill>
+		<s:filters>
+			<s:DropShadowFilter angle="90" distance="1" blurX="0" blurY="0" color="0x636363" alpha="0.75" />
+		</s:filters>
+	</s:Rect>
+
+	<s:Rect id="baseDown" left="0" right="0" top="0" bottom="0" radiusX="4" radiusY="4" minHeight="22" minWidth="28" includeIn="down">
+		<s:stroke>
+			<s:SolidColorStroke joints="round" caps="none" color="#242424" miterLimit="4" weight="1"/>
+		</s:stroke>
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#323232" alpha="1.0" ratio="1"/>
+				<s:GradientEntry ratio="0.50" color="#313131" alpha="1.0"/>
+				<s:GradientEntry ratio="0.49" color="#444444" alpha="1.0"/>
+				<s:GradientEntry color="#7D7D7D" alpha="1.0" ratio="0"/>
+			</s:LinearGradient>
+		</s:fill>
+		<s:filters>
+			<s:DropShadowFilter angle="90" distance="1" blurX="0" blurY="0" color="0x636363" alpha="0.75" />
+		</s:filters>
+	</s:Rect>	
+	
+	<!-- layer 2: arrows -->	
+	<s:BitmapImage source="@Embed(source='/Assets/General.swf', symbol='IconFirstOne')" fillMode="clip" x="6" y="4" />
+	<s:filters>
+		<s:DropShadowFilter angle="270" distance="1" blurX="0" blurY="0" color="0x000000" alpha="0.50" />
+	</s:filters>
+	
+</s:SparkSkin>

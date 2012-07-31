@@ -1,0 +1,86 @@
+require 'find'
+require 'fileutils'
+
+BUILD_OUTPUT_DIR = 'build/'
+SRC_DIR = '../SoccerServerV1/SoccerServerV1/SoccerClientV1/'
+
+REMOTE_DIR = '/cygdrive/c/inetpub/wwwmahou/SoccerClientV1'
+REMOTE_HOST = 'mahouligachapas.unusualwonder.com'
+
+REMOTE_USER = 'Administrator' 
+
+=begin
+  Copia excluyendo todas las carpetas .svn
+=end
+def excluding_svn_copy(in_path, out_path)
+
+  exclude = ".svn"
+
+  unless FileTest.exist?(in_path)
+    puts "Input directory doesn't exist"
+    return
+  end
+
+  Find.find(in_path) do |path|
+    if FileTest.directory?(path)
+      unless path[exclude] == nil
+        # Salto a la siguiente iteracion
+        Find.prune 
+      else
+        # Hacemos apuntar el path al out
+        path.sub!(in_path, out_path)
+        # Creamos el directorio destino
+        Dir.mkdir path unless FileTest.exist?(path)
+        next
+      end
+    else
+      dest_path = path.sub(in_path, out_path)
+      FileUtils.cp path, dest_path, :preserve => true
+    end
+  end
+end
+
+task :clean do
+	puts 'Deleting output dir...'
+
+	if File.directory?(BUILD_OUTPUT_DIR)
+		remove_dir(BUILD_OUTPUT_DIR)
+	end
+end
+
+task :prepareBuildOutputDir => [:clean] do
+	puts 'Creating build output dir...'
+
+	unless File.directory?(BUILD_OUTPUT_DIR)
+		mkdir_p BUILD_OUTPUT_DIR
+	end
+end
+
+task :exeCopy => [:prepareBuildOutputDir] do
+	puts 'Copying main files'
+
+  excluding_svn_copy SRC_DIR, BUILD_OUTPUT_DIR
+
+end
+
+task :assetCopy => [:prepareBuildOutputDir] do
+  	puts 'Copying assets...'
+  	
+  	# TODO: Cuando el juego tenga assets...
+end
+
+task :publish do
+	puts 'RSyncing...'
+
+	rsync_cmd = 'rsync -avz --rsync-path=\'CYGWIN=nontsec rsync\' --rsh=\'ssh -o StrictHostKeyChecking=no -o CheckHostIP=no\' ' +
+             	 BUILD_OUTPUT_DIR + ' ' + REMOTE_USER + '@' +
+             	 REMOTE_HOST + ':' + REMOTE_DIR
+
+	system rsync_cmd
+end
+
+
+task :default => [:assetCopy, :exeCopy, :publish] do
+	puts 'End default build'
+	puts Time.now.ctime.to_s
+end

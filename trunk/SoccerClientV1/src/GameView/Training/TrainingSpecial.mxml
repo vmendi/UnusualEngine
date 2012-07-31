@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 creationComplete="CreationCompleteHandler(event)"
+		 >
+	
+	<fx:Script><![CDATA[
+		import GameModel.MainGameModel;
+		import mx.events.FlexEvent;
+		
+		
+		protected function CreationCompleteHandler(event:FlexEvent):void
+		{
+			mMainGameModel = SoccerClientV1.GetMainGameModel();
+		}
+				
+		[Bindable] private var mMainGameModel : MainGameModel;
+			
+	]]></fx:Script>
+
+	<s:Panel title="HABILIDADES ESPECIALES" skinClass="GameView.Skins.DefaultPanelSkin" top="10" bottom="10" left="10" width="740" height="420">
+		
+		<s:Rect id="base" left="0" right="0" height="64">
+			<s:fill><s:SolidColor color="#000000" alpha="0.5" /></s:fill>
+		</s:Rect>
+		
+		<s:Label x="20" y="14" width="700" text="Mejora tu equipo con las siguientes habilidades especiales. Para conseguirlas tendrás que tener el nivel XP y los Puntos Mahou que se indican, excepto 'Superpotencia', que podrás conseguirla sólo con pulsar en 'Me gusta'." styleName="whiteBoldBig" textAlign="center" />
+
+		<s:SkinnableDataContainer y="64" id="MyTrainingList" 
+				dataProvider="{mMainGameModel.TheSpecialTrainingModel.SpecialTrainings}" 
+				itemRenderer="GameView.Training.TrainingSpecialListItem" width="100%" height="100%"
+				skinClass="GameView.Skins.DefaultListSkin"/>
+	</s:Panel>
+		
+</s:Group>

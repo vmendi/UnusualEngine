@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 addedToStage="AddedToStageHandler(event)">
+
+	<fx:Style source="styles.css" />
+	
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center"/>
+	</s:layout>
+	
+	<fx:Script><![CDATA[
+		import com.greensock.TweenLite;
+		import com.greensock.TweenNano;
+		
+		import utils.CentralLoader;
+				
+		protected function AddedToStageHandler(event:Event):void
+		{
+			if (mLoader == null)
+				TweenLite.delayedCall(1, Start);
+		}
+		
+		private function Start() : void
+		{
+			mLoader = new URLLoader(new URLRequest("/News.xml"));
+			mLoader.addEventListener(Event.COMPLETE, OnXMLLoaded);
+			mLoader.addEventListener(IOErrorEvent.IO_ERROR, OnXMLError);	
+		}
+		
+		private function OnXMLLoaded(e:Event) : void
+		{
+			var xml:XML = new XML(e.target.data);
+			
+			mNewsChannel = xml[0].channel.(title == "News");
+			mNews = mNewsChannel.item;
+			
+			if (mNewsChannel.defaultShowTime != undefined)
+			{
+				mDefaultShowTime = parseInt(mNewsChannel.defaultShowTime);
+				if (mDefaultShowTime == 0)
+					mDefaultShowTime = 5;
+			}
+			
+			if (mNews.length() > 0)
+				NextNews();
+		}
+		
+		private function NextNews() : void
+		{
+			mCurrentNewsIdx++;
+			
+			if (mCurrentNewsIdx >= mNews.length())
+				mCurrentNewsIdx = 0;
+
+			var currentNews : XML = mNews[mCurrentNewsIdx];
+			
+			MyNewsLabel.text = currentNews.description;			
+			
+			TweenLite.to(MyNewsLabel, 0.5, { alpha: 1.0, onComplete:OnFadeInCompleted } );
+		}
+		
+		private function OnFadeInCompleted() : void
+		{
+			var currentNews : XML = mNews[mCurrentNewsIdx];
+			
+			var showTime : int = mDefaultShowTime;
+			
+			if (currentNews.showTime != undefined)
+				showTime = parseInt(currentNews.showTime);
+			if (showTime == 0)
+				showTime = mDefaultShowTime;
+			
+			TweenLite.delayedCall(showTime, OnCurrentNewsExpired);
+		}
+		
+		private function OnCurrentNewsExpired() : void
+		{
+			TweenLite.to(MyNewsLabel, 0.5, { alpha: 0.0, onComplete:NextNews });	
+		}
+		
+		private function OnXMLError(e:Event):void
+		{
+		}
+		
+		private var mDefaultShowTime : int; 
+		
+		private var mCurrentNewsIdx : int = -1;
+		private var mNewsChannel : XMLList;
+		private var mNews : XMLList;
+		private var mLoader : URLLoader;
+
+	]]></fx:Script>
+
+	<s:Label text="" styleName="redBoldBig" id="MyNewsLabel" alpha="0" />
+</s:Group>

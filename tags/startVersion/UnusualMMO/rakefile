@@ -1,0 +1,82 @@
+BUILD_OUTPUT_DIR = 'build/'
+SRC_DIR = '../Out/'
+PROJECT_FOLDER = 'MmoGirls/'
+PROJECT_MAIN_EXE = 'UnusualMMO'
+RSYNC_PROJECT = 'UnusualMMO'
+
+task :clean do
+	puts 'Deleting output dir...'
+
+	if File.directory?(BUILD_OUTPUT_DIR)
+		remove_dir(BUILD_OUTPUT_DIR)
+	end
+end
+
+task :prepareBuildOutputDir => [:clean] do
+	puts 'Creating build output dir...'
+
+	unless File.directory?(BUILD_OUTPUT_DIR)
+		mkdir_p BUILD_OUTPUT_DIR
+	end
+end
+
+task :exeCopy => [:prepareBuildOutputDir] do
+	puts 'Copying main files'
+
+	cp SRC_DIR + 'AC_OETags.js', BUILD_OUTPUT_DIR
+	cp SRC_DIR + 'playerProductInstall.swf', BUILD_OUTPUT_DIR
+	cp SRC_DIR + PROJECT_MAIN_EXE + '.swf', BUILD_OUTPUT_DIR
+	cp SRC_DIR + PROJECT_MAIN_EXE + '.html', BUILD_OUTPUT_DIR
+
+	cp_r SRC_DIR + 'history/', BUILD_OUTPUT_DIR
+end
+
+task :assetCopy => [:prepareBuildOutputDir] do
+  	puts 'Copying assets...'
+
+  	# Let's copy all the Map definitions
+  	targetMapsDir = BUILD_OUTPUT_DIR + 'Maps/' + PROJECT_FOLDER
+
+  	unless File.directory?(targetMapsDir)
+		mkdir_p targetMapsDir
+	end
+
+	cp_r Dir.glob(SRC_DIR + 'Maps/' + PROJECT_FOLDER + "*.xml"), targetMapsDir
+
+	# Now we copy the assets: swf, jpg, flv, xml, mp3
+	targetAssetsDir = BUILD_OUTPUT_DIR + "Assets/" + PROJECT_FOLDER
+	srcAssetsDir = SRC_DIR + "Assets/" + PROJECT_FOLDER
+
+  	FileList[srcAssetsDir + '**/*.swf',
+  			 srcAssetsDir + '**/*.jpg',
+  			 srcAssetsDir + '**/*.flv',
+  			 srcAssetsDir + '**/*.xml',
+  			 srcAssetsDir + '**/*.mp3'].each do |src|
+
+  		# Puesto que estamos cogiendo subdirectorios, tenemos que crearlos en el destino
+  		targetSubDir = (File.dirname(src)+'/').gsub(srcAssetsDir, '')
+ 		targetSubDir = targetAssetsDir + targetSubDir
+
+  		unless File.directory?(targetSubDir)
+  			mkdir_p targetSubDir
+  		end
+
+  		# Y ahora la copia del archivo en sí mismo... estaría bien que cp creara el subdirectorio destino, pero no lo hace,
+  		# así que hay que crearlo con lo anterior
+  		cp src, targetSubDir
+	end
+end
+
+task :publish => [:default] do
+	puts 'RSyncing...'
+
+	rsyncCmd  = 'export RSYNC_PASSWORD="liposuccion123&."'
+	rsyncCmd += ';'
+	rsyncCmd += 'rsync -avz ' + BUILD_OUTPUT_DIR + ' root@91.121.144.120::' + RSYNC_PROJECT
+
+	system rsyncCmd
+end
+
+task :default => [:assetCopy, :exeCopy] do	
+	puts 'End mainBuild'
+end

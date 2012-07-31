@@ -1,0 +1,78 @@
+<Score>
+	<ScoreSpeed>0.5</ScoreSpeed>
+
+	<Note>
+		<Time val="250" />
+		<Key num="0"/>
+	</Note>
+
+	<Note>
+		<Time val="750" />
+		<Key num="1"/>
+	</Note>
+
+	<Note>
+		<Time val="1250" />
+		<Key num="2"/>
+	</Note>
+
+	<Note>
+		<Time val="1750" />
+		<Key num="0"/>
+	</Note>
+
+	<Note>
+		<Time val="2250" />
+		<Key num="1"/>
+	</Note>
+
+	<Note>
+		<Time val="2750" />
+		<Key num="2"/>
+	</Note>
+
+	<Note>
+		<Time val="3250" />
+		<Key num="0"/>
+	</Note>
+
+	<Note>
+		<Time val="3750" />
+		<Key num="1"/>
+	</Note>
+
+	<Note>
+		<Time val="4250" />
+		<Key num="2"/>
+	</Note>
+
+	<Note>
+		<Time val="5000" />
+		<Key num="0"/>
+		<Key num="1"/>
+	</Note>
+
+	<Note>
+		<Time val="6000" />
+		<Key num="1"/>
+		<Key num="2"/>
+	</Note>
+
+	<Note>
+		<Time val="7000" />
+		<Key num="0"/>
+		<Key num="3"/>
+	</Note>
+
+	<Note>
+		<Time val="8000" />
+		<Key num="2"/>
+		<Key num="3"/>
+	</Note>
+
+	<Note>
+		<Time val="9000" />
+		<Key num="1"/>
+		<Key num="3"/>
+	</Note>
+</Score>

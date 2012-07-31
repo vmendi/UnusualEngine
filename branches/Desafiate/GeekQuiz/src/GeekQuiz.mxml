@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application name="Quiz_test"
+        xmlns:mx="http://www.adobe.com/2006/mxml"
+        verticalAlign="middle"
+        layout="absolute" height="508" width="915" verticalScrollPolicy="off" 
+        addedToStage="Start()"
+        >
+
+    <mx:Style>
+    	Application
+    	{
+    		background-color:"";
+    		background-image:"";
+    		padding: 0px;
+    		background-alpha: 0;
+    	}
+    	.HolderVBoxC
+    	{
+    		background-image: Embed(source='QuizLib.swf', symbol='grTest');
+    	}
+        RadioButton {
+            icon: Embed(source='QuizLib.swf', symbol='grRadio');
+            selected-down-icon: Embed(source='QuizLib.swf', symbol='grRadioA');
+            over-icon: Embed(source='QuizLib.swf', symbol='grRadio');
+            selected-over-icon: Embed(source='QuizLib.swf', symbol='grRadioA');
+            selected-up-icon: Embed(source='QuizLib.swf', symbol='grRadioA');
+            up-icon: Embed(source='QuizLib.swf', symbol='grRadio');
+			padding-right: 15;
+			padding-bottom: 5;
+        }
+        .QuestionVBox {
+            paddingBottom: 10;
+            vertical-gap: 0;
+        }
+        .QuestionText {
+            padding-right: 100;
+            font-size: 16;
+            padding-bottom: 5;
+        }
+    </mx:Style>
+    <mx:Script>
+        <![CDATA[
+        	import mx.core.BitmapAsset;
+        	import gs.TweenLite;
+            import mx.controls.Alert;
+
+			[Embed(source="COUR.ttf", fontFamily="ari", mimeType='application/x-font', unicodeRange='U+0020,U+0041-U+005A,U+0020-U+002F, U+0030-U+0039, U+003A-U+0040, U+0041-U+005A, U+005B-U+0060, U+0061-U+007A, U+007B-U+007E')] 
+			public var f1 : Class;
+			
+			[Embed(source="QuizLib.swf", symbol="grError")] 
+			public var grBocadillo : Class;
+        
+        	private var bEnded : Boolean = false;
+           	private var success : int = 0;
+
+			public function Start ():void
+			{
+				addEventListener(Event.ENTER_FRAME, makeAppear);
+				addEventListener(MouseEvent.MOUSE_UP, CheckButtonShow);
+			}
+			public function CheckButtonShow (e:MouseEvent) : void 
+			{
+				if (checkAnsQuantity() >= 9) btSend.alpha = 1;
+			}
+			private function makeAppear (e:Event):void {
+				if (myQuizContainer.alpha < 1) myQuizContainer.alpha = myQuizContainer.alpha + 0.1;
+				else 
+				{
+					addEventListener(Event.ENTER_FRAME, onEnterFrame);
+					removeEventListener(Event.ENTER_FRAME, makeAppear);			
+				}
+			}
+			public function IsEnded ():Boolean
+			{
+				return bEnded;
+			}
+			public function GetScore() : int
+			{
+				return success * 100;
+			}
+			public function Stop () : void 
+			{
+				removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				removeEventListener(Event.ENTER_FRAME, makeAppear);
+				removeAllChildren();
+			}
+			private function onEnterFrame(e:Event):void
+			{
+				//trace(myQuizContainer.y + ' ' + mouseY);
+	    		//var coordY : Number = ((-(mouseY)*(((myQuizContainer.height-stage.stageHeight)/stage.stageHeight))+(stage.stageHeight/3)-200));
+	    		var coordY : Number = -mouseY * ((myQuizContainer.height-parent.height)/parent.height);
+	    		TweenLite.to(myQuizContainer, 0.2, {y:coordY});
+			}
+			private function checkQuiz():void
+			{
+				var answers : int = checkAnsQuantity();
+				if (answers == 10) {
+					checkAnswers();
+	                bEnded = true;
+	                removeAllChildren();
+                }
+                else
+                {
+                	BocadilloTest.visible = true;
+                	var theTimer:Timer = new Timer (2000, 1);
+                	theTimer.addEventListener(TimerEvent.TIMER, HideBocadillo);
+                	theTimer.start();
+                }
+			}
+			private function checkAnswers():int 
+            {
+                success = checkGroup(q1_group) + success;
+                success = checkGroup(q2_group) + success;
+                success = checkGroup(q3_group) + success;
+                success = checkGroup(q4_group) + success;
+                success = checkGroup(q5_group) + success;
+                success = checkGroup(q6_group) + success;
+                success = checkGroup(q7_group) + success;
+                success = checkGroup(q8_group) + success;
+                success = checkGroup(q9_group) + success;
+                success = checkGroup(q10_group) + success;
+				return (success);
+            }
+			private function checkAnsQuantity():int
+			{
+                var answers : int = 0;
+                answers = checkGroupAns(q1_group) + answers;
+                answers = checkGroupAns(q2_group) + answers;
+                answers = checkGroupAns(q3_group) + answers;
+                answers = checkGroupAns(q4_group) + answers;
+                answers = checkGroupAns(q5_group) + answers;
+                answers = checkGroupAns(q6_group) + answers;
+                answers = checkGroupAns(q7_group) + answers;
+                answers = checkGroupAns(q8_group) + answers;
+                answers = checkGroupAns(q9_group) + answers;
+                answers = checkGroupAns(q10_group) + answers;
+				return (answers);
+			}
+
+			public function HideBocadillo (e:TimerEvent) : void
+			{
+				BocadilloTest.visible = false;
+			}
+
+            private function checkGroupAns(rbg:RadioButtonGroup) : int {
+                var valid : int = 1;
+                if (rbg.selectedValue == null) {
+                	valid = 0;
+                }
+                return valid;
+            }
+            
+            private function checkGroup(rbg:RadioButtonGroup) : int {
+                var valid : int = 1;
+                if (rbg.selectedValue != true) {
+                    valid = 0;
+                }
+                return valid;
+            }
+        ]]>
+    </mx:Script>
+
+    <mx:RadioButtonGroup id="q1_group" enabled="false" />
+    <mx:RadioButtonGroup id="q2_group" enabled="false" />
+    <mx:RadioButtonGroup id="q3_group" enabled="false" />
+    <mx:RadioButtonGroup id="q4_group" enabled="false" />
+    <mx:RadioButtonGroup id="q5_group" enabled="false" />
+    <mx:RadioButtonGroup id="q6_group" enabled="false" />
+    <mx:RadioButtonGroup id="q7_group" enabled="false" />
+    <mx:RadioButtonGroup id="q8_group" enabled="false" />
+    <mx:RadioButtonGroup id="q9_group" enabled="false" />
+    <mx:RadioButtonGroup id="q10_group" enabled="false" />
+    <mx:VBox 
+    	styleName="HolderVBoxC" 
+    	height="1338" 
+    	width="898" 
+    	paddingTop="430" 
+    	paddingLeft="100" 
+    	fontFamily="aribold" 
+    	fontSize="14"
+    	fontWeight="bold" 
+    	id="myQuizContainer"
+    	alpha="0" 
+    	>
+	    <mx:HBox styleName="HolderVBox">
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>1. Interior de un OS</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q1_a" 
+		                    label="Kernel                 "
+		                    group="{q1_group}"
+		                    value="true" />
+		            <mx:RadioButton id="q1_b"
+		                    label="Palomitas                 "
+		                    group="{q1_group}" />
+		            <mx:RadioButton id="q1_c"
+		                    label="X86                         "
+		                    group="{q1_group}" />
+	        </mx:VBox>
+	
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>2. Laughing out loud</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q2_a"
+		                    label="Inteface                           "
+		                    group="{q2_group}" />
+		            <mx:RadioButton id="q2_b"
+		                    label="LOL                           "
+		                    group="{q2_group}" 
+		                    value="true"/>
+		            <mx:RadioButton id="q2_c"
+		                    label="HaHa                           "
+		                    group="{q2_group}" />
+	        </mx:VBox>
+	
+	    </mx:HBox>
+		<mx:HBox styleName="HolderVBox">
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>3. Distribución alternativa de teclado</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q3_a"
+		                    label="ROM                           "
+		                    group="{q3_group}" />
+		            <mx:RadioButton id="q3_b"
+		                    label="DVORAK                           "
+		                    group="{q3_group}"
+		                    value="true" />
+		            <mx:RadioButton id="q3_c"
+		                    label="QWERTY                           "
+		                    group="{q3_group}" />
+	        </mx:VBox>
+	
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>4. De local a remoto</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q4_a"
+		                    label="Upload                           "
+		                    group="{q4_group}"
+		                    value="true" />
+		            <mx:RadioButton id="q4_b"
+		                    label="Sideload                           "
+		                    group="{q4_group}" />
+		            <mx:RadioButton id="q4_c"
+		                    label="Download                           "
+		                    group="{q4_group}" />
+	        </mx:VBox>
+	    </mx:HBox>
+		<mx:HBox styleName="HolderVBox">
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>5. Blackcomb</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q5_a"
+		                    label="XP                           "
+		                    group="{q5_group}" />
+		            <mx:RadioButton id="q5_b"
+		                    label="2000                           "
+		                    group="{q5_group}" />
+		            <mx:RadioButton id="q5_c"
+		                    label="7                           "
+		                    group="{q5_group}"
+		                    value="true" />
+	        </mx:VBox>
+	
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>6. ¿Soñaré?</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q6_a"
+		                    label="WOPR                           "
+		                    group="{q6_group}" />
+		            <mx:RadioButton id="q6_b"
+		                    label="HAL                           "
+		                    group="{q6_group}" 
+		                    value="true"/>
+		            <mx:RadioButton id="q6_c"
+		                    label="95                           "
+		                    group="{q6_group}" />
+	        </mx:VBox>
+	    </mx:HBox>
+		<mx:HBox styleName="HolderVBox">
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>7. GUI innovador</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q7_a"
+		                    label="Bob                           "
+		                    group="{q7_group}"
+		                    value="true" />
+		            <mx:RadioButton id="q7_b"
+		                    label="Me                           "
+		                    group="{q7_group}" />
+		            <mx:RadioButton id="q7_c"
+		                    label="Caché                           "
+		                    group="{q7_group}" />
+	        </mx:VBox>
+	
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>8. 65536</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q8_a"
+		                    label="2^8                           "
+		                    group="{q8_group}" />
+		            <mx:RadioButton id="q8_b"
+		                    label="2^16                           "
+		                    group="{q8_group}" 
+		                    value="true"/>
+		            <mx:RadioButton id="q8_c"
+		                    label="2^32                           "
+		                    group="{q8_group}" />
+	        </mx:VBox>
+	    </mx:HBox>
+		<mx:HBox styleName="HolderVBox">
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>9. Set objFSO = CreateObject ("Scripting.FileSystemObject")</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q9_a"
+		                    label="PowerShell            "
+		                    group="{q9_group}"
+		                    value="true" />
+		            <mx:RadioButton id="q9_b"
+		                    label="DOS                       "
+		                    group="{q9_group}" />
+		            <mx:RadioButton id="q9_c"
+		                    label="PERL                       "
+		                    group="{q9_group}" />
+	        </mx:VBox>
+	
+	        <mx:VBox styleName="QuestionVBox" width="350">
+	            <mx:Text styleName="QuestionText"
+	                    selectable="false"
+	                    width="100%">
+	                <mx:text>10. ASLR</mx:text>
+	            </mx:Text>
+		            <mx:RadioButton id="q10_a"
+		                    label="Protección                  "
+		                    group="{q10_group}"
+		                    value="true" />
+		            <mx:RadioButton id="q10_b"
+		                    label="Rapidez                     "
+		                    group="{q10_group}" />
+		            <mx:RadioButton id="q10_c"
+		                    label="Interactividad                   "
+		                    group="{q10_group}" />
+	        </mx:VBox>
+	    </mx:HBox>
+	    
+		<mx:HBox>
+	        <mx:ControlBar paddingLeft="520">
+	        	<mx:Image id="btSend" source="@Embed(source='QuizLib.swf', symbol='grBoton')" click="checkQuiz()" alpha="0.2"/>
+	        </mx:ControlBar>
+	    </mx:HBox>
+	</mx:VBox>
+	<mx:SWFLoader id="BocadilloTest" scaleContent="false" visible="false" source="@Embed(source='QuizLib.swf', symbol='grError')" x="400" y="340"/>
+
+</mx:Application>

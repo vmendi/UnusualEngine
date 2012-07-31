@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="com.adobe.crypto.MD5"/>
+<classEntry path="com.adobe.crypto.SHA1"/>
+<classEntry path="com.adobe.crypto.SHA224"/>
+<classEntry path="com.adobe.crypto.SHA256"/>
+<classEntry path="com.adobe.crypto.WSSEUsernameToken"/>
+<classEntry path="com.adobe.errors.IllegalStateError"/>
+<classEntry path="com.adobe.images.BitString"/>
+<classEntry path="com.adobe.images.JPGEncoder"/>
+<classEntry path="com.adobe.images.PNGEncoder"/>
+<classEntry path="com.adobe.net.DynamicURLLoader"/>
+<classEntry path="com.adobe.net.IURIResolver"/>
+<classEntry path="com.adobe.net.URI"/>
+<classEntry path="com.adobe.net.URIEncodingBitmap"/>
+<classEntry path="com.adobe.net.proxies.RFC2817Socket"/>
+<classEntry path="com.adobe.serialization.json.JSON"/>
+<classEntry path="com.adobe.serialization.json.JSONDecoder"/>
+<classEntry path="com.adobe.serialization.json.JSONEncoder"/>
+<classEntry path="com.adobe.serialization.json.JSONParseError"/>
+<classEntry path="com.adobe.serialization.json.JSONToken"/>
+<classEntry path="com.adobe.serialization.json.JSONTokenType"/>
+<classEntry path="com.adobe.serialization.json.JSONTokenizer"/>
+<classEntry path="com.adobe.utils.ArrayUtil"/>
+<classEntry path="com.adobe.utils.DateUtil"/>
+<classEntry path="com.adobe.utils.DictionaryUtil"/>
+<classEntry path="com.adobe.utils.IntUtil"/>
+<classEntry path="com.adobe.utils.NumberFormatter"/>
+<classEntry path="com.adobe.utils.StringUtil"/>
+<classEntry path="com.adobe.utils.XMLUtil"/>
+<classEntry path="com.adobe.webapis.ServiceBase"/>
+<classEntry path="com.adobe.webapis.URLLoaderBase"/>
+<classEntry path="com.adobe.webapis.events.ServiceEvent"/>
+<classEntry path="it.gotoandplay.smartfoxserver.SFSEvent"/>
+<classEntry path="it.gotoandplay.smartfoxserver.SmartFoxClient"/>
+<classEntry path="it.gotoandplay.smartfoxserver.data.Room"/>
+<classEntry path="it.gotoandplay.smartfoxserver.data.User"/>
+<classEntry path="it.gotoandplay.smartfoxserver.data.Zone"/>
+<classEntry path="it.gotoandplay.smartfoxserver.handlers.ExtHandler"/>
+<classEntry path="it.gotoandplay.smartfoxserver.handlers.IMessageHandler"/>
+<classEntry path="it.gotoandplay.smartfoxserver.handlers.SysHandler"/>
+<classEntry path="it.gotoandplay.smartfoxserver.http.HttpConnection"/>
+<classEntry path="it.gotoandplay.smartfoxserver.http.HttpEvent"/>
+<classEntry path="it.gotoandplay.smartfoxserver.http.IHttpProtocolCodec"/>
+<classEntry path="it.gotoandplay.smartfoxserver.http.LoaderFactory"/>
+<classEntry path="it.gotoandplay.smartfoxserver.http.RawProtocolCodec"/>
+<classEntry path="it.gotoandplay.smartfoxserver.util.Entities"/>
+<classEntry path="it.gotoandplay.smartfoxserver.util.ObjectSerializer"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>

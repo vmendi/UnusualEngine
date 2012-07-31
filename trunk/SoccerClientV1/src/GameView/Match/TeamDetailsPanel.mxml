@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:Match="GameView.Match.*" xmlns:GameView="GameView.*"
+		 currentState="alignToLeft" 
+		 addedToStage="AddedToStageHandler(event)"
+		 visible="{TheRealtimePlayer!=null}" width="150">
+	
+
+	<fx:Script><![CDATA[
+		import GameModel.RealtimePlayer;
+		
+		import SoccerServerV1.TransferModel.vo.TeamDetails;
+		
+		protected function AddedToStageHandler(event:Event):void
+		{
+			
+		}
+	
+		[Bindable]
+		public function get TheRealtimePlayer() : RealtimePlayer { return mRealtimePlayer; }
+		public function set TheRealtimePlayer(v:RealtimePlayer) : void { mRealtimePlayer = v; }
+				
+		private var mRealtimePlayer : RealtimePlayer;
+				
+	]]></fx:Script>
+
+	<s:states>
+		<s:State name="alignToLeft" />
+		<s:State name="alignToRight" />	
+	</s:states>
+	
+	<s:Group>
+		<GameView:BadgeTeam left.alignToLeft="-6" right.alignToRight="-6" TeamName="{TheRealtimePlayer.PredefinedTeamName}" />
+		
+		<s:Label left.alignToLeft="38" right.alignToRight="38" top="2" width="100" maxDisplayedLines="1" text="{TheRealtimePlayer.Name}" styleName="whiteBoldBig" textAlign.alignToLeft="left" textAlign.alignToRight="right"/>
+		<s:Label left.alignToLeft="38" right.alignToRight="38" top="22" width="100" text="{TheRealtimePlayer.PredefinedTeamName}" styleName="greyBoldMedium" textAlign.alignToLeft="left" textAlign.alignToRight="right"/>
+	</s:Group>
+	
+	<s:Group top="44" width="100" left.alignToLeft="0" right.alignToRight="0">
+		<s:layout><s:VerticalLayout gap="10"/></s:layout>			
+		<GameView:ProgressBar width="100%" Percent="{TheRealtimePlayer.TheTeamDetails.AveragePower*TheRealtimePlayer.TheTeamDetails.Fitness/100}" 
+							  			   MaxPercent="{TheRealtimePlayer.TheTeamDetails.AveragePower}"/>
+		<GameView:ProgressBar width="100%" Percent="{TheRealtimePlayer.TheTeamDetails.AverageSliding*TheRealtimePlayer.TheTeamDetails.Fitness/100}"
+							  			   MaxPercent="{TheRealtimePlayer.TheTeamDetails.AverageSliding}"/>
+		<GameView:ProgressBar width="100%" Percent="{TheRealtimePlayer.TheTeamDetails.AverageWeight*TheRealtimePlayer.TheTeamDetails.Fitness/100}" 
+							  			   MaxPercent="{TheRealtimePlayer.TheTeamDetails.AverageWeight}"/>
+	</s:Group>
+	
+	<s:Label top="100" text="Entrenamiento: {TheRealtimePlayer.TheTeamDetails.Fitness}%" styleName="yellowBoldMedium" left.alignToLeft="0" right.alignToRight="0" />
+	<s:Label id="MyMessageLabel" top="117" width="286" text="Los valores medios de tu equipo se modifican según tu nivel de entrenamiento" styleName="greyBoldMedium" textAlign="center" includeIn="alignToLeft" />
+	
+	<s:Label text="ESPECIALES" top="150" styleName="whiteBoldBig" left.alignToLeft="0" right.alignToRight="0"/>
+	
+	<GameView:SpecialSkillsBrowser top="170" scaleX="0.8" scaleY="0.8" 
+								   left.alignToLeft="0" right.alignToRight="0"
+								   SpecialSkillIDs="{TheRealtimePlayer.TheTeamDetails.SpecialSkillsIDs}"/>
+</s:Group>
